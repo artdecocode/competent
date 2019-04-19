@@ -1,0 +1,48 @@
+{
+  "name": "competent",
+  "version": "0.0.0-pre",
+  "description": "Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.",
+  "main": "build/index.js",
+  "module": "src/index.js",
+  "scripts": {
+    "t": "zoroaster -a",
+    "test": "yarn t test/spec test/mask",
+    "spec": "yarn t test/spec",
+    "mask": "yarn t test/mask",
+    "test-build": "ALAMODE_ENV=test-build yarn test",
+    "lint": "eslint .",
+    "doc": "NODE_DEBUG=doc doc -o README.md",
+    "b": "alamode src -o build -s",
+    "d": "yarn-s d1 externs",
+    "d1": "typal src -c",
+    "externs": "typal externs.js -e",
+    "build": "yarn-s d b doc",
+    "e": "alanode"
+  },
+  "files": [
+    "build",
+    "src",
+    "externs.js"
+  ],
+  "externs": "externs.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/artdecocode/competent.git"
+  },
+  "keywords": [
+    "competent"
+  ],
+  "author": "Anton <anton@adc.sh>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/artdecocode/competent/issues"
+  },
+  "homepage": "https://github.com/artdecocode/competent#readme",
+  "devDependencies": {
+    "alamode": "^1.9.3",
+    "documentary": "^1.24.1",
+    "eslint-config-artdeco": "1.0.1",
+    "yarn-s": "1.1.0",
+    "zoroaster": "^3.11.6"
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "ws": "",
+    "all": "<test>Hello</test>",
+    "key": "test"
+  },
+  {
+    "ws": "  ",
+    "all": "<test-comp>World</test-comp>",
+    "key": "test-comp"
+  },
+  {
+    "ws": "  ",
+    "all": "<test/>",
+    "key": "test"
+  },
+  {
+    "ws": "  ",
+    "all": "<test-comp/>",
+    "key": "test-comp"
+  }
+]

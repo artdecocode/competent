@@ -1,15 +1,9 @@
 import { join } from 'path'
-import { debuglog } from 'util'
-
-const LOG = debuglog('competent')
 
 /**
  * A testing context for the package.
  */
 export default class Context {
-  async _init() {
-    LOG('init context')
-  }
   /**
    * Example method.
    */
@@ -25,8 +19,5 @@ export default class Context {
   fixture(file) {
     const f = file.raw[0]
     return join('test/fixture', f)
-  }
-  async _destroy() {
-    LOG('destroy context')
   }
 }

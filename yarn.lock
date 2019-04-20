@@ -437,6 +437,14 @@ restream@^3.6.0:
   dependencies:
     "@artdeco/clean-stack" "^1.1.1"
 
+restream@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.0.tgz#160d815878c507f76df3bba717bcf9434927e14d"
+  integrity sha512-cLM0KJFXIm1cjuScEmrI6x/z9zpuUKJn1Kkxe1RPEbBauTcuwgaCT1bbNx/g7brAG1HsxOnvG9Q4jZlSknap0A==
+  dependencies:
+    "@artdeco/clean-stack" "^1.1.1"
+    catchment "^3.3.0"
+
 rexml@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/rexml/-/rexml-1.4.0.tgz#64368db531b4e86acf1a3e69a4cbbed94acc5232"

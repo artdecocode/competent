@@ -218,11 +218,6 @@ assert-throws@3.1.1:
     erotic "2.0.1"
     erte "1.1.4"
 
-catchment@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/catchment/-/catchment-3.0.1.tgz#11dab5fea86d412343e797e052b21091b7e83a55"
-  integrity sha512-rT/WIcR2hBPwlcOLx7ULAM6yWBLfDjVTMnzrMyjxKhFKAWClVTjDSoe8mxn3ZyAlCyg+Vbtw1iPopa6YxUkW4A==
-
 catchment@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/catchment/-/catchment-1.0.0.tgz#3061f71be0102710be84328d2f94363a165f8c4b"
@@ -438,17 +433,10 @@ restream@3.1.1:
   resolved "https://registry.yarnpkg.com/restream/-/restream-3.1.1.tgz#36084997bd3e765c2da484700e16b850c2f9ffb4"
   integrity sha512-mFHfHno39K371GeDxN07bDK6LtGqoA0PQVePRAQ1kwWVgjDiwkHhLif/4HrCoCWNIv6SXLHePCiMomX4j5Y5ZA==
 
-restream@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/restream/-/restream-3.6.0.tgz#c75721b8f87a37e12e112b19e80811d07051884b"
-  integrity sha512-8tiTQT6RNAl1qGaFFaPsN1UkaS3TIZ2lUcJ+G577KCfS0mqNHrHtSf6L56269dCOYwJRp/Z1VfBATpVA+nKyjw==
-  dependencies:
-    "@artdeco/clean-stack" "^1.1.1"
-
-restream@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.0.tgz#160d815878c507f76df3bba717bcf9434927e14d"
-  integrity sha512-cLM0KJFXIm1cjuScEmrI6x/z9zpuUKJn1Kkxe1RPEbBauTcuwgaCT1bbNx/g7brAG1HsxOnvG9Q4jZlSknap0A==
+restream@^3.6.0, restream@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.1.tgz#4ffefbd2a008965413e90d50fa7f0898889b3a61"
+  integrity sha512-OZLcbqwcZ1VMW3MziEjE4xaeqXvl8r367pBmgviRNl3dywyzdi+ueKFW5p1qPaYaZwIRvaR/TqAlB0XKJVX90g==
   dependencies:
     "@artdeco/clean-stack" "^1.1.1"
     catchment "^3.3.0"
@@ -505,9 +493,9 @@ static-analysis@^1.3.3, static-analysis@^1.6.0:
     resolve-dependency "^1.0.3"
 
 typal@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.3.1.tgz#f61350517014258fd1deb1a917c070514efff16d"
-  integrity sha512-e2MG3uCOrFzjQhTLPG2RYeEdpZDOF1kDZ9I82u1aJkjZW/AFskE+CoHUaAkq5qklvPAVF76pm0v0m+l7ER41uA==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.3.2.tgz#2ae846aeb827a6cb4219a41994fb8d2f3353c668"
+  integrity sha512-Aio8C0XH01ur0a1YYnCWuVTNTSjMO75Y4GxySqgkMVq9I9zSiO21tjKlLpWayBFAytCtAtCP11SJJ9VmZbgyfQ==
   dependencies:
     mismatch "^1.1.1"
     rexml "^1.4.0"
@@ -518,11 +506,11 @@ usually@^1.1.0, usually@^1.2.0:
   integrity sha512-/PIDu3pkZNqYdzOr0Cyq2q8FP3ziBISOvVJtZcypg3BygIW/W618oF4dtK4mhCxbk3bUzrfTbCxDWCCr85bq/g==
 
 which-stream@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/which-stream/-/which-stream-1.0.1.tgz#2b495b083b1c31ff68dd4d770b0caa7f86e769af"
-  integrity sha512-UANI3ps4Qh+SKR39/z/2NZBNk/FKLYFpbPBc1bv3cX+PRR2ycinKCXpFOMCXv67xWBlSw7nIzd4ZD0hFGNQ99g==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/which-stream/-/which-stream-1.1.0.tgz#7a57ddf20b8b33d27df7e1706760294aa931ea8a"
+  integrity sha512-ksadtFR6JduhGSkLsbAwsNNLi4nHZGIKti1AXA1VhuzgFx7ktLLcZmauytscJpbHbm9Dv4jFIcLxpEWz41dFQQ==
   dependencies:
-    catchment "3.0.1"
+    catchment "^3.3.0"
 
 wordwrap@>=0.0.2:
   version "1.0.0"

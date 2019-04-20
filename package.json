@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@depack/render": "^1.1.4",
-    "restream": "^3.7.0",
+    "restream": "^3.7.1",
     "rexml": "^1.4.0"
   }
 }

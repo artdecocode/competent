@@ -141,12 +141,12 @@ The output will contain rendered <strong>JSX</strong>.
 ```html
 <html lang="en">
 
-<div style="background:red;" id="c1">
+<div style="background:red;" id="c2">
   <span class="name">splendid</span>
   <span class="ver">1.3.0</span>
   <p>A Static Web Site Generator.</p>
 </div>
-<div style="background:green;" id="c2">
+<div style="background:green;" id="c1">
   <span class="name">@a-la/jsx</span>
   <span class="ver">1.4.7</span>
   <p>The JSX Transform For ÀLaMode And Other Packages.</p>
@@ -199,7 +199,7 @@ __<a name="type-_competentconfig">`_competent.Config`</a>__: Options for the pro
 | markExported  | <em>function(string, string, [!_competent.Props](#type-_competentprops), !Array&lt;string&gt;)</em>     | If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.                                          | -       |
 | removeOnError | <em>boolean</em>                                                                                        | If there was an error when rendering the component, controls whether the HTML should be be left on the page.                                                                                                          | `false` |
 | onSuccess     | <em>function(string)</em>                                                                               | The callback at the end of a successful replacement with the component's key.                                                                                                                                         | -       |
-| onFail        | <em>function(string, Error, number, string)</em>                                                        | The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.                                                                       | -       |
+| onFail        | <em>function(string, !Error, number, string)</em>                                                       | The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.                                                                       | -       |
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
 

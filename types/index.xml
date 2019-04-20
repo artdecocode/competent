@@ -25,7 +25,7 @@
     <prop opt type="function(string)" name="onSuccess">
       The callback at the end of a successful replacement with the component's key.
     </prop>
-    <prop opt type="function(string, Error, number, string)" name="onFail">
+    <prop opt type="function(string, !Error, number, string)" name="onFail">
       The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
     </prop>
   </type>

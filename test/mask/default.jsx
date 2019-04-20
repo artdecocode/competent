@@ -18,9 +18,13 @@ makeTestSuite('test/result/default', {
           {children}
         </body-tag>)
       },
-    })
+      'error'() {
+        throw new Error('Cannot process')
+      },
+    }, this.options)
     const re = new Replaceable(comp)
     return re
   },
+  jsonProps: ['options'],
   context: Context,
 })

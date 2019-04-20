@@ -1,7 +1,7 @@
-import { equal, ok } from 'zoroaster/assert'
-import Context from '../context'
+import { equal } from 'zoroaster/assert'
 import mismatch from 'mismatch'
-// import competent from '../../src'
+import Context from '../context'
+import competent from '../../src'
 import { makeRe } from '../../src/lib'
 
 /** @type {Object.<string, (c: Context)>} */
@@ -10,15 +10,6 @@ const T = {
   'is a function'() {
     equal(typeof competent, 'function')
   },
-  // async 'calls package without error'() {
-  //   await competent()
-  // },
-  // async 'gets a link to the fixture'({ FIXTURE }) {
-  //   const res = await competent({
-  //     text: FIXTURE,
-  //   })
-  //   ok(res, FIXTURE)
-  // },
   'matches regular expression'() {
     const keys = ['test', 'test-comp']
     const html = `<test>Hello</test>

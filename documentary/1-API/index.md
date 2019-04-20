@@ -31,7 +31,7 @@ For example, the above HTML page can be rendered with _Competent_ by creating a 
 </td></tr>
 <tr><td>
 
-%EXAMPLE: example/example, ../src => competent%
+%EXAMPLE: example, ../src => competent%
 </td></tr>
 <tr><td>
 <md2html>

@@ -43,6 +43,8 @@
   },
   "homepage": "https://github.com/artdecocode/competent#readme",
   "devDependencies": {
+    "@rqt/aqt": "^1.2.5",
+    "@wrote/read": "^1.0.4",
     "alamode": "^1.9.3",
     "documentary": "^1.24.1",
     "eslint-config-artdeco": "1.0.1",

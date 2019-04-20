@@ -69,6 +69,14 @@
   resolved "https://registry.yarnpkg.com/@depack/split/-/split-1.0.0.tgz#37fea28d9bc6f01e5a2da87d393f402781bb7e99"
   integrity sha512-PNJPl01VFMKtyN7qBZ2cds4N/lO2KvzLrR7JamODFiuuL2X8mGoTKp1SI8fxlT2MwLV8mScCUKn55QPwsUX7iA==
 
+"@rqt/aqt@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@rqt/aqt/-/aqt-1.2.5.tgz#c8bb161a8266fd8bd414ae4119199a23120af4e8"
+  integrity sha512-Yd6MV/IwipUACv/rheVu0YKGpU+ZcWWKtIaPNZhI9b2967h+JpMP3e91Qsc7MlbSx6xx9uhvc0WWmuf4GpwmEQ==
+  dependencies:
+    catchment "^3.3.0"
+    erotic "^2.1.1"
+
 "@wrote/clone@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@wrote/clone/-/clone-1.1.1.tgz#66800b5ee6db034967856a6b98587b795742364b"

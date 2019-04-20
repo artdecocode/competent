@@ -7,17 +7,17 @@ const { makeRe } = require('./lib');
  * Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.
  * @param {Object<string, function({ children: !Array<string> })>} components The components to look for and render.
  * @param {_competent.Config} conf Options for the program. All functions will be called with the Replaceable instance as their `this` context.
- * @param {function(): string} conf.getId The function which returns an `id` for the html element.
+ * @param {function(): string} [conf.getId] The function which returns an `id` for the html element.
  * @param {function(!_competent.Props, _competent.Meta)} [conf.getProps] The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
  * @param {function(string, string, !_competent.Props, !Array<string>)} [conf.markExported] If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.
- * @param {string} [conf.errorBehaviour="KEEP"] Indicates what should be done on error and can be either `REMOVE` or `KEEP`. The former will not print anything to html whereas the latter will keep the detected component as in HTML file. Default `KEEP`.
+ * @param {boolean} [conf.removeOnError=false] If there was an error when rendering the component, controls whether the HTML should be be left on the page. Default `false`.
  * @param {function(string)} [conf.onSuccess] The callback at the end of a successful replacement with the component's key.
  * @param {function(string, Error, number, string)} [conf.onFail] The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
  */
 const competent = (components, conf = {}) => {
   const { getId, getProps = (props, meta) => ({
     ...props, ...meta }), markExported, onSuccess, onFail,
-  errorBehaviour = 'KEEP' } = conf
+  removeOnError = false } = conf
 
   const re = makeRe(Object.keys(components))
 
@@ -84,7 +84,7 @@ const competent = (components, conf = {}) => {
       return f
     } catch (err) {
       if (onFail) onFail.call(this, key, err, position, str)
-      if (errorBehaviour == 'REMOVE') return ''
+      if (removeOnError) return ''
       return m
     }
   }
@@ -96,6 +96,7 @@ const competent = (components, conf = {}) => {
 }
 
 module.exports=competent
+const $_lib_make_comps = require('./lib/make-comps');
 
 /**
  * @suppress {nonStandardJsDocs}
@@ -132,10 +133,13 @@ module.exports=competent
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {Object} _competent.Config Options for the program. All functions will be called with the Replaceable instance as their `this` context.
- * @prop {function(): string} getId The function which returns an `id` for the html element.
+ * @prop {function(): string} [getId] The function which returns an `id` for the html element.
  * @prop {function(!_competent.Props, _competent.Meta)} [getProps] The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
  * @prop {function(string, string, !_competent.Props, !Array<string>)} [markExported] If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.
- * @prop {string} [errorBehaviour="KEEP"] Indicates what should be done on error and can be either `REMOVE` or `KEEP`. The former will not print anything to html whereas the latter will keep the detected component as in HTML file. Default `KEEP`.
+ * @prop {boolean} [removeOnError=false] If there was an error when rendering the component, controls whether the HTML should be be left on the page. Default `false`.
  * @prop {function(string)} [onSuccess] The callback at the end of a successful replacement with the component's key.
  * @prop {function(string, Error, number, string)} [onFail] The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
  */
+
+
+module.exports.makeComponentsScript = $_lib_make_comps

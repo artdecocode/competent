@@ -10,6 +10,6 @@ _competent.Props
  */
 _competent.Meta
 /**
- * @typedef {{ getId: function(): string, getProps: (function(!_competent.Props, _competent.Meta)|undefined), markExported: (function(string, string, !_competent.Props, !Array<string>)|undefined), errorBehaviour: (string|undefined), onSuccess: (function(string)|undefined), onFail: (function(string, Error, number, string)|undefined) }}
+ * @typedef {{ getId: (function(): string|undefined), getProps: (function(!_competent.Props, _competent.Meta)|undefined), markExported: (function(string, string, !_competent.Props, !Array<string>)|undefined), removeOnError: (boolean|undefined), onSuccess: (function(string)|undefined), onFail: (function(string, Error, number, string)|undefined) }}
  */
 _competent.Config

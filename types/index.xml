@@ -10,7 +10,7 @@
     </prop>
   </type>
   <type name="Config" desc="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">
-    <prop type="function(): string" name="getId">
+    <prop opt type="function(): string" name="getId">
       The function which returns an `id` for the html element.
     </prop>
     <prop opt type="function(!_competent.Props, _competent.Meta)" name="getProps">
@@ -19,8 +19,8 @@
     <prop opt type="function(string, string, !_competent.Props, !Array<string>)" name="markExported">
       If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.
     </prop>
-    <prop type="string" name="errorBehaviour" default="KEEP">
-      Indicates what should be done on error and can be either `REMOVE` or `KEEP`. The former will not print anything to html whereas the latter will keep the detected component as in HTML file.
+    <prop boolean name="removeOnError" default="false">
+      If there was an error when rendering the component, controls whether the HTML should be be left on the page.
     </prop>
     <prop opt type="function(string)" name="onSuccess">
       The callback at the end of a successful replacement with the component's key.

@@ -24,11 +24,14 @@ const FriendCount = ({ count }) => {
  */
 const NpmPackage = async ({ style, children, competent: c }) => {
   c.export()
-  const [pck] = children
+  let [pck] = children
+  pck = encodeURIComponent(pck)
   const { statusCode, body } =
-    await aqt(`https://registry.npmjs.com/${pck}/latest`)
+    await aqt(`https://registry.npmjs.com/${pck}`)
   if (statusCode == 404) throw new Error(`Package ${pck} not found.`)
-  const { name, version, description } = body
+  const { name, versions, description } = body
+  const keys = Object.keys(versions)
+  const version = keys[keys.length - 1]
   return <div style={style}>
     <span className="name">{name}</span>
     <span className="ver">{version}</span>
@@ -64,5 +67,6 @@ const NpmPackage = async ({ style, children, competent: c }) => {
   const r = new Replaceable(rule)
   const res = await Replaceable.replace(r, file)
   console.log(res)
+  console.error('Exported packages:')
   console.error(exported)
 })()

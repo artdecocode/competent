@@ -61,7 +61,7 @@ __<a name="type-_competentconfig">`_competent.Config`</a>__: Options for the pro
 <html lang="en">
 
 <npm-package style="background:red;">splendid</npm-package>
-<npm-package style="background:green;">zoroaster</npm-package>
+<npm-package style="background:green;">@a-la/jsx</npm-package>
 <npm-package style="background:grey;">unknown-package</npm-package>
 
 <hello-world from="Art Deco">
@@ -103,11 +103,14 @@ const FriendCount = ({ count }) => {
  */
 const NpmPackage = async ({ style, children, competent: c }) => {
   c.export()
-  const [pck] = children
+  let [pck] = children
+  pck = encodeURIComponent(pck)
   const { statusCode, body } =
-    await aqt(`https://registry.npmjs.com/${pck}/latest`)
+    await aqt(`https://registry.npmjs.com/${pck}`)
   if (statusCode == 404) throw new Error(`Package ${pck} not found.`)
-  const { name, version, description } = body
+  const { name, versions, description } = body
+  const keys = Object.keys(versions)
+  const version = keys[keys.length - 1]
   return <div style={style}>
     <span className="name">{name}</span>
     <span className="ver">{version}</span>
@@ -143,30 +146,28 @@ const NpmPackage = async ({ style, children, competent: c }) => {
   const r = new Replaceable(rule)
   const res = await Replaceable.replace(r, file)
   console.log(res)
+  console.error('Exported packages:')
   console.error(exported)
 })()
 ```
 </td></tr>
 <tr><td>
-
-The output will contain rendered **JSX**.
+The output will contain rendered <strong>JSX</strong>.
 </td></tr>
 <tr><td>
 
 ```html
 <html lang="en">
 
-<div style="background:red;" id="c2">
+<div style="background:red;" id="c1">
   <span class="name">splendid</span>
   <span class="ver">1.3.0</span>
   <p>A Static Web Site Generator.</p>
 </div>
-<div style="background:green;" id="c1">
-  <span class="name">zoroaster</span>
-  <span class="ver">3.11.6</span>
-  <p>
-    A Modern Testing Framework For Node.js With Support For Test Contexts Which Can Be Reused Across Test Suites And Packages. Zoroaster Improves Developer Productivity And Experience With IDE Hints, And Test Reliability.
-  </p>
+<div style="background:green;" id="c2">
+  <span class="name">@a-la/jsx</span>
+  <span class="ver">1.4.7</span>
+  <p>The JSX Transform For ÀLaMode And Other Packages.</p>
 </div>
 <npm-package style="background:grey;">unknown-package</npm-package>
 
@@ -178,33 +179,22 @@ You have 10 friends.
 ```
 </td></tr>
 <tr><td>
-
 The logging will be output to <code>stderr</code>.
 </td></tr>
 <tr><td>
 
-```err
-<html lang="en">
-
-<div style="background:red;" id="c2">
-  <span class="name">splendid</span>
-  <span class="ver">1.3.0</span>
-  <p>A Static Web Site Generator.</p>
-</div>
-<div style="background:green;" id="c1">
-  <span class="name">zoroaster</span>
-  <span class="ver">3.11.6</span>
-  <p>
-    A Modern Testing Framework For Node.js With Support For Test Contexts Which Can Be Reused Across Test Suites And Packages. Zoroaster Improves Developer Productivity And Experience With IDE Hints, And Test Reliability.
-  </p>
-</div>
-<npm-package style="background:grey;">unknown-package</npm-package>
-
-<p>Hello World From Art Deco.
-  An example usage of competent.
-</p>
-You have 10 friends.
-</html>
+```js
+Component npm-package did not render:
+Package unknown-package not found.
+Exported packages:
+[ { key: 'npm-package',
+    id: 'c1',
+    props: { style: 'background:red;' },
+    children: [ 'splendid' ] },
+  { key: 'npm-package',
+    id: 'c2',
+    props: { style: 'background:green;' },
+    children: [ '@a-la/jsx' ] } ]
 ```
 </td></tr>
 </table>

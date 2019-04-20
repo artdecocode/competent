@@ -36,22 +36,24 @@ For example, the above HTML page can be rendered with _Competent_ by creating a 
 %EXAMPLE: example, ../src => competent%
 </td></tr>
 <tr><td>
+<md2html>
 
 The output will contain rendered **JSX**.
+</md2html>
 </td></tr>
 <tr><td>
 
 %FORK-html example%
 </td></tr>
 <tr><td>
-
 <md2html>
+
 The logging will be output to `stderr`.
 </md2html>
 </td></tr>
 <tr><td>
 
-%FORK-err example%
+%FORKERR-js example%
 </td></tr>
 </table>
 

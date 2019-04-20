@@ -13,7 +13,7 @@
     <prop opt type="function(): string" name="getId">
       The function which returns an `id` for the html element.
     </prop>
-    <prop opt type="function(!_competent.Props, _competent.Meta)" name="getProps">
+    <prop opt type="function(!_competent.Props, !_competent.Meta)" name="getProps">
       The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
     </prop>
     <prop opt type="function(string, string, !_competent.Props, !Array<string>)" name="markExported">

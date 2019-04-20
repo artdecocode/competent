@@ -34,7 +34,8 @@
     "jsx",
     "components",
     "html",
-    "render"
+    "render",
+    "preact"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",

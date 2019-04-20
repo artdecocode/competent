@@ -27,7 +27,7 @@ const NpmPackage = async ({ style, children, competent: c }) => {
   let [pck] = children
   pck = encodeURIComponent(pck)
   const { statusCode, body } =
-    await aqt(`https://registry.npmjs.com/${pck}`)
+    await aqt('https://registry.npmjs.com/' + pck)
   if (statusCode == 404) throw new Error(`Package ${pck} not found.`)
   const { name, versions, description } = body
   const keys = Object.keys(versions)
@@ -39,7 +39,7 @@ const NpmPackage = async ({ style, children, competent: c }) => {
   </div>
 }
 
-(async () => {
+const CompetentExample = async () => {
   let i = 0
   const exported = []
   const file = await read('example/index.html')
@@ -66,7 +66,7 @@ const NpmPackage = async ({ style, children, competent: c }) => {
   })
   const r = new Replaceable(rule)
   const res = await Replaceable.replace(r, file)
-  console.log(res)
-  console.error('Exported packages:')
-  console.error(exported)
-})()
+  return { res, exported }
+}
+
+export default CompetentExample

@@ -16,13 +16,16 @@
     <prop opt type="function(!_competent.Props, _competent.Meta)" name="getProps">
       The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
     </prop>
-    <prop type="function(string, string, !_competent.Props, !Array<string>)" name="markExported">
+    <prop opt type="function(string, string, !_competent.Props, !Array<string>)" name="markExported">
       If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.
     </prop>
-    <prop type="function(string)" name="onSuccess">
+    <prop type="string" name="errorBehaviour" default="KEEP">
+      Indicates what should be done on error and can be either `REMOVE` or `KEEP`. The former will not print anything to html whereas the latter will keep the detected component as in HTML file.
+    </prop>
+    <prop opt type="function(string)" name="onSuccess">
       The callback at the end of a successful replacement with the component's key.
     </prop>
-    <prop type="function(string, Error, number, string)" name="onFail">
+    <prop opt type="function(string, Error, number, string)" name="onFail">
       The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
     </prop>
   </type>

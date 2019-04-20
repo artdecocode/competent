@@ -1,10 +1,29 @@
 <types namespace="_competent">
-  <type name="Config" desc="Options for the program.">
-    <prop boolean name="shouldRun" default="true">
-      A boolean option.
+  <type type="Object<string, *>" name="Props" desc="The properties extracted from HTML and to be passed to the component for rendering.">
+  </type>
+  <type name="Meta" desc="Service methods for `competent`.">
+    <prop type="function(boolean?)" name="export">
+      When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.
     </prop>
-    <prop string name="text">
-      A text to return.
+    <prop type="function(boolean, number?)" name="setPretty">
+      The function which controls whether to enable pretty printing, and the line width.
+    </prop>
+  </type>
+  <type name="Config" desc="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">
+    <prop type="function(): string" name="getId">
+      The function which returns an `id` for the html element.
+    </prop>
+    <prop opt type="function(!_competent.Props, _competent.Meta)" name="getProps">
+      The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
+    </prop>
+    <prop type="function(string, string, !_competent.Props, !Array<string>)" name="markExported">
+      If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.
+    </prop>
+    <prop type="function(string)" name="onSuccess">
+      The callback at the end of a successful replacement with the component's key.
+    </prop>
+    <prop type="function(string, Error, number, string)" name="onFail">
+      The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
     </prop>
   </type>
 </types>

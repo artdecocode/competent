@@ -11,5 +11,7 @@
 </html>
 
 /* expected */
-<rendered-html lang="en">The children are:<div><body-tag page="test">Hello World</body-tag></div></rendered-html>
+<rendered-html lang="en">The children are:<div>
+  <body-tag page="test">Hello World</body-tag>
+</div></rendered-html>
 /**/

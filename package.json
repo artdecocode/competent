@@ -47,13 +47,12 @@
     "documentary": "^1.24.1",
     "eslint-config-artdeco": "1.0.1",
     "mismatch": "^1.1.1",
-    "restream": "^3.7.0",
     "yarn-s": "1.1.0",
     "zoroaster": "^3.11.6"
   },
   "dependencies": {
     "@depack/render": "^1.1.4",
-    "catchment": "^3.3.0",
+    "restream": "^3.7.0",
     "rexml": "^1.4.0"
   }
 }

@@ -17,6 +17,7 @@ yarn add -E competent
   * [`_competent.Meta`](#type-_competentmeta)
   * [`_competent.Config`](#type-_competentconfig)
 - [`makeComponentsScript(components: Array<comps>, componentsLocation: string, includeH?: boolean): string`](#makecomponentsscriptcomponents-arraycompscomponentslocation-stringincludeh-boolean-string)
+- [Who Uses _Competent_](#who-uses-competent)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
@@ -171,12 +172,12 @@ Package unknown-package not found.
 Exported packages:
 [ { key: 'npm-package',
     id: 'c1',
-    props: { style: 'background:red;' },
-    children: [ 'splendid' ] },
+    props: { style: 'background:green;' },
+    children: [ '@a-la/jsx' ] },
   { key: 'npm-package',
     id: 'c2',
-    props: { style: 'background:green;' },
-    children: [ '@a-la/jsx' ] } ]
+    props: { style: 'background:red;' },
+    children: [ 'splendid' ] } ]
 ```
 </td></tr>
 </table>
@@ -254,6 +255,15 @@ import Components from '../components'
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
+
+## Who Uses _Competent_
+
+_Competent_ is used by:
+
+- [_Documentary_](https://artdecocode.com/documentary/): a documentation pre-processor that supports JSX for reusable components when generating `README` files.
+- [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ## Copyright
 

@@ -1,5 +1,13 @@
 ## 23 April 2019
 
+### [1.1.0](https://github.com/artdecocode/competent/compare/v1.0.1...v1.1.0)
+
+- [feature/fix] Allow to have self-closing together with full components:
+    ```html
+    <component test boolean />
+    <component test boolean></component>
+  ```
+
 ### [1.0.1](https://github.com/artdecocode/competent/compare/v1.0.0...v1.0.1)
 
 - [fix] Allow to have new lines in attributes.

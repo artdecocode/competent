@@ -39,6 +39,14 @@ const T = {
     clientLogo="test3"/>`, ['ws', 'test'])
     equal(res.length, 2)
   },
+  'matches self-closing and non self-closing comps'() {
+    const re = makeRe(['Component'])
+    const res = mismatch(re, `<Component test
+  boolean />
+  <Component test
+  boolean></Component>`, ['ws', 'test'])
+    equal(res.length, 2)
+  },
 }
 
 export default T

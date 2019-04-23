@@ -17,6 +17,7 @@ yarn add -E competent
   * [`_competent.Meta`](#type-_competentmeta)
   * [`_competent.Config`](#type-_competentconfig)
 - [`makeComponentsScript(components: Array<comps>, componentsLocation: string, includeH?: boolean): string`](#makecomponentsscriptcomponents-arraycompscomponentslocation-stringincludeh-boolean-string)
+- [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
 - [Copyright](#copyright)
 
@@ -142,12 +143,12 @@ The output will contain rendered <strong>JSX</strong>.
 ```html
 <html lang="en">
 
-<div style="background:red;" id="c2">
+<div style="background:red;" id="c1">
   <span class="name">splendid</span>
   <span class="ver">1.3.0</span>
   <p>A Static Web Site Generator.</p>
 </div>
-<div style="background:green;" id="c1">
+<div style="background:green;" id="c2">
   <span class="name">@a-la/jsx</span>
   <span class="ver">1.4.7</span>
   <p>The JSX Transform For ÀLaMode And Other Packages.</p>
@@ -172,12 +173,12 @@ Package unknown-package not found.
 Exported packages:
 [ { key: 'npm-package',
     id: 'c1',
-    props: { style: 'background:green;' },
-    children: [ '@a-la/jsx' ] },
+    props: { style: 'background:red;' },
+    children: [ 'splendid' ] },
   { key: 'npm-package',
     id: 'c2',
-    props: { style: 'background:red;' },
-    children: [ 'splendid' ] } ]
+    props: { style: 'background:green;' },
+    children: [ '@a-la/jsx' ] } ]
 ```
 </td></tr>
 </table>
@@ -256,6 +257,26 @@ import Components from '../components'
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
+## Known Limitations
+
+Currently, it is not possible to match nested components.
+
+```js
+<Component>
+  <Component example />
+  <Component test boolean></Component>
+</Component>
+```
+
+```html
+<component-processed />
+</component>
+```
+
+This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
+
 ## Who Uses _Competent_
 
 _Competent_ is used by:
@@ -263,7 +284,7 @@ _Competent_ is used by:
 - [_Documentary_](https://artdecocode.com/documentary/): a documentation pre-processor that supports JSX for reusable components when generating `README` files.
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg?sanitize=true"></a></p>
 
 ## Copyright
 

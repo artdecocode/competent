@@ -2,6 +2,23 @@
 
 - [ ] Add a new item to the todo list. -->
 
+## Known Limitations
+
+Currently, it is not possible to match nested components.
+
+```js
+<Component>
+  <Component example />
+  <Component test boolean></Component>
+</Component>
+```
+
+%FORK-html example/nested%
+
+This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
+
+%~%
+
 ## Who Uses _Competent_
 
 _Competent_ is used by:

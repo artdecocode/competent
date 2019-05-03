@@ -1,3 +1,10 @@
+## 3 May 2019
+
+### [1.1.1](https://github.com/artdecocode/competent/compare/v1.1.0...v1.1.1)
+
+- [fix] Fix regexp to correctly match self-closing.
+- [types] Correctly annotate optional args in types.
+
 ## 23 April 2019
 
 ### [1.1.0](https://github.com/artdecocode/competent/compare/v1.0.1...v1.1.0)

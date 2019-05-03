@@ -1,4 +1,4 @@
-import { equal } from 'zoroaster/assert'
+import { equal } from '@zoroaster/assert'
 import mismatch from 'mismatch'
 import Context from '../context'
 import competent from '../../src'

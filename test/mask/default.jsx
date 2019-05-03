@@ -21,6 +21,12 @@ makeTestSuite('test/result/default', {
       'error'() {
         throw new Error('Cannot process')
       },
+      'page-title'() {
+        return '<rendered-page-title/>'
+      },
+      'ajax-loader'() {
+        return '<rendered-ajax-loader/>'
+      },
     }, this.options)
     const re = new Replaceable(comp)
     return re

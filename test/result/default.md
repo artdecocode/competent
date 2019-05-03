@@ -41,3 +41,14 @@
   Error:<error>Hello world</error>
 </div></rendered-html>
 /**/
+
+## correctly processes self-closing
+<page-title />
+<link href="https://fonts.googleapis.com/css?family=Ruda" rel="stylesheet">
+<ajax-loader />
+
+/* expected */
+<rendered-page-title/>
+<link href="https://fonts.googleapis.com/css?family=Ruda" rel="stylesheet">
+<rendered-ajax-loader/>
+/**/

@@ -27,10 +27,14 @@ makeTestSuite('test/result/default', {
       'ajax-loader'() {
         return '<rendered-ajax-loader/>'
       },
-    }, this.options)
+      'child-props'({ childProp }) {
+        return `Hello ${childProp}`
+      },
+    }, { ...this.options, ...this.JSOptions })
     const re = new Replaceable(comp)
     return re
   },
   jsonProps: ['options'],
+  jsProps: ['JSOptions'],
   context: Context,
 })

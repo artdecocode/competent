@@ -28,5 +28,8 @@
     <prop opt type="function(string, !Error, number, string)" name="onFail">
       The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
     </prop>
+    <prop opt type="function(): !Object" name="getContext">
+      The function to be called to get the properties to set on the child _Replaceable_ started to recursively replace inner HTML. This is needed if the root _Replaceable_ was assigned some properties that are referenced in components.
+    </prop>
   </type>
 </types>

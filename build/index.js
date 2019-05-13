@@ -17,7 +17,7 @@ const { makeRe } = require('./lib');
 const competent = (components, conf = {}) => {
   const { getId, getProps = (props, meta) => ({
     ...props, ...meta }), markExported, onSuccess, onFail,
-  removeOnError = false } = conf
+  removeOnError = false, getContext } = conf
 
   const re = makeRe(Object.keys(components))
 
@@ -34,6 +34,10 @@ const competent = (components, conf = {}) => {
       let child = content
       if (child) {
         const r = new Replaceable({ re, replacement })
+        if (getContext) {
+          const ctx = getContext.call(this)
+          Object.assign(r, ctx)
+        }
         child = await Replaceable.replace(r, child)
       }
       const children = [child]

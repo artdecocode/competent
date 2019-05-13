@@ -52,3 +52,25 @@
 <link href="https://fonts.googleapis.com/css?family=Ruda" rel="stylesheet">
 <rendered-ajax-loader/>
 /**/
+
+## gets the context
+<html lang="en">
+  <child-props>Hello </child-props>
+</html>
+
+/* JSOptions */
+{
+  getContext() {
+    return { childProp: 'World' }
+  },
+  getProps(htmlProps) {
+    return { ...htmlProps, childProp: this.childProp }
+  },
+}
+/**/
+
+/* expected */
+<rendered-html lang="en">The children are:<div>
+  Hello World
+</div></rendered-html>
+/**/

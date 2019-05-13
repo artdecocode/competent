@@ -88,7 +88,7 @@ const competent = (components, conf = {}) => {
         const childRepl = new Replaceable({ re, replacement })
         if (getContext) {
           const ctx = getContext.call(this)
-          Object.assign(r, ctx)
+          Object.assign(childRepl, ctx)
         }
         r = await Replaceable.replace(childRepl, r)
       }

@@ -42,6 +42,7 @@ const competent = (components, conf = {}) => {
       }
       const children = [child]
       let exported = false
+      let renderAgain = false
       let pretty, lineLength
       let id
       const props = getProps.call(this, {
@@ -50,6 +51,7 @@ const competent = (components, conf = {}) => {
       }, {
         export(value = true) { exported = value },
         setPretty(p, l) { pretty = p; if (l) lineLength = l },
+        renderAgain(value = true) { renderAgain = value },
       })
       let hyperResult
       try {
@@ -81,11 +83,19 @@ const competent = (components, conf = {}) => {
           lineLength,
         })
       }
-      const f = r.replace(/^/gm, pad)
+      r = r.replace(/^/gm, pad)
+      if (renderAgain) {
+        const childRepl = new Replaceable({ re, replacement })
+        if (getContext) {
+          const ctx = getContext.call(this)
+          Object.assign(r, ctx)
+        }
+        r = await Replaceable.replace(childRepl, r)
+      }
       if (exported)
         markExported.call(this, key, hyperResult.attributes.id, htmlProps, children)
       if (onSuccess) onSuccess.call(this, key)
-      return f
+      return r
     } catch (err) {
       if (onFail) onFail.call(this, key, err, position, str)
       if (removeOnError) return ''

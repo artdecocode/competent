@@ -8,6 +8,9 @@
     <prop type="function(boolean, number=)" name="setPretty">
       The function which controls whether to enable pretty printing, and the line width.
     </prop>
+    <prop type="function(boolean=)" name="renderAgain">
+      Render the result of the component again. This is needed when a self-closing component might contain other components when rendered. No recursion is allowed otherwise the program will be stuck.
+    </prop>
   </type>
   <type name="Config" desc="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">
     <prop opt type="function(): string" name="getId">

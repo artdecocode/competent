@@ -1,5 +1,9 @@
 ## 13 May 2019
 
+### [1.3.0](https://github.com/artdecocode/competent/compare/v1.2.0...v1.3.0)
+
+- [feature] Implement `renderAgain` meta property to allow rendering newly appeared components.
+
 ### [1.2.0](https://github.com/artdecocode/competent/compare/v1.1.1...v1.2.0)
 
 - [feature] Implement `getContext` to propagate the _Replaceable_ properties down to child instances.

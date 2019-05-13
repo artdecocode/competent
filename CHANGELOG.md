@@ -1,3 +1,9 @@
+## 13 May 2019
+
+### [1.2.0](https://github.com/artdecocode/competent/compare/v1.1.1...v1.2.0)
+
+- [feature] Implement `getContext` to propagate the _Replaceable_ properties down to child instances.
+
 ## 3 May 2019
 
 ### [1.1.1](https://github.com/artdecocode/competent/compare/v1.1.0...v1.1.1)

@@ -7,14 +7,22 @@ const makeProps = (props) => {
   }).join(',\n')}${keys.length ? ',' : ''}
   }`
 }
+
 const makeComponent = (component) => {
+  const arr = []
+  arr.push(`key: '${component.key}'`)
+  arr.push(`id: '${component.id}'`)
+  if (Object.keys(component.props).length)
+    arr.push(`props: ${makeProps(component.props)}`)
+  const c = component.children.filter(Boolean)
+  if (c.length)
+    arr.push(`children: ${JSON.stringify(component.children)}`)
+  const j = arr.map((l) => `  ${l}`).join(',\n')
   return `{
-  key: '${component.key}',
-  id: '${component.id}',
-  props: ${makeProps(component.props)},
-  children: ${JSON.stringify(component.children)},
+${j}
 }`
 }
+
 const makeJs = (components) => {
   const s = components.map(makeComponent)
   return '[' + s.join(',\n') + ']'
@@ -31,7 +39,7 @@ const makeComponentsScript = (components, componentsLocation, includeH = false) 
 `+`import Components from '${componentsLocation}'
 
 ${makeJs(components)}
-  .map(({ key, id, props, children }) => {
+  .map(({ key, id, props = null, children }) => {
     const el = document.getElementById(id)
     if (!el) {
       console.warn('Parent element for component %s with id %s not found', key, id)

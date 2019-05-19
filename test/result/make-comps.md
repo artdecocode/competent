@@ -18,7 +18,7 @@ import Components from '../comps'
   key: 'test',
   id: 'id1',
 }]
-  .map(({ key, id, props = null, children }) => {
+  .map(({ key, id, props = {}, children }) => {
     const el = document.getElementById(id)
     if (!el) {
       console.warn('Parent element for component %s with id %s not found', key, id)
@@ -60,7 +60,7 @@ import Components from '../comps'
   key: 'test',
   id: 'id1',
 }]
-  .map(({ key, id, props = null, children }) => {
+  .map(({ key, id, props = {}, children }) => {
     const el = document.getElementById(id)
     if (!el) {
       console.warn('Parent element for component %s with id %s not found', key, id)

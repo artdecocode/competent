@@ -46,7 +46,7 @@ const makeComponentsScript = (components, componentsLocation,
 `+`import Components from '${componentsLocation}'
 
 ${makeJs(components)}
-  .map(({ key, id, props = null, children }) => {
+  .map(({ key, id, props = {}, children }) => {
     const el = document.getElementById(id)
     if (!el) {
       console.warn('Parent element for component %s with id %s not found', key, id)

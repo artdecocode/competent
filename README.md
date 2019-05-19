@@ -21,7 +21,7 @@ yarn add -E competent
 - [Who Uses _Competent_](#who-uses-competent)
 - [Copyright](#copyright)
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/0.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -31,7 +31,7 @@ The package is available by importing its default function:
 import competent from 'competent'
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
 ## `competent(`<br/>&nbsp;&nbsp;`components: Object,`<br/>&nbsp;&nbsp;`config?: Config,`<br/>`): _restream.Rule`
 
@@ -145,7 +145,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.5.2</span>
+  <span class="ver">1.6.1</span>
   <p>Static Web Site Generator With JSX As HTML.</p>
 </div>
 <div style="background:green;" id="c2">
@@ -205,7 +205,7 @@ __<a name="type-_competentconfig">`_competent.Config`</a>__: Options for the pro
 | onFail        | <em>function(string, !Error, number, string)</em>                                                                                                                                                                                                                  | The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.                                                                                       | -       |
 | getContext    | <em>function(): !Object</em>                                                                                                                                                                                                                                       | The function to be called to get the properties to set on the child _Replaceable_ started to recursively replace inner HTML. This is needed if the root _Replaceable_ was assigned some properties that are referenced in components. | -       |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/2.svg?sanitize=true"></a></p>
 
 ## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: Array<comps>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`includeH?: boolean,`<br/>`): string`
 
@@ -240,7 +240,7 @@ import Components from '../components'
   },
   children: ["@a-la/jsx"],
 }]
-  .map(({ key, id, props, children }) => {
+  .map(({ key, id, props = {}, children }) => {
     const el = document.getElementById(id)
     if (!el) {
       console.warn('Parent element for component %s with id %s not found', key, id)
@@ -252,12 +252,12 @@ import Components from '../components'
       console.warn('Component with key %s was not found.', key)
       return
     }
-    props.splendid = { export() {} }
+
     render(h(Comp, props, children), parent, el)
   })
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
 ## Known Limitations
 
@@ -277,7 +277,7 @@ Currently, it is not possible to match nested components.
 
 This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ## Who Uses _Competent_
 
@@ -286,7 +286,7 @@ _Competent_ is used by:
 - [_Documentary_](https://artdecocode.com/documentary/): a documentation pre-processor that supports JSX for reusable components when generating `README` files.
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/5.svg?sanitize=true"></a></p>
 
 ## Copyright
 
@@ -308,4 +308,4 @@ _Competent_ is used by:
   </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/-1.svg?sanitize=true"></a></p>

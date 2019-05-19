@@ -7,14 +7,22 @@ const makeProps = (props) => {
   }).join(',\n')}${keys.length ? ',' : ''}
   }`
 }
+
 const makeComponent = (component) => {
+  const arr = []
+  arr.push(`key: '${component.key}'`)
+  arr.push(`id: '${component.id}'`)
+  if (Object.keys(component.props).length)
+    arr.push(`props: ${makeProps(component.props)}`)
+  const c = component.children.filter(Boolean)
+  if (c.length)
+    arr.push(`children: ${JSON.stringify(component.children)}`)
+  const j = arr.map((l) => `  ${l}`).join(',\n') + ','
   return `{
-  key: '${component.key}',
-  id: '${component.id}',
-  props: ${makeProps(component.props)},
-  children: ${JSON.stringify(component.children)},
+${j}
 }`
 }
+
 const makeJs = (components) => {
   const s = components.map(makeComponent)
   return '[' + s.join(',\n') + ']'
@@ -26,12 +34,19 @@ const makeJs = (components) => {
  * @param {string} componentsLocation The location of the module which exports a default object with components relative to where this file will be placed.
  * @param {boolean} [includeH=false] Imports the `h` pragma from preact. By default is disabled, because can be added automatically by `Depack` and `@idio/frontend`.
  */
-const makeComponentsScript = (components, componentsLocation, includeH = false) => {
+const makeComponentsScript = (components, componentsLocation,
+  includeH = false, props = {},
+) => {
+  const p = Object.keys(props).map((propName) => {
+    const val = props[propName]
+    const s = `props.${propName} = ${val}`
+    return s
+  }).join('\n')
   const s = `import { render${includeH ? ', h' : ''} } from 'preact'
 `+`import Components from '${componentsLocation}'
 
 ${makeJs(components)}
-  .map(({ key, id, props, children }) => {
+  .map(({ key, id, props = null, children }) => {
     const el = document.getElementById(id)
     if (!el) {
       console.warn('Parent element for component %s with id %s not found', key, id)
@@ -43,7 +58,7 @@ ${makeJs(components)}
       console.warn('Component with key %s was not found.', key)
       return
     }
-    props.splendid = { export() {} }
+${p ? `    ${p}` : ''}
     render(h(Comp, props, children), parent, el)
   })
 `

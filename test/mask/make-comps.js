@@ -4,7 +4,7 @@ import { makeComponentsScript } from '../../src'
 export default
 makeTestSuite('test/result/make-comps', {
   getResults() {
-    return makeComponentsScript(this.components, this.input)
+    return makeComponentsScript(this.components, this.input, false, this.props)
   },
-  jsProps: ['components'],
+  jsProps: ['components', 'props'],
 })

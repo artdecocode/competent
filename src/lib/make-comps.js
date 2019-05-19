@@ -17,7 +17,7 @@ const makeComponent = (component) => {
   const c = component.children.filter(Boolean)
   if (c.length)
     arr.push(`children: ${JSON.stringify(component.children)}`)
-  const j = arr.map((l) => `  ${l}`).join(',\n')
+  const j = arr.map((l) => `  ${l}`).join(',\n') + ','
   return `{
 ${j}
 }`

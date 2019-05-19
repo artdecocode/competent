@@ -16,7 +16,7 @@ import Components from '../comps'
 
 [{
   key: 'test',
-  id: 'id1'
+  id: 'id1',
 }]
   .map(({ key, id, props = null, children }) => {
     const el = document.getElementById(id)

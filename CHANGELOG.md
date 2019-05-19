@@ -1,3 +1,9 @@
+## 20 May 2019
+
+### [1.4.0](https://github.com/artdecocode/competent/compare/v1.3.1...v1.4.0)
+
+- [feature] Pass properties as an object.
+
 ## 13 May 2019
 
 ### [1.3.1](https://github.com/artdecocode/competent/compare/v1.3.0...v1.3.1)

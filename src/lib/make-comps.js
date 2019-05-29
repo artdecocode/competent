@@ -28,6 +28,27 @@ const makeJs = (components) => {
   return '[' + s.join(',\n') + ']'
 }
 
+function makeIo() {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      if (isIntersecting) {
+        if (target.render) {
+          console.log('rendering the element %s', target)
+          target.render()
+          io.unobserve(target)
+        }
+      }
+    })
+  }, { rootMargin: '0px 0px 76px 0px' })
+  return io
+}
+
+const defineIo = (io = true) => {
+  if (!io) return ''
+  return `${makeIo.toString()}
+const io = makeIo()`
+}
+
 /**
  * From the array of exported components, creates an ES6 modules script that will render them on a page using Preact.
  * @param {!Array<{key:string, id: string, props: !Object, children:!Array<string>}>} components The list of exported components
@@ -35,17 +56,22 @@ const makeJs = (components) => {
  * @param {boolean} [includeH=false] Imports the `h` pragma from preact. By default is disabled, because can be added automatically by `Depack` and `@idio/frontend`.
  */
 const makeComponentsScript = (components, componentsLocation,
-  includeH = false, props = {},
+  includeH = false, props = {}, io = false,
 ) => {
   const p = Object.keys(props).map((propName) => {
     const val = props[propName]
     const s = `props.${propName} = ${val}`
     return s
   }).join('\n')
+  const r = 'render(h(Comp, props, children), parent, el)'
+  const ifIo = io ? `parent.render = () => {
+      ${r}
+    }
+    io.observe(parent)` : r
   const s = `import { render${includeH ? ', h' : ''} } from 'preact'
 `+`import Components from '${componentsLocation}'
 
-${makeJs(components)}
+${defineIo(io)}${makeJs(components)}
   .map(({ key, id, props = {}, children }) => {
     const el = document.getElementById(id)
     if (!el) {
@@ -53,16 +79,22 @@ ${makeJs(components)}
       return
     }
     const parent = el.parentElement
+    if (!parent) {
+      console.warn('Parent of element for component %s with id %s not found', key, id)
+      return
+    }
     const Comp = Components[key]
     if (!Comp) {
       console.warn('Component with key %s was not found.', key)
       return
     }
 ${p ? `    ${p}` : ''}
-    render(h(Comp, props, children), parent, el)
+    ${ifIo}
   })
 `
   return s
 }
+
+// render(h(Comp, props, children), parent, el)
 
 export default makeComponentsScript

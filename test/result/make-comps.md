@@ -1,14 +1,12 @@
-## creates a map
-../comps
-
-/* components */
 [{
   key: 'test',
   id: 'id1',
   props: {},
   children: [''],
 }]
-/**/
+
+## creates a map
+../comps
 
 /* expected */
 import { render } from 'preact'
@@ -25,6 +23,10 @@ import Components from '../comps'
       return
     }
     const parent = el.parentElement
+    if (!parent) {
+      console.warn('Parent of element for component %s with id %s not found', key, id)
+      return
+    }
     const Comp = Components[key]
     if (!Comp) {
       console.warn('Component with key %s was not found.', key)
@@ -38,15 +40,6 @@ import Components from '../comps'
 
 ## creates a map with props
 ../comps
-
-/* components */
-[{
-  key: 'test',
-  id: 'id1',
-  props: {},
-  children: [''],
-}]
-/**/
 
 /* props */
 { splendid: '{ export() {} }' }
@@ -67,6 +60,10 @@ import Components from '../comps'
       return
     }
     const parent = el.parentElement
+    if (!parent) {
+      console.warn('Parent of element for component %s with id %s not found', key, id)
+      return
+    }
     const Comp = Components[key]
     if (!Comp) {
       console.warn('Component with key %s was not found.', key)

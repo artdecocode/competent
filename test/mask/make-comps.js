@@ -4,7 +4,14 @@ import { makeComponentsScript } from '../../src'
 export default
 makeTestSuite('test/result/make-comps', {
   getResults() {
-    return makeComponentsScript(this.components, this.input, false, this.props)
+    return makeComponentsScript(this.preamble, this.input, false, this.props)
   },
-  jsProps: ['components', 'props'],
+  jsProps: ['preamble', 'props'],
+})
+
+export const io = makeTestSuite('test/result/io', {
+  getResults() {
+    return makeComponentsScript(this.preamble, this.input, false, this.props, this.io)
+  },
+  jsProps: ['preamble', 'io'],
 })

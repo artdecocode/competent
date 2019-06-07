@@ -16,7 +16,8 @@ yarn add -E competent
   * [`_competent.Props`](#type-_competentprops)
   * [`_competent.Meta`](#type-_competentmeta)
   * [`_competent.Config`](#type-_competentconfig)
-- [`makeComponentsScript(components: Array<comps>, componentsLocation: string, includeH?: boolean): string`](#makecomponentsscriptcomponents-arraycompscomponentslocation-stringincludeh-boolean-string)
+- [`makeComponentsScript(components: Array<comps>, componentsLocation: string, includeH?: boolean, io?: boolean): string`](#makecomponentsscriptcomponents-arraycompscomponentslocation-stringincludeh-booleanio-boolean-string)
+  * [Intersection Observer](#intersection-observer)
 - [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
 - [Copyright](#copyright)
@@ -143,12 +144,12 @@ The output will contain rendered <strong>JSX</strong>.
 ```html
 <html lang="en">
 
-<div style="background:red;" id="c1">
+<div style="background:red;" id="c2">
   <span class="name">splendid</span>
   <span class="ver">1.6.1</span>
   <p>Static Web Site Generator With JSX As HTML.</p>
 </div>
-<div style="background:green;" id="c2">
+<div style="background:green;" id="c1">
   <span class="name">@a-la/jsx</span>
   <span class="ver">1.6.0</span>
   <p>The JSX Transform For ÀLaMode And Other Packages.</p>
@@ -173,12 +174,12 @@ Package unknown-package not found.
 Exported packages:
 [ { key: 'npm-package',
     id: 'c1',
-    props: { style: 'background:red;' },
-    children: [ 'splendid' ] },
+    props: { style: 'background:green;' },
+    children: [ '@a-la/jsx' ] },
   { key: 'npm-package',
     id: 'c2',
-    props: { style: 'background:green;' },
-    children: [ '@a-la/jsx' ] } ]
+    props: { style: 'background:red;' },
+    children: [ 'splendid' ] } ]
 ```
 </td></tr>
 </table>
@@ -207,7 +208,7 @@ __<a name="type-_competentconfig">`_competent.Config`</a>__: Options for the pro
 
 <p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/2.svg?sanitize=true"></a></p>
 
-## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: Array<comps>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`includeH?: boolean,`<br/>`): string`
+## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: Array<comps>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`includeH?: boolean,`<br/>&nbsp;&nbsp;`io?: boolean,`<br/>`): string`
 
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
@@ -247,6 +248,10 @@ import Components from '../components'
       return
     }
     const parent = el.parentElement
+    if (!parent) {
+      console.warn('Parent of element for component %s with id %s not found', key, id)
+      return
+    }
     const Comp = Components[key]
     if (!Comp) {
       console.warn('Component with key %s was not found.', key)
@@ -258,6 +263,82 @@ import Components from '../components'
 ```
 
 <p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/3.svg?sanitize=true"></a></p>
+
+### Intersection Observer
+
+Competent can generate code that will utilise the _IntesectionObserver_ browser capability to detect when the element into which the components needs to be rendered comes into view, and only mount it at that point. This will only work when _IntesectionObserver_ is present either natively, or via a polyfill.
+
+```js
+import CompetentExample from './'
+import { makeComponentsScript } from 'competent'
+
+(async () => {
+  const { exported } = await CompetentExample()
+  console.log(
+    makeComponentsScript(exported, '../components', false, {}, true))
+})()
+```
+```js
+import { render } from 'preact'
+import Components from '../components'
+
+function makeIo() {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      if (isIntersecting) {
+        if (target.render) {
+          console.warn('rendering component %s into the element %s ',
+            target.render.meta.key, target.render.meta.id)
+          target.render()
+          io.unobserve(target)
+        }
+      }
+    })
+  }, { rootMargin: '0px 0px 76px 0px' })
+  return io
+}
+const io = makeIo();[{
+  key: 'npm-package',
+  id: 'c1',
+  props: {
+    style: 'background:red;',
+  },
+  children: ["splendid"],
+},
+{
+  key: 'npm-package',
+  id: 'c2',
+  props: {
+    style: 'background:green;',
+  },
+  children: ["@a-la/jsx"],
+}]
+  .map(({ key, id, props = {}, children }) => {
+    const el = document.getElementById(id)
+    if (!el) {
+      console.warn('Parent element for component %s with id %s not found', key, id)
+      return
+    }
+    const parent = el.parentElement
+    if (!parent) {
+      console.warn('Parent of element for component %s with id %s not found', key, id)
+      return
+    }
+    const Comp = Components[key]
+    if (!Comp) {
+      console.warn('Component with key %s was not found.', key)
+      return
+    }
+
+    parent.render = () => {
+      render(h(Comp, props, children), parent, el)
+    }
+    parent.render.meta = { key, id }
+    io.observe(parent)
+  })
+```
+
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ## Known Limitations
 
@@ -277,7 +358,7 @@ Currently, it is not possible to match nested components.
 
 This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/4.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/5.svg?sanitize=true"></a></p>
 
 ## Who Uses _Competent_
 
@@ -286,7 +367,7 @@ _Competent_ is used by:
 - [_Documentary_](https://artdecocode.com/documentary/): a documentation pre-processor that supports JSX for reusable components when generating `README` files.
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/5.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/6.svg?sanitize=true"></a></p>
 
 ## Copyright
 

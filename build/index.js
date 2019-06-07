@@ -1,5 +1,5 @@
-let render = require('@depack/render'); if (render && render.__esModule) render = render.default;
-let rexml = require('rexml'); if (rexml && rexml.__esModule) rexml = rexml.default;
+const render = require('@depack/render');
+const rexml = require('rexml');
 const { Replaceable } = require('restream');
 const { makeRe } = require('./lib');
 

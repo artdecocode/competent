@@ -21,7 +21,8 @@ function makeIo() {
     entries.forEach(({ target, isIntersecting }) => {
       if (isIntersecting) {
         if (target.render) {
-          console.log('rendering the element %s', target)
+          console.warn('rendering component %s into the element %s ',
+            target.render.meta.key, target.render.meta.id)
           target.render()
           io.unobserve(target)
         }
@@ -30,7 +31,7 @@ function makeIo() {
   }, { rootMargin: '0px 0px 76px 0px' })
   return io
 }
-const io = makeIo()[{
+const io = makeIo();[{
   key: 'test',
   id: 'id1',
 }]
@@ -54,6 +55,7 @@ const io = makeIo()[{
     parent.render = () => {
       render(h(Comp, props, children), parent, el)
     }
+    parent.render.meta = { key, id }
     io.observe(parent)
   })
 

@@ -33,7 +33,8 @@ function makeIo() {
     entries.forEach(({ target, isIntersecting }) => {
       if (isIntersecting) {
         if (target.render) {
-          console.log('rendering the element %s', target)
+          console.warn('rendering component %s into the element %s ',
+            target.render.meta.key, target.render.meta.id)
           target.render()
           io.unobserve(target)
         }
@@ -46,7 +47,7 @@ function makeIo() {
 const defineIo = (io = true) => {
   if (!io) return ''
   return `${makeIo.toString()}
-const io = makeIo()`
+const io = makeIo();`
 }
 
 /**
@@ -67,6 +68,7 @@ const makeComponentsScript = (components, componentsLocation,
   const ifIo = io ? `parent.render = () => {
       ${r}
     }
+    parent.render.meta = { key, id }
     io.observe(parent)` : r
   const s = `import { render${includeH ? ', h' : ''} } from 'preact'
 `+`import Components from '${componentsLocation}'

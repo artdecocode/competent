@@ -144,12 +144,12 @@ The output will contain rendered <strong>JSX</strong>.
 ```html
 <html lang="en">
 
-<div style="background:red;" id="c2">
+<div style="background:red;" id="c1">
   <span class="name">splendid</span>
   <span class="ver">1.6.1</span>
   <p>Static Web Site Generator With JSX As HTML.</p>
 </div>
-<div style="background:green;" id="c1">
+<div style="background:green;" id="c2">
   <span class="name">@a-la/jsx</span>
   <span class="ver">1.6.0</span>
   <p>The JSX Transform For ÀLaMode And Other Packages.</p>
@@ -174,12 +174,12 @@ Package unknown-package not found.
 Exported packages:
 [ { key: 'npm-package',
     id: 'c1',
-    props: { style: 'background:green;' },
-    children: [ '@a-la/jsx' ] },
+    props: { style: 'background:red;' },
+    children: [ 'splendid' ] },
   { key: 'npm-package',
     id: 'c2',
-    props: { style: 'background:red;' },
-    children: [ 'splendid' ] } ]
+    props: { style: 'background:green;' },
+    children: [ '@a-la/jsx' ] } ]
 ```
 </td></tr>
 </table>
@@ -266,7 +266,7 @@ import Components from '../components'
 
 ### Intersection Observer
 
-Competent can generate code that will utilise the _IntesectionObserver_ browser capability to detect when the element into which the components needs to be rendered comes into view, and only mount it at that point. This will only work when _IntesectionObserver_ is present either natively, or via a polyfill.
+Competent can generate code that will utilise the _IntesectionObserver_ browser capability to detect when the element into which the components needs to be rendered comes into view, and only mount it at that point. This will only work when _IntesectionObserver_ is present either natively, or via a polyfill. When the `io` argument value is passed as a string, it will be set as the root margin, e.g., `0 0 76px 0`. The other options are not available at the moment.
 
 ```js
 import CompetentExample from './'
@@ -282,7 +282,7 @@ import { makeComponentsScript } from 'competent'
 import { render } from 'preact'
 import Components from '../components'
 
-function makeIo() {
+function makeIo(rootMargin = '0px 0px 76px 0px') {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
       if (isIntersecting) {
@@ -294,7 +294,7 @@ function makeIo() {
         }
       }
     })
-  }, { rootMargin: '0px 0px 76px 0px' })
+  }, { rootMargin })
   return io
 }
 const io = makeIo();[{

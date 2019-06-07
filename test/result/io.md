@@ -16,7 +16,7 @@ true
 import { render } from 'preact'
 import Components from '../comps'
 
-function makeIo() {
+function makeIo(rootMargin = '0px 0px 76px 0px') {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
       if (isIntersecting) {
@@ -28,7 +28,7 @@ function makeIo() {
         }
       }
     })
-  }, { rootMargin: '0px 0px 76px 0px' })
+  }, { rootMargin })
   return io
 }
 const io = makeIo();[{

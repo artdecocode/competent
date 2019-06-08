@@ -1,3 +1,9 @@
+## 8 June 2019
+
+### [1.5.1](https://github.com/artdecocode/competent/compare/v1.5.0...v1.5.1)
+
+- [fix] Observe the element, not the parent in IO.
+
 ## 7 June 2019
 
 ### [1.5.0](https://github.com/artdecocode/competent/compare/v1.4.0...v1.5.0)

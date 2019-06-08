@@ -66,11 +66,11 @@ const makeComponentsScript = (components, componentsLocation,
     return s
   }).join('\n')
   const r = 'render(h(Comp, props, children), parent, el)'
-  const ifIo = io ? `parent.render = () => {
+  const ifIo = io ? `el.render = () => {
       ${r}
     }
-    parent.render.meta = { key, id }
-    io.observe(parent)` : r
+    el.render.meta = { key, id }
+    io.observe(el)` : r
   const s = `import { render${includeH ? ', h' : ''} } from 'preact'
 `+`import Components from '${componentsLocation}'
 

@@ -52,11 +52,11 @@ const io = makeIo();[{
       return
     }
 
-    parent.render = () => {
+    el.render = () => {
       render(h(Comp, props, children), parent, el)
     }
-    parent.render.meta = { key, id }
-    io.observe(parent)
+    el.render.meta = { key, id }
+    io.observe(el)
   })
 
 /**/

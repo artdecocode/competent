@@ -1,3 +1,9 @@
+## 11 June 2019
+
+### [1.6.0](https://github.com/artdecocode/competent/compare/v1.5.1...v1.6.0)
+
+- [feature] Supply the `getReplacements` option for better _renderAgain_.
+
 ## 8 June 2019
 
 ### [1.5.1](https://github.com/artdecocode/competent/compare/v1.5.0...v1.5.1)

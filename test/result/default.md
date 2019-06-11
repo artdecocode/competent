@@ -74,3 +74,25 @@
   Hello World
 </div></rendered-html>
 /**/
+
+## renders again
+<render-again/>
+
+/* expected */
+<body-tag>%TEST_REPLACEMENTS%</body-tag>
+/**/
+
+## renders again with replacements
+<render-again/>
+
+/* JSOptions */
+{
+  getReplacements() {
+    return { re: /%TEST_REPLACEMENTS%/, replacement: 'OK' }
+  },
+}
+/**/
+
+/* expected */
+<body>OK</body>
+/**/

@@ -18,6 +18,12 @@ makeTestSuite('test/result/default', {
           {children}
         </body-tag>)
       },
+      'render-again'({ renderAgain }) {
+        renderAgain()
+        return (<body>
+          %TEST_REPLACEMENTS%
+        </body>)
+      },
       'error'() {
         throw new Error('Cannot process')
       },
@@ -30,7 +36,9 @@ makeTestSuite('test/result/default', {
       'child-props'({ childProp }) {
         return `Hello ${childProp}`
       },
-    }, { ...this.options, ...this.JSOptions })
+    }, { getProps(props, meta) {
+      return { ...props, ...meta }
+    }, ...this.options, ...this.JSOptions })
     const re = new Replaceable(comp)
     return re
   },

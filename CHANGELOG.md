@@ -1,3 +1,11 @@
+## 14 June 2019
+
+### [1.7.0](https://github.com/artdecocode/competent/compare/v1.6.0...v1.7.0)
+
+- [fix] Update regex to avoid matching void elements.
+- [deps] Upgrade `rexml` (simpler regex) & `@depack/render` (rename _srcSet_ and don't auto close void tags).
+- [feature] Pass the key to `getProps` and allow to set recursive via `renderAgain`.
+
 ## 11 June 2019
 
 ### [1.6.0](https://github.com/artdecocode/competent/compare/v1.5.1...v1.6.0)

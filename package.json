@@ -54,8 +54,8 @@
     "zoroaster": "^4.1.1-alpha"
   },
   "dependencies": {
-    "@depack/render": "^1.1.4",
+    "@depack/render": "^1.2.0",
     "restream": "^3.7.1",
-    "rexml": "^1.4.0"
+    "rexml": "^2.0.0"
   }
 }

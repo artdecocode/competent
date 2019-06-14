@@ -13,6 +13,6 @@ _competent.Props
 _competent.Meta
 /**
  * Options for the program. All functions will be called with the Replaceable instance as their `this` context.
- * @typedef {{ getId: ((function(): string)|undefined), getProps: ((function(!_competent.Props, !_competent.Meta))|undefined), markExported: ((function(string, string, !_competent.Props, !Array<string>))|undefined), removeOnError: (boolean|undefined), onSuccess: ((function(string))|undefined), onFail: ((function(string, !Error, number, string))|undefined), getContext: ((function(): !Object)|undefined), getReplacements: ((function(): !Array)|undefined) }}
+ * @typedef {{ getId: ((function(): string)|undefined), getProps: ((function(!_competent.Props, !_competent.Meta, string))|undefined), markExported: ((function(string, string, !_competent.Props, !Array<string>))|undefined), removeOnError: (boolean|undefined), onSuccess: ((function(string))|undefined), onFail: ((function(string, !Error, number, string))|undefined), getContext: ((function(): !Object)|undefined), getReplacements: ((function(string, boolean): !Array)|undefined) }}
  */
 _competent.Config

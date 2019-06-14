@@ -96,3 +96,10 @@
 /* expected */
 <body>OK</body>
 /**/
+
+## ignores void
+<img src="test.jpg"><section-break />
+
+/* expected */
+<img src="test.jpg"><section-break />
+/**/

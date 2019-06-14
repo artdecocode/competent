@@ -47,6 +47,11 @@ const T = {
   boolean></Component>`, ['ws', 'test'])
     equal(res.length, 2)
   },
+  'does not match void'() {
+    const re = makeRe(['img'])
+    const res = mismatch(re, `<img src="test.jpg"><section-break />`, ['ws', 'test'])
+    equal(res.length, 0)
+  },
 }
 
 export default T

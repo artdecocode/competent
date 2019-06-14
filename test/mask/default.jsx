@@ -24,6 +24,9 @@ makeTestSuite('test/result/default', {
           %TEST_REPLACEMENTS%
         </body>)
       },
+      'img'() {
+        return '<img-ok>'
+      },
       'error'() {
         throw new Error('Cannot process')
       },

@@ -5,7 +5,7 @@ import { makeRe } from './lib'
 
 /**
  * Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.
- * @param {Object<string, function({ children: !Array<string> })>} components The components to look for and render.
+ * @param {!Object<string, function({ children: !Array<string> })>} components The components to look for and render.
  * @param {!_competent.Config} [conf] Options for the program. All functions will be called with the Replaceable instance as their `this` context.
  */
 const competent = (components, conf = {}) => {
@@ -113,7 +113,7 @@ const competent = (components, conf = {}) => {
 }
 
 export default competent
-export { default as makeComponentsScript } from './lib/make-comps'
+export { default as makeComponentsScript } from './make-comps'
 
 /**
  * @suppress {nonStandardJsDocs}
@@ -134,5 +134,5 @@ export { default as makeComponentsScript } from './lib/make-comps'
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('@externs/preact').VNode} preact.VNode
+ * @typedef {import('..').VNode} preact.VNode
  */

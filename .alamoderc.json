@@ -1,15 +1,12 @@
 {
   "env": {
-    "test-build": {
+    "test-compile": {
       "import": {
         "replacement": {
-          "from": "^((../)+)src",
-          "to": "$1build"
+          "from": "^((../)+)src$",
+          "to": "$1"
         }
       }
     }
-  },
-  "import": {
-    "alamodeModules": ["@depack/render", "rexml"]
   }
 }

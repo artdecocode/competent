@@ -43,7 +43,7 @@ _competent.Config.prototype.getProps = function(props, meta, componentName) {}
 _competent.Config.prototype.markExported = function(key, id, props, children) {}
 /**
  * The callback at the end of a successful replacement with the component's key.
- * @param {string} componentName The element name, e.g., `my-element`.
+ * @type {(function(string): void)|undefined}
  */
 _competent.Config.prototype.onSuccess = function(componentName) {}
 /**

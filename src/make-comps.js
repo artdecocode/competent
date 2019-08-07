@@ -1,3 +1,5 @@
+const makeIo = /** @type {!Function} **/ (require(/* dok */ '../make-io'))
+
 const makeProps = (props) => {
   const keys = Object.keys(props)
   return `{
@@ -28,22 +30,6 @@ const makeJs = (components) => {
   return '[' + s.join(',\n') + ']'
 }
 
-function makeIo(rootMargin = '0px 0px 76px 0px') {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(({ target, isIntersecting }) => {
-      if (isIntersecting) {
-        if (target.render) {
-          console.warn('rendering component %s into the element %s ',
-            target.render.meta.key, target.render.meta.id)
-          target.render()
-          io.unobserve(target)
-        }
-      }
-    })
-  }, { rootMargin })
-  return io
-}
-
 const defineIo = (io = true) => {
   if (!io) return ''
   return `${makeIo.toString()}
@@ -57,9 +43,7 @@ const io = makeIo(${typeof io == 'string' ? `'${io}'` : ''});`
  * @param {boolean} [includeH=false] Imports the `h` pragma from preact. By default is disabled, because can be added automatically by `Depack` and `@idio/frontend`.
  * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
  */
-const makeComponentsScript = (components, componentsLocation,
-  includeH = false, props = {}, io = false,
-) => {
+const makeComponentsScript = (components, componentsLocation, includeH = false, props = {}, io = false ) => {
   const p = Object.keys(props).map((propName) => {
     const val = props[propName]
     const s = `props.${propName} = ${val}`

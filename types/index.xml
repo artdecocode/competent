@@ -42,7 +42,7 @@
     <prop boolean name="removeOnError" default="false">
       If there was an error when rendering the component, controls whether the HTML should be be left on the page.
     </prop>
-    <fn name="onSuccess">
+    <fn name="onSuccess" opt>
       <arg string name="componentName">The element name, e.g., `my-element`.</arg>
       The callback at the end of a successful replacement with the component's key.
     </fn>

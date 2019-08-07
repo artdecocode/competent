@@ -42,7 +42,7 @@ import competent from 'competent'
 ## <code><ins>competent</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Object<string, !Function|function(new: preact.Component)>,`<br/>&nbsp;&nbsp;`config=: !Config,`<br/><code>): <i>!restream.Rule</i></code></sub>
 Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
 
- - <kbd><strong>components*</strong></kbd> <em><code>!Object&lt;string, (!Function \| function(new: <a href="https://github.com/dpck/preact/wiki/Component" title="A base class that is usually subclassed to create stateful Preact components.">preact.Component</a>))&gt;</code></em> : Components to extract from HTML and render using _Preact's_ server-side rendering. Can be either a functional stateless component, or a _Preact_ component constructor.
+ - <kbd><strong>components*</strong></kbd> <em><code>!Object&lt;string, (!Function \| function(new: <a href="https://github.com/dpck/preact/wiki/Component" title="A base class that is usually subclassed to create stateful Preact components.">preact.Component</a>))&gt;</code></em>: Components to extract from HTML and render using _Preact's_ server-side rendering. Can be either a functional stateless component, or a _Preact_ component constructor.
  - <kbd>config</kbd> <em><code><a href="#type-config" title="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">!Config</a></code></em> (optional): Options for the program. All functions will be called with the _Replaceable_ instance as their `this` context.
 
 <table>
@@ -315,8 +315,8 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 ## <code><ins>makeComponentsScript</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/><code>): <i>string</i></code></sub>
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
- - <kbd><strong>components*</strong></kbd> <em><code>!Array&lt;<a href="#type-exportedcomponent" title="An exported component.">!ExportedComponent</a>&gt;</code></em> : All components that were made exportable by the rule.
- - <kbd><strong>componentsLocation*</strong></kbd> <em>`string`</em> : Relative location from which to require components.
+ - <kbd><strong>components*</strong></kbd> <em><code>!Array&lt;<a href="#type-exportedcomponent" title="An exported component.">!ExportedComponent</a>&gt;</code></em>: All components that were made exportable by the rule.
+ - <kbd><strong>componentsLocation*</strong></kbd> <em>`string`</em>: Relative location from which to require components.
  - <kbd>props</kbd> <em>`Object`</em> (optional): Shared properties made available for each component in addition to its own properties.
  - <kbd>includeH</kbd> <em>`boolean`</em> (optional): Include `import { h } from 'preact'` on top of the file.
  - <kbd>io</kbd> <em>`boolean`</em> (optional): Include intersection observer.

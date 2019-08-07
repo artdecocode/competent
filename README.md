@@ -2,10 +2,10 @@
 
 [![npm version](https://badge.fury.io/js/competent.svg)](https://npmjs.org/package/competent)
 
-`competent` is Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.
+`competent` Extracts, Renders And Exports For Dynamic Render _JSX_ Components From Within HTML.
 
 ```sh
-yarn add -E competent
+yarn add competent
 ```
 
 ## Table Of Contents
@@ -315,44 +315,14 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
 __<a name="type-exportedcomponent">`ExportedComponent`</a>__: An exported component.
-<table>
- <thead><tr>
-  <th>Name</th>
-  <th>Type &amp; Description</th>
- </tr></thead>
- <tr>
-  <td rowSpan="3" align="center"><strong>key*</strong></td>
-  <td><em>string</em></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>The name of the component as passed to <em>Competent</em>.</td>
- </tr>
- <tr>
-  <td rowSpan="3" align="center"><strong>id*</strong></td>
-  <td><em>string</em></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>The ID where the component should render.</td>
- </tr>
- <tr>
-  <td rowSpan="3" align="center"><strong>props*</strong></td>
-  <td><em>!Object</em></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>Properties of the component.</td>
- </tr>
- <tr>
-  <td rowSpan="3" align="center"><strong>children*</strong></td>
-  <td><em>!Array&lt;string&gt;</em></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>Children as strings.</td>
- </tr>
-</table>
+
+
+|     Name      |             Type              |                     Description                     |
+| ------------- | ----------------------------- | --------------------------------------------------- |
+| __key*__      | <em>string</em>               | The name of the component as passed to _Competent_. |
+| __id*__       | <em>string</em>               | The ID where the component should render.           |
+| __props*__    | <em>!Object</em>              | Properties of the component.                        |
+| __children*__ | <em>!Array&lt;string&gt;</em> | Children as strings.                                |
 
 ```js
 import CompetentExample from './'

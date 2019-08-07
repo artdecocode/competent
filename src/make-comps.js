@@ -47,6 +47,7 @@ const io = makeIo(${typeof io == 'string' ? `'${io}'` : ''});`
  * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
  * @param {string} componentsLocation The location of the module which exports a default object with components relative to where this file will be placed.
  * @param {boolean} [includeH=false] Imports the `h` pragma from preact. By default is disabled, because can be added automatically by `Depack` and `@idio/frontend`.
+ * @param {Object} [props] Properties.
  * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
  */
 const makeComponentsScript = (components, componentsLocation, includeH = false, props = {}, io = false ) => {

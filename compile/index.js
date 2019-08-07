@@ -1,4 +1,4 @@
-const { _competent: __competent, _makeComponentScript } = require('./competent')
+const { _competent: __competent, _makeComponentsScript } = require('./competent')
 
 /**
  * Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.
@@ -9,7 +9,20 @@ function competent(components, conf) {
   return __competent(components, conf)
 }
 
+/**
+ * From the array of exported components, creates an ES6 modules script that will render them on a page using Preact.
+ * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
+ * @param {string} componentsLocation The location of the module which exports a default object with components relative to where this file will be placed.
+ * @param {boolean} [includeH=false] Imports the `h` pragma from preact. By default is disabled, because can be added automatically by `Depack` and `@idio/frontend`.
+ * @param {Object} [props] Properties.
+ * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
+ */
+function makeComponentsScript(components, componentsLocation, includeH = false, props = {}, io = false) {
+  return _makeComponentsScript(components, componentsLocation, includeH, props, io)
+}
+
 module.exports = competent
+module.exports.makeComponentsScript = makeComponentsScript
 
 /* typal types/index.xml namespace */
 /**

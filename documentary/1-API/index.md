@@ -6,8 +6,7 @@ The package is available by importing its default function:
 import competent from 'competent'
 ```
 
-%~% 
-
+%~%
 
 <typedef name="competent" noArgTypesInToc>types/api.xml</typedef>
 

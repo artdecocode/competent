@@ -35,8 +35,9 @@ The package is available by importing its default function:
 import competent from 'competent'
 ```
 
-%~% 
-
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
+</a></p>
 
 ## `competent(`<br/>&nbsp;&nbsp;`components: !Object<string, !Function|function(new: preact.Component)>,`<br/>&nbsp;&nbsp;`config: !Config,`<br/>`): !restream.Rule`
 Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
@@ -310,7 +311,7 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
 </table>
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
 ## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>`): string`
@@ -383,7 +384,7 @@ import Components from '../components'
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/2.svg?sanitize=true" width="25">
+  <img src="/.documentary/section-breaks/3.svg?sanitize=true" width="25">
 </a></p>
 
 ### Intersection Observer
@@ -461,7 +462,7 @@ const io = makeIo();[{
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
 </a></p>
 
 ## Known Limitations
@@ -483,7 +484,7 @@ Currently, it is not possible to match nested components.
 This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
 </a></p>
 
 ## Who Uses _Competent_
@@ -494,7 +495,7 @@ _Competent_ is used by:
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
 </a></p>
 
 ## Copyright

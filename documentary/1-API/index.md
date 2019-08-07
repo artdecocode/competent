@@ -17,8 +17,6 @@ import competent from 'competent'
 ]
 ``` -->
 
-Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
-
 <table>
 <tr><th>Example Usage</th></tr>
 <tr><td>

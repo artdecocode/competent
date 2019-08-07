@@ -4,10 +4,10 @@
 
   <method name="competent" desc="Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript." return="!restream.Rule">
     <arg type="!Object<string, !Function|function(new: preact.Component)>" name="components">
-      Components to extract from HTML and render using _Preact's_ server-side rendering.
+      Components to extract from HTML and render using _Preact's_ server-side rendering. Can be either a functional stateless component, or a _Preact_ component constructor.
     </arg>
-    <arg type="!_competent.Config" name="config">
-      Options for the program. All functions will be called with the Replaceable instance as their `this` context.
+    <arg type="!_competent.Config" name="config" opt>
+      Options for the program. All functions will be called with the _Replaceable_ instance as their `this` context.
     </arg>
   </method>
 

@@ -373,21 +373,21 @@ async function za(a, b) {
   b instanceof na ? b.pipe(a) : a.end(b);
   return await ya(a);
 }
-;const Aa = require("../make-io"), Ba = a => {
+;const Aa = a => {
   const b = Object.keys(a);
   return `{
     ${b.map(c => `${/-/.test(c) ? `'${c}'` : c}: '${a[c]}'`).join(",\n")}${b.length ? "," : ""}
   }`;
-}, Ca = a => {
+}, Ba = a => {
   const b = [];
   b.push(`key: '${a.key}'`);
   b.push(`id: '${a.id}'`);
-  Object.keys(a.props).length && b.push(`props: ${Ba(a.props)}`);
+  Object.keys(a.props).length && b.push(`props: ${Aa(a.props)}`);
   a.children.filter(Boolean).length && b.push(`children: ${JSON.stringify(a.children)}`);
   return `{
 ${b.map(c => `  ${c}`).join(",\n") + ","}
 }`;
-}, Da = (a = !0) => a ? `${Aa.toString()}
+}, Ca = (a = !0) => a ? `${"function makeIo(rootMargin = '0px 0px 76px 0px') {\n  const io = new IntersectionObserver((entries) => {\n    entries.forEach(({ target, isIntersecting }) => {\n      if (isIntersecting) {\n        if (target.render) {\n          console.warn('rendering component %s into the element %s ',\n            target.render.meta.key, target.render.meta.id)\n          target.render()\n          io.unobserve(target)\n        }\n      }\n    })\n  }, { rootMargin })\n  return io\n}"}
 const io = makeIo(${"string" == typeof a ? `'${a}'` : ""});` : "";
 module.exports = {_competent:(a, b = {}) => {
   async function c(t, x, D, h, F, n) {
@@ -434,8 +434,8 @@ module.exports = {_competent:(a, b = {}) => {
         m ? q = m.call(this, h, aa) : q = {re:u, replacement:c};
         const H = new Z(q);
         if (f) {
-          const Ea = f.call(this);
-          Object.assign(H, Ea);
+          const Da = f.call(this);
+          Object.assign(H, Da);
         }
         C = await Y(H, C);
       }
@@ -453,7 +453,7 @@ module.exports = {_competent:(a, b = {}) => {
   return `import { render${c ? ", h" : ""} } from 'preact'
 ` + `import Components from '${b}'
 
-${Da(e)}${"[" + a.map(Ca).join(",\n") + "]"}
+${Ca(e)}${"[" + a.map(Ba).join(",\n") + "]"}
   .map(({ key, id, props = {}, children }) => {
     const el = document.getElementById(id)
     if (!el) {

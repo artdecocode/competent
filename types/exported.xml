@@ -1,0 +1,8 @@
+<types namespace="_competent">
+  <type record name="ExportedComponent" desc="An exported component.">
+    <prop string name="key">The name of the component as passed to _Competent_.</prop>
+    <prop string name="id">The ID where the component should render.</prop>
+    <prop type="!Object" name="props">Properties of the component.</prop>
+    <prop type="!Array<string>" name="children">Children as strings.</prop>
+  </type>
+</types>

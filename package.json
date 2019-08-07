@@ -23,8 +23,7 @@
   "files": [
     "compile",
     "src",
-    "types/externs.js",
-    "make-io.js"
+    "types/externs.js"
   ],
   "externs": "types/externs.js",
   "repository": {

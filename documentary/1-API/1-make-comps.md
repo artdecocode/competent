@@ -1,18 +1,20 @@
 ```## makeComponentsScript => string
 [
-  ["components", "Array<comps>"],
+  ["components", "Array<ExportedComponent>"],
   ["componentsLocation", "string"],
-  ["includeH?", "boolean"],
-  ["io?", "boolean"]
+  ["includeH=", "boolean"],
+  ["io=", "boolean"]
 ]
 ```
 
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
+<typedef narrow flatten>types/exported.xml</typedef>
+
 %EXAMPLE: example/make-comps, ../src => competent%
 %FORK-js example/make-comps%
 
-%~%
+%~ width="25"%
 
 ### Intersection Observer
 

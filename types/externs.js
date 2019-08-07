@@ -3,9 +3,36 @@
  * @externs
  */
 
-/* typal types/index.xml externs */
+/* typal types/exported.xml externs */
 /** @const */
 var _competent = {}
+/**
+ * An exported component.
+ * @record
+ */
+_competent.ExportedComponent
+/**
+ * The name of the component as passed to _Competent_.
+ * @type {string}
+ */
+_competent.ExportedComponent.prototype.key
+/**
+ * The ID where the component should render.
+ * @type {string}
+ */
+_competent.ExportedComponent.prototype.id
+/**
+ * Properties of the component.
+ * @type {!Object}
+ */
+_competent.ExportedComponent.prototype.props
+/**
+ * Children as strings.
+ * @type {!Array<string>}
+ */
+_competent.ExportedComponent.prototype.children
+
+/* typal types/index.xml externs */
 /**
  * The properties extracted from HTML and to be passed to the component for rendering.
  * @typedef {Object<string, *>}

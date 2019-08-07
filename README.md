@@ -16,7 +16,8 @@ yarn add -E competent
   * [`Props`](#type-props)
   * [`Meta`](#type-meta)
   * [`Config`](#type-config)
-- [`makeComponentsScript(components: Array<comps>, componentsLocation: string, includeH?: boolean, io?: boolean): string`](#makecomponentsscriptcomponents-arraycompscomponentslocation-stringincludeh-booleanio-boolean-string)
+- [`makeComponentsScript(components: Array<ExportedComponent>, componentsLocation: string, includeH=: boolean, io=: boolean): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringincludeh-booleanio-boolean-string)
+  * [`ExportedComponent`](#type-exportedcomponent)
   * [Intersection Observer](#intersection-observer)
 - [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
@@ -309,9 +310,49 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
-## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: Array<comps>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`includeH?: boolean,`<br/>&nbsp;&nbsp;`io?: boolean,`<br/>`): string`
+## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: Array<ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>`): string`
 
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
+
+__<a name="type-exportedcomponent">`ExportedComponent`</a>__: An exported component.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><strong>key*</strong></td>
+  <td><em>string</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The name of the component as passed to <em>Competent</em>.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><strong>id*</strong></td>
+  <td><em>string</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The ID where the component should render.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><strong>props*</strong></td>
+  <td><em>!Object</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>Properties of the component.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><strong>children*</strong></td>
+  <td><em>!Array&lt;string&gt;</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>Children as strings.</td>
+ </tr>
+</table>
 
 ```js
 import CompetentExample from './'
@@ -364,7 +405,7 @@ import Components from '../components'
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/3.svg?sanitize=true" width="25">
 </a></p>
 
 ### Intersection Observer

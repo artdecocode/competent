@@ -1,4 +1,4 @@
-const makeIo = /** @type {!Function} **/ (require(/* dok */ '../make-io'))
+import makeIo from './lib/make-io'
 
 const makeProps = (props) => {
   const keys = Object.keys(props)
@@ -10,6 +10,9 @@ const makeProps = (props) => {
   }`
 }
 
+/**
+ * @param {!_competent.ExportedComponent} component
+ */
 const makeComponent = (component) => {
   const arr = []
   arr.push(`key: '${component.key}'`)
@@ -25,6 +28,9 @@ ${j}
 }`
 }
 
+/**
+ * @param {!Array<!_competent.ExportedComponent>} components
+ */
 const makeJs = (components) => {
   const s = components.map(makeComponent)
   return '[' + s.join(',\n') + ']'
@@ -32,13 +38,13 @@ const makeJs = (components) => {
 
 const defineIo = (io = true) => {
   if (!io) return ''
-  return `${makeIo.toString()}
+  return `${makeIo}
 const io = makeIo(${typeof io == 'string' ? `'${io}'` : ''});`
 }
 
 /**
  * From the array of exported components, creates an ES6 modules script that will render them on a page using Preact.
- * @param {!Array<{key:string, id: string, props: !Object, children:!Array<string>}>} components The list of exported components
+ * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
  * @param {string} componentsLocation The location of the module which exports a default object with components relative to where this file will be placed.
  * @param {boolean} [includeH=false] Imports the `h` pragma from preact. By default is disabled, because can be added automatically by `Depack` and `@idio/frontend`.
  * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
@@ -85,3 +91,8 @@ ${p ? `    ${p}` : ''}
 // render(h(Comp, props, children), parent, el)
 
 export default makeComponentsScript
+
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('..').ExportedComponent} _competent.ExportedComponent
+ */

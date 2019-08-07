@@ -55,6 +55,6 @@ The logging will be output to `stderr`.
 </td></tr>
 </table>
 
-%TYPEDEF types/index.xml%
+<typedef narrow flatten>types/index.xml</typedef>
 
 %~%

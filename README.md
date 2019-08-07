@@ -13,16 +13,18 @@ yarn add -E competent
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
 - [`competent(components: Object, config?: Config): _restream.Rule`](#competentcomponents-objectconfig-config-_restreamrule)
-  * [`_competent.Props`](#type-_competentprops)
-  * [`_competent.Meta`](#type-_competentmeta)
-  * [`_competent.Config`](#type-_competentconfig)
+  * [`Props`](#type-props)
+  * [`Meta`](#type-meta)
+  * [`Config`](#type-config)
 - [`makeComponentsScript(components: Array<comps>, componentsLocation: string, includeH?: boolean, io?: boolean): string`](#makecomponentsscriptcomponents-arraycompscomponentslocation-stringincludeh-booleanio-boolean-string)
   * [Intersection Observer](#intersection-observer)
 - [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
 - [Copyright](#copyright)
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/0.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/0.svg?sanitize=true">
+</a></p>
 
 ## API
 
@@ -32,7 +34,9 @@ The package is available by importing its default function:
 import competent from 'competent'
 ```
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
+</a></p>
 
 ## `competent(`<br/>&nbsp;&nbsp;`components: Object,`<br/>&nbsp;&nbsp;`config?: Config,`<br/>`): _restream.Rule`
 
@@ -184,30 +188,126 @@ Exported packages:
 </td></tr>
 </table>
 
-`Object<string, *>` __<a name="type-_competentprops">`_competent.Props`</a>__: The properties extracted from HTML and to be passed to the component for rendering.
+<code>Object&lt;string, *&gt;</code> __<a name="type-props">`Props`</a>__: The properties extracted from HTML and to be passed to the component for rendering.
 
-__<a name="type-_competentmeta">`_competent.Meta`</a>__: Service methods for `competent`.
 
-|       Name       |                Type                 |                                                                                                                                                                                     Description                                                                                                                                                                                     |
-| ---------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| __export*__      | <em>function(boolean=)</em>         | When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.                                                                                                                                                                           |
-| __setPretty*__   | <em>function(boolean, number=)</em> | The function which controls whether to enable pretty printing, and the line width.                                                                                                                                                                                                                                                                                                  |
-| __renderAgain*__ | <em>function(boolean=)</em>         | Render the result of the component again. This is needed when a component might contain other components when rendered. No recursion is allowed otherwise the program will get stuck. Use `getReplacements` to specify how to acquire the replacements for the new _Replaceable_ stream. The argument passed specifies if the component might render recursively (default `false`). |
+__<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><strong>export*</strong></td>
+  <td><em>(shouldExport?: boolean) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>When called, marks the component for export and adds an <code>id</code> if the root element of the hyper result did not have it. Individual instances can pass the <code>false</code> value if they don't want to get exported.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><strong>setPretty*</strong></td>
+  <td><em>(isPretty: boolean, lineLength?: number) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The function which controls whether to enable pretty printing, and the line width.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><strong>renderAgain*</strong></td>
+  <td><em>(recursiveRender?: boolean) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>Render the result of the component again. This is needed when a component might contain other components when rendered. No recursion is allowed otherwise the program will get stuck. Use <code>getReplacements</code> to specify how to acquire the replacements for the new <em>Replaceable</em> stream. The argument passed specifies if the component might render recursively (default <code>false</code>).</td>
+ </tr>
+</table>
 
-__<a name="type-_competentconfig">`_competent.Config`</a>__: Options for the program. All functions will be called with the Replaceable instance as their `this` context.
 
-|      Name       |                                                                                                                                    Type                                                                                                                                    |                                                                                                                                                  Description                                                                                                                                                   | Default |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| getId           | <em>function(): string</em>                                                                                                                                                                                                                                                | The function which returns an `id` for the html element.                                                                                                                                                                                                                                                       | -       |
-| getProps        | <em>function(<a href="#type-_competentprops" title="The properties extracted from HTML and to be passed to the component for rendering.">!_competent.Props</a>, <a href="#type-_competentmeta" title="Service methods for `competent`.">!_competent.Meta</a>, string)</em> | The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_. The last argument is the name of the component.                                          | -       |
-| markExported    | <em>function(string, string, <a href="#type-_competentprops" title="The properties extracted from HTML and to be passed to the component for rendering.">!_competent.Props</a>, !Array&lt;string&gt;)</em>                                                                 | If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.                                                                                                                                   | -       |
-| removeOnError   | <em>boolean</em>                                                                                                                                                                                                                                                           | If there was an error when rendering the component, controls whether the HTML should be be left on the page.                                                                                                                                                                                                   | `false` |
-| onSuccess       | <em>function(string)</em>                                                                                                                                                                                                                                                  | The callback at the end of a successful replacement with the component's key.                                                                                                                                                                                                                                  | -       |
-| onFail          | <em>function(string, !Error, number, string)</em>                                                                                                                                                                                                                          | The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.                                                                                                                                                                | -       |
-| getContext      | <em>function(): !Object</em>                                                                                                                                                                                                                                               | The function to be called to get the properties to set on the child _Replaceable_ started to recursively replace inner HTML. This is needed if the root _Replaceable_ was assigned some properties that are referenced in components.                                                                          | -       |
-| getReplacements | <em>function(string, boolean): !Array</em>                                                                                                                                                                                                                                 | The function which should return the list of replacements for `renderAgain` method. By default, the initial rule generated by _Competent_ is used. The first argument passed is the key, and the second argument is the value passed via the `renderAgain`, that is if the component might render recursively. | -       |
+__<a name="type-config">`Config`</a>__: Options for the program. All functions will be called with the Replaceable instance as their `this` context.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+  <th>Default</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center">removeOnError</td>
+  <td><em>boolean</em></td>
+  <td rowSpan="3"><code>false</code></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>If there was an error when rendering the component, controls whether the HTML should be be left on the page.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">getId</td>
+  <td><em>() => string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The function which returns an <code>id</code> for the html element.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">getProps</td>
+  <td><em>(props: <a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a>, meta: <a href="#type-meta" title="Service methods for `competent`.">!Meta</a>, componentName: string) => Object</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with <em>meta</em>.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">markExported</td>
+  <td><em>(key: string, id: string, props: <a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a>, children: !Array&lt;string&gt;) => void</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>If the component called the <code>export</code> meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">onSuccess</td>
+  <td><em>(componentName: string) => void</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The callback at the end of a successful replacement with the component's key.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">onFail</td>
+  <td><em>(componentName: string, error: Error, position: number, input: string) => void</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">getContext</td>
+  <td><em>() => Object</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The function to be called to get the properties to set on the child <em>Replaceable</em> started to recursively replace inner HTML. This is needed if the root <em>Replaceable</em> was assigned some properties that are referenced in components.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">getReplacements</td>
+  <td><em>(componentName: string, recursiveRenderAgain: boolean) => Array</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The function which should return the list of replacements for <code>renderAgain</code> method. By default, the initial rule generated by <em>Competent</em> is used. The first argument passed is the key, and the second argument is the value passed via the <code>renderAgain</code>, that is if the component might render recursively.</td>
+ </tr>
+</table>
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
+</a></p>
 
 ## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: Array<comps>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`includeH?: boolean,`<br/>&nbsp;&nbsp;`io?: boolean,`<br/>`): string`
 
@@ -263,7 +363,9 @@ import Components from '../components'
   })
 ```
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/3.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
+</a></p>
 
 ### Intersection Observer
 
@@ -339,7 +441,9 @@ const io = makeIo();[{
   })
 ```
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/4.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
+</a></p>
 
 ## Known Limitations
 
@@ -359,7 +463,9 @@ Currently, it is not possible to match nested components.
 
 This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/5.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
+</a></p>
 
 ## Who Uses _Competent_
 
@@ -368,7 +474,9 @@ _Competent_ is used by:
 - [_Documentary_](https://artdecocode.com/documentary/): a documentation pre-processor that supports JSX for reusable components when generating `README` files.
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/6.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
+</a></p>
 
 ## Copyright
 
@@ -376,13 +484,14 @@ _Competent_ is used by:
   <tr>
     <th>
       <a href="https://artd.eco">
-        <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco">
+        <img width="100" src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png"
+          alt="Art Deco">
       </a>
     </th>
     <th>© <a href="https://artd.eco">Art Deco</a>   2019</th>
     <th>
       <a href="https://www.technation.sucks" title="Tech Nation Visa">
-        <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif"
+        <img width="100" src="https://raw.githubusercontent.com/idiocc/cookies/master/wiki/arch4.jpg"
           alt="Tech Nation Visa">
       </a>
     </th>
@@ -390,4 +499,6 @@ _Competent_ is used by:
   </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/-1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/-1.svg?sanitize=true">
+</a></p>

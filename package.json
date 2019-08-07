@@ -12,7 +12,7 @@
     "compile": "depack-dev src/depack -o compile/competent.js -a -c -p -O 2018 -s --source_map_include_content",
     "test-compile": "ALAMODE_ENV=test-compile yarn test",
     "lint": "eslint .",
-    "doc": "NODE_DEBUG=doc doc -o README.md",
+    "doc": "NODE_DEBUG=doc doc -o README.md -n _competent",
     "b": "alamode src -o build -s",
     "d": "yarn-s d1 externs",
     "d1": "typal compile/index.js",

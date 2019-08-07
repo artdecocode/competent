@@ -1,6 +1,18 @@
 <types namespace="_competent">
+  <import from="@externs/preact" ns="preact" name="Component" link="https://github.com/dpck/preact/wiki/Component" desc="A base class that is usually subclassed to create stateful Preact components."/>
+  <import from="restream" name="Rule" link="https://github.com/artdecocode/restream#rule-type" desc="An object with a `re:RegEx` and `replacement` properties."/>
+
+  <method name="competent" desc="Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript." return="!restream.Rule">
+    <arg type="!Object<string, !Function|function(new: preact.Component)>" name="components">
+      Components to extract from HTML and render using _Preact's_ server-side rendering.
+    </arg>
+    <arg type="!_competent.Config" name="config">
+      Options for the program. All functions will be called with the Replaceable instance as their `this` context.
+    </arg>
+  </method>
+
   <method name="makeComponentsScript" return="string" desc="Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.">
-    <arg type="!Array<_competent.ExportedComponent>" name="components">
+    <arg type="!Array<!_competent.ExportedComponent>" name="components">
       All components that were made exportable by the rule.
     </arg>
     <arg string name="componentsLocation">

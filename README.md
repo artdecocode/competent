@@ -12,7 +12,7 @@ yarn add competent
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`competent(components: Object, config?: Config): _restream.Rule`](#competentcomponents-objectconfig-config-_restreamrule)
+- [`competent(components, config): !restream.Rule`](#competentcomponents-objectstring-functionfunctionnew-preactcomponentconfig-config-restreamrule)
   * [`Props`](#type-props)
   * [`Meta`](#type-meta)
   * [`Config`](#type-config)
@@ -35,11 +35,14 @@ The package is available by importing its default function:
 import competent from 'competent'
 ```
 
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
-</a></p>
+%~% 
 
-## `competent(`<br/>&nbsp;&nbsp;`components: Object,`<br/>&nbsp;&nbsp;`config?: Config,`<br/>`): _restream.Rule`
+
+## `competent(`<br/>&nbsp;&nbsp;`components: !Object<string, !Function|function(new: preact.Component)>,`<br/>&nbsp;&nbsp;`config: !Config,`<br/>`): !restream.Rule`
+Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
+
+ - <kbd><strong>components*</strong></kbd> <em><code>!Object&lt;string, (!Function \| function(new: <a href="https://github.com/dpck/preact/wiki/Component" title="A base class that is usually subclassed to create stateful Preact components.">preact.Component</a>))&gt;</code></em> : Components to extract from HTML and render using _Preact's_ server-side rendering.
+ - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-config" title="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">!Config</a></code></em> : Options for the program. All functions will be called with the Replaceable instance as their `this` context.
 
 Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
 
@@ -307,13 +310,13 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
 </table>
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
 </a></p>
 
-## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: !Array<ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>`): string`
+## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>`): string`
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
- - <kbd><strong>components*</strong></kbd> <em><code>!Array&lt;<a href="#type-exportedcomponent" title="An exported component.">ExportedComponent</a>&gt;</code></em> : All components that were made exportable by the rule.
+ - <kbd><strong>components*</strong></kbd> <em><code>!Array&lt;<a href="#type-exportedcomponent" title="An exported component.">!ExportedComponent</a>&gt;</code></em> : All components that were made exportable by the rule.
  - <kbd><strong>componentsLocation*</strong></kbd> <em>`string`</em> : Relative location from which to require components.
  - <kbd>props</kbd> <em>`Object`</em> (optional): Shared properties made available for each component in addition to its own properties.
  - <kbd>includeH</kbd> <em>`boolean`</em> (optional): Include `import { h } from 'preact'` on top of the file.
@@ -380,7 +383,7 @@ import Components from '../components'
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/3.svg?sanitize=true" width="25">
+  <img src="/.documentary/section-breaks/2.svg?sanitize=true" width="25">
 </a></p>
 
 ### Intersection Observer
@@ -458,7 +461,7 @@ const io = makeIo();[{
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
 </a></p>
 
 ## Known Limitations
@@ -480,7 +483,7 @@ Currently, it is not possible to match nested components.
 This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
 </a></p>
 
 ## Who Uses _Competent_
@@ -491,7 +494,7 @@ _Competent_ is used by:
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
 </a></p>
 
 ## Copyright

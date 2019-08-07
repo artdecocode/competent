@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-'use strict';
+             
 const stream = require('stream');
 const os = require('os');             
 const da = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;

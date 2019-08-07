@@ -13,6 +13,7 @@
     "test-compile": "ALAMODE_ENV=test-compile yarn test",
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc -o README.md -n _competent",
+    "doc-dev": "NODE_DEBUG=doc doc-dev -o README.md -n _competent",
     "b": "alamode src -o build -s",
     "d": "yarn-s d1 externs",
     "d1": "typal compile/index.js",

@@ -12,10 +12,10 @@ yarn add competent
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`competent(components, config): !restream.Rule`](#competentcomponents-objectstring-functionfunctionnew-preactcomponentconfig-config-restreamrule)
+- [`competent(components, config=): !restream.Rule`](#competentcomponents-objectstring-functionfunctionnew-preactcomponentconfig-config-restreamrule)
+  * [`Config`](#type-config)
   * [`Props`](#type-props)
   * [`Meta`](#type-meta)
-  * [`Config`](#type-config)
 - [`makeComponentsScript(components, componentsLocation, props=, includeH=, io=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringprops-objectincludeh-booleanio-boolean-string)
   * [`ExportedComponent`](#type-exportedcomponent)
   * [Intersection Observer](#intersection-observer)
@@ -39,13 +39,11 @@ import competent from 'competent'
   <img src="/.documentary/section-breaks/1.svg?sanitize=true">
 </a></p>
 
-## `competent(`<br/>&nbsp;&nbsp;`components: !Object<string, !Function|function(new: preact.Component)>,`<br/>&nbsp;&nbsp;`config: !Config,`<br/>`): !restream.Rule`
+## <code><ins>competent</ins>(<sub><br/>&nbsp;&nbsp;components: !Object<string, !Function|function(new: preact.Component)>,<br/>&nbsp;&nbsp;config=: !Config,<br/>): <i>!restream.Rule</i></code></sub>
 Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
 
- - <kbd><strong>components*</strong></kbd> <em><code>!Object&lt;string, (!Function \| function(new: <a href="https://github.com/dpck/preact/wiki/Component" title="A base class that is usually subclassed to create stateful Preact components.">preact.Component</a>))&gt;</code></em> : Components to extract from HTML and render using _Preact's_ server-side rendering.
- - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-config" title="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">!Config</a></code></em> : Options for the program. All functions will be called with the Replaceable instance as their `this` context.
-
-Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
+ - <kbd><strong>components*</strong></kbd> <em><code>!Object&lt;string, (!Function \| function(new: <a href="https://github.com/dpck/preact/wiki/Component" title="A base class that is usually subclassed to create stateful Preact components.">preact.Component</a>))&gt;</code></em> : Components to extract from HTML and render using _Preact's_ server-side rendering. Can be either a functional stateless component, or a _Preact_ component constructor.
+ - <kbd>config</kbd> <em><code><a href="#type-config" title="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">!Config</a></code></em> (optional): Options for the program. All functions will be called with the _Replaceable_ instance as their `this` context.
 
 <table>
 <tr><th>Example Usage</th></tr>
@@ -193,42 +191,6 @@ Exported packages:
 </td></tr>
 </table>
 
-<code>Object&lt;string, *&gt;</code> __<a name="type-props">`Props`</a>__: The properties extracted from HTML and to be passed to the component for rendering.
-
-
-__<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
-<table>
- <thead><tr>
-  <th>Name</th>
-  <th>Type &amp; Description</th>
- </tr></thead>
- <tr>
-  <td rowSpan="3" align="center"><strong>export*</strong></td>
-  <td><em>(shouldExport?: boolean) => void</em></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>When called, marks the component for export and adds an <code>id</code> if the root element of the hyper result did not have it. Individual instances can pass the <code>false</code> value if they don't want to get exported.</td>
- </tr>
- <tr>
-  <td rowSpan="3" align="center"><strong>setPretty*</strong></td>
-  <td><em>(isPretty: boolean, lineLength?: number) => void</em></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>The function which controls whether to enable pretty printing, and the line width.</td>
- </tr>
- <tr>
-  <td rowSpan="3" align="center"><strong>renderAgain*</strong></td>
-  <td><em>(recursiveRender?: boolean) => void</em></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>Render the result of the component again. This is needed when a component might contain other components when rendered. No recursion is allowed otherwise the program will get stuck. Use <code>getReplacements</code> to specify how to acquire the replacements for the new <em>Replaceable</em> stream. The argument passed specifies if the component might render recursively (default <code>false</code>).</td>
- </tr>
-</table>
-
-
 __<a name="type-config">`Config`</a>__: Options for the program. All functions will be called with the Replaceable instance as their `this` context.
 <table>
  <thead><tr>
@@ -310,11 +272,47 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
 </table>
 
+
+<code>Object&lt;string, *&gt;</code> __<a name="type-props">`Props`</a>__: The properties extracted from HTML and to be passed to the component for rendering.
+
+
+__<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><strong>export*</strong></td>
+  <td><em>(shouldExport?: boolean) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>When called, marks the component for export and adds an <code>id</code> if the root element of the hyper result did not have it. Individual instances can pass the <code>false</code> value if they don't want to get exported.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><strong>setPretty*</strong></td>
+  <td><em>(isPretty: boolean, lineLength?: number) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>The function which controls whether to enable pretty printing, and the line width.</td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><strong>renderAgain*</strong></td>
+  <td><em>(recursiveRender?: boolean) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>Render the result of the component again. This is needed when a component might contain other components when rendered. No recursion is allowed otherwise the program will get stuck. Use <code>getReplacements</code> to specify how to acquire the replacements for the new <em>Replaceable</em> stream. The argument passed specifies if the component might render recursively (default <code>false</code>).</td>
+ </tr>
+</table>
+
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
-## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>`): string`
+## <code><ins>makeComponentsScript</ins>(<sub><br/>&nbsp;&nbsp;components: !Array<!ExportedComponent>,<br/>&nbsp;&nbsp;componentsLocation: string,<br/>&nbsp;&nbsp;props=: Object,<br/>&nbsp;&nbsp;includeH=: boolean,<br/>&nbsp;&nbsp;io=: boolean,<br/>): <i>string</i></code></sub>
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
  - <kbd><strong>components*</strong></kbd> <em><code>!Array&lt;<a href="#type-exportedcomponent" title="An exported component.">!ExportedComponent</a>&gt;</code></em> : All components that were made exportable by the rule.

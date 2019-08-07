@@ -1,3 +1,10 @@
+## 7 August 2019
+
+### [1.8.0](https://github.com/artdecocode/competent/compare/v1.7.0...v1.8.0)
+
+- [package] Compile with [_Depack_](https://compiler.page).
+- [doc] Better documentation.
+
 ## 14 June 2019
 
 ### [1.7.0](https://github.com/artdecocode/competent/compare/v1.6.0...v1.7.0)

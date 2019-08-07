@@ -15,7 +15,7 @@ const competent = (components, conf = {}) => {
 
   const re = makeRe(Object.keys(components))
 
-  /** @type {_restream.AsyncReplacer} */
+  /** @type {!_restream.AsyncReplacer} */
   const replacement = async function (m, pad, Component, key, position, str) {
     try {
       const instance = components[key]
@@ -48,6 +48,7 @@ const competent = (components, conf = {}) => {
         setPretty(p, l) { pretty = p; if (l) lineLength = l },
         renderAgain(v = false) { renderAgain = true, recursiveRenderAgain = v },
       }), key)
+      /** @type {!preact.VNode} */
       let hyperResult
       try {
         const promise = instance(props)
@@ -130,4 +131,8 @@ export { default as makeComponentsScript } from './lib/make-comps'
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {import('..').Meta} _competent.Meta
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('@externs/preact').VNode} preact.VNode
  */

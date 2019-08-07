@@ -7,10 +7,15 @@
   resolved "https://registry.yarnpkg.com/@artdeco/clean-stack/-/clean-stack-1.1.1.tgz#0a68b9a061b5076ebaf948c150ea26d09c1e753f"
   integrity sha512-q5lO3vGUo0WgkSqzgzjL0HQdA9t2HzQqZISuVuQWMh9xqLuiLFP/ZTsxFc8vpMl7mNpGk7Mm0OeyFQ+Evrp0Cw==
 
-"@depack/render@^1.2.0", "@depack/render@^1.2.1":
+"@depack/render@^1.2.0", "@depack/render@^1.2.1", "@depack/render@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@depack/render/-/render-1.3.0.tgz#a4f0a2f3a8fd23e38d54e44aa17468d18335af53"
   integrity sha512-gaU58MHVNRawGysRfc2qIOuNf8R3Um2vYb5hRi+UYhbNWswtuVUrVHVZZsL79oZA2tD/mbHQErlOg0MqXX8Kfw==
+
+"@externs/preact@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@externs/preact/-/preact-1.2.0.tgz#fffc5dace84af604653d7be4da2754f40cb11f32"
+  integrity sha512-wnPa51swyIndcKuXQc9U49Ha+mtaK7QXLt6K28jJcazMUZ1pE6gXyfw8VNAhhvZ85eB4/kSbje+JDaH/Bsba5g==
 
 "@rqt/aqt@^1.3.0":
   version "1.3.0"
@@ -103,6 +108,14 @@ restream@^3.7.1:
   version "3.7.3"
   resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.3.tgz#3ec32dd9485a3230b731de29dff766ec9c0c606d"
   integrity sha512-CPWz8ud+cQF36xmjgEIYlD6R5c7dsf39iQojFQMR9QkVdFDr7UvlP/eGAs//LYfbl4B5tF9CR4sdwr8IcOBQXA==
+  dependencies:
+    "@artdeco/clean-stack" "^1.1.1"
+    catchment "^3.3.0"
+
+restream@^3.7.4:
+  version "3.7.4"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.4.tgz#e86c455f92ba65ce41d9e450ed54d065a130f89c"
+  integrity sha512-heKiPfU5CLE/jTLcs53MyvE1jje/V/JViAD95LMY1p0XVDLyVcyM4iUo0iYUnuNUYTUxrJyKpXDTu7GKOr0pFA==
   dependencies:
     "@artdeco/clean-stack" "^1.1.1"
     catchment "^3.3.0"

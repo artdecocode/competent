@@ -1,0 +1,19 @@
+<types namespace="_competent">
+  <method name="makeComponentsScript" return="string" desc="Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.">
+    <arg type="!Array<_competent.ExportedComponent>" name="components">
+      All components that were made exportable by the rule.
+    </arg>
+    <arg string name="componentsLocation">
+      Relative location from which to require components.
+    </arg>
+    <arg type="Object" name="props" opt>
+      Shared properties made available for each component in addition to its own properties.
+    </arg>
+    <arg boolean name="includeH" opt>
+      Include `import { h } from 'preact'` on top of the file.
+    </arg>
+    <arg boolean name="io" opt>
+      Include intersection observer.
+    </arg>
+  </method>
+</types>

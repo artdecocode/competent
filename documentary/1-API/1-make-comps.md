@@ -1,13 +1,4 @@
-```## makeComponentsScript => string
-[
-  ["components", "Array<ExportedComponent>"],
-  ["componentsLocation", "string"],
-  ["includeH=", "boolean"],
-  ["io=", "boolean"]
-]
-```
-
-Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
+<typedef name="makeComponentsScript" noArgTypesInToc>types/api.xml</typedef>
 
 <typedef flatten>types/exported.xml</typedef>
 

@@ -16,7 +16,7 @@ yarn add competent
   * [`Props`](#type-props)
   * [`Meta`](#type-meta)
   * [`Config`](#type-config)
-- [`makeComponentsScript(components: Array<ExportedComponent>, componentsLocation: string, includeH=: boolean, io=: boolean): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringincludeh-booleanio-boolean-string)
+- [`makeComponentsScript(components, componentsLocation, props=, includeH=, io=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringprops-objectincludeh-booleanio-boolean-string)
   * [`ExportedComponent`](#type-exportedcomponent)
   * [Intersection Observer](#intersection-observer)
 - [Known Limitations](#known-limitations)
@@ -310,9 +310,14 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
-## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: Array<ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>`): string`
-
+## `makeComponentsScript(`<br/>&nbsp;&nbsp;`components: !Array<ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>`): string`
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
+
+ - <kbd><strong>components*</strong></kbd> <em><code>!Array&lt;<a href="#type-exportedcomponent" title="An exported component.">ExportedComponent</a>&gt;</code></em> : All components that were made exportable by the rule.
+ - <kbd><strong>componentsLocation*</strong></kbd> <em>`string`</em> : Relative location from which to require components.
+ - <kbd>props</kbd> <em>`Object`</em> (optional): Shared properties made available for each component in addition to its own properties.
+ - <kbd>includeH</kbd> <em>`boolean`</em> (optional): Include `import { h } from 'preact'` on top of the file.
+ - <kbd>io</kbd> <em>`boolean`</em> (optional): Include intersection observer.
 
 __<a name="type-exportedcomponent">`ExportedComponent`</a>__: An exported component.
 

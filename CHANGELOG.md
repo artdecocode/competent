@@ -1,3 +1,10 @@
+## 17 August 2019
+
+### [1.8.1](https://github.com/artdecocode/competent/compare/v1.8.0...v1.8.1)
+
+- [deps] Upgrade `render` to prevent whitespace for inline-tags in pretty mode.
+- [types] Fix types warnings.
+
 ## 7 August 2019
 
 ### [1.8.0](https://github.com/artdecocode/competent/compare/v1.7.0...v1.8.0)

@@ -16,6 +16,26 @@
 </div></rendered-html>
 /**/
 
+## correctly adds padding
+  <body page="test" mask-testing where-is-my-mind>Hello World</body>
+
+/* JSOptions */
+{
+  getProps(htmlProps, meta) {
+    meta.setPretty(true, 20)
+    return { ...htmlProps, ...meta }
+  },
+}
+/**/
+
+/* expected */
+  <body-tag
+    mask-testing where-is-my-mind
+    page="test">
+    Hello World
+  </body-tag>
+/**/
+
 ## removes the component it cannot process
 <html lang="en">
   Error:<error>Hello world</error>

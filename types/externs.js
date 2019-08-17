@@ -34,22 +34,12 @@ _competent.ExportedComponent.prototype.children
 
 /* typal types/index.xml externs */
 /**
- * The properties extracted from HTML and to be passed to the component for rendering.
- * @typedef {Object<string, *>}
- */
-_competent.Props
-/**
- * Service methods for `competent`.
- * @typedef {{ export: function(boolean=): void, setPretty: function(boolean,number=): void, renderAgain: function(boolean=): void }}
- */
-_competent.Meta
-/**
  * Options for the program. All functions will be called with the Replaceable instance as their `this` context.
  * @record
  */
 _competent.Config
 /**
- * If there was an error when rendering the component, controls whether the HTML should be be left on the page.
+ * If there was an error when rendering the component, controls whether the HTML should be be left on the page. Default `false`.
  * @type {boolean|undefined}
  */
 _competent.Config.prototype.removeOnError
@@ -65,17 +55,17 @@ _competent.Config.prototype.getId = function() {}
 _competent.Config.prototype.getProps = function(props, meta, componentName) {}
 /**
  * If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.
- * @type {(function(string,string,!_competent.Props,!Array<string>): void)|undefined}
+ * @type {(function(string,string,!_competent.Props,!Array<string>))|undefined}
  */
 _competent.Config.prototype.markExported = function(key, id, props, children) {}
 /**
  * The callback at the end of a successful replacement with the component's key.
- * @type {(function(string): void)|undefined}
+ * @type {(function(string))|undefined}
  */
 _competent.Config.prototype.onSuccess = function(componentName) {}
 /**
  * The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
- * @type {(function(string,Error,number,string): void)|undefined}
+ * @type {(function(string,Error,number,string))|undefined}
  */
 _competent.Config.prototype.onFail = function(componentName, error, position, input) {}
 /**
@@ -88,3 +78,13 @@ _competent.Config.prototype.getContext = function() {}
  * @type {(function(string,boolean): !Array<!_restream.Rule>)|undefined}
  */
 _competent.Config.prototype.getReplacements = function(componentName, recursiveRenderAgain) {}
+/**
+ * The properties extracted from HTML and to be passed to the component for rendering.
+ * @typedef {Object<string, *>}
+ */
+_competent.Props
+/**
+ * Service methods for `competent`.
+ * @typedef {{ export: function(boolean=), setPretty: function(boolean,number=), renderAgain: function(boolean=) }}
+ */
+_competent.Meta

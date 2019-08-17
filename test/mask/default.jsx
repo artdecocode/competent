@@ -13,8 +13,8 @@ makeTestSuite('test/result/default', {
           <div dangerouslySetInnerHTML={{ __html: children }}></div>
         </rendered-html>)
       },
-      async 'body'({ children, page }) {
-        return (<body-tag page={page}>
+      async 'body'({ children, page, ...props }) {
+        return (<body-tag page={page} {...props}>
           {children}
         </body-tag>)
       },

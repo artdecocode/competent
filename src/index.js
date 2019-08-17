@@ -24,6 +24,11 @@ const competent = (components, conf = {}) => {
       if (/<!--\s*$/.test(before) && /^\s*-->/.test(after))
         return m
 
+      // let initialPadding = 0
+      // const lastNewLine = before.lastIndexOf('\n')
+      // if (lastNewLine != -1) initialPadding = position - lastNewLine - 1
+      // else initialPadding = position
+
       const [{ content = '', props: htmlProps }] = rexml(key, Component)
       let child = content
       if (child) {
@@ -48,7 +53,7 @@ const competent = (components, conf = {}) => {
         setPretty(p, l) { pretty = p; if (l) lineLength = l },
         renderAgain(v = false) { renderAgain = true, recursiveRenderAgain = v },
       }), key)
-      /** @type {!preact.VNode} */
+      /** @type {preact.VNode} */
       let hyperResult
       try {
         const promise = instance(props)
@@ -56,12 +61,17 @@ const competent = (components, conf = {}) => {
       } catch (err) {
         if (!err.message.startsWith('Class constructor'))
           throw err
-        const i = new instance()
+        const Instance = /** @type {function(new:preact.Component)} */ (instance)
+        const i = new Instance()
         hyperResult = i.render(props)
       }
       if (exported && !hyperResult.attributes.id) {
         id = getId.call(this) // `c${splendid.random()}`
         hyperResult.attributes.id = id
+      }
+      const renderOptions = {
+        pretty,
+        lineLength,
       }
       let r
       if (typeof hyperResult == 'string') {
@@ -69,16 +79,11 @@ const competent = (components, conf = {}) => {
       } else if (Array.isArray(hyperResult)) {
         r = hyperResult.map((hr) => {
           if (typeof hr == 'string') return hr
-          return render(hr, {
-            pretty,
-            lineLength,
-          })
+          const res = render(hr, renderOptions)
+          return res
         }).join('\n')
       } else {
-        r = render(hyperResult, {
-          pretty,
-          lineLength,
-        })
+        r = render(hyperResult, renderOptions)
       }
       r = r.replace(/^/gm, pad)
       if (renderAgain) {
@@ -135,4 +140,8 @@ export { default as makeComponentsScript } from './make-comps'
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {import('..').VNode} preact.VNode
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('..').Component} preact.Component
  */

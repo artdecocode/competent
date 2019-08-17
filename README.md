@@ -205,70 +205,93 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr></tr>
  <tr>
-  <td>If there was an error when rendering the component, controls whether the HTML should be be left on the page.</td>
+  <td>
+   If there was an error when rendering the component, controls whether the HTML should be be left on the page.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">getId</td>
-  <td><em>() => string</em></td>
-  <td rowSpan="3">-</td>
+  <td colSpan="2"><em>() => string</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>The function which returns an <code>id</code> for the html element.</td>
+  <td colSpan="2">
+   The function which returns an <code>id</code> for the html element.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">getProps</td>
-  <td><em>(props: <a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a>, meta: <a href="#type-meta" title="Service methods for `competent`.">!Meta</a>, componentName: string) => Object</em></td>
-  <td rowSpan="3">-</td>
+  <td colSpan="2"><em>(props: <a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a>, meta: <a href="#type-meta" title="Service methods for `competent`.">!Meta</a>, componentName: string) => Object</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with <em>meta</em>.</td>
+  <td colSpan="2">
+   The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with <em>meta</em>.<br/>
+   <kbd><strong>props*</strong></kbd> <em><code><a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a></code></em>: Properties.<br/>
+   <kbd><strong>meta*</strong></kbd> <em><code><a href="#type-meta" title="Service methods for `competent`.">!Meta</a></code></em>: Meta properties.<br/>
+   <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The name of the component.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">markExported</td>
-  <td><em>(key: string, id: string, props: <a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a>, children: !Array&lt;string&gt;) => void</em></td>
-  <td rowSpan="3">-</td>
+  <td colSpan="2"><em>(key: string, id: string, props: <a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a>, children: !Array&lt;string&gt;) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>If the component called the <code>export</code> meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.</td>
+  <td colSpan="2">
+   If the component called the <code>export</code> meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.<br/>
+   <kbd><strong>key*</strong></kbd> <em><code>string</code></em>: Component key.<br/>
+   <kbd><strong>id*</strong></kbd> <em><code>string</code></em>: The ID assigned manually either via the element's id attribute, or with the <code>getId</code> function automatically.<br/>
+   <kbd><strong>props*</strong></kbd> <em><code><a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a></code></em>: Component properties.<br/>
+   <kbd><strong>children*</strong></kbd> <em><code>!Array&lt;string&gt;</code></em>: Component children.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">onSuccess</td>
-  <td><em>(componentName: string) => void</em></td>
-  <td rowSpan="3">-</td>
+  <td colSpan="2"><em>(componentName: string) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>The callback at the end of a successful replacement with the component's key.</td>
+  <td colSpan="2">
+   The callback at the end of a successful replacement with the component's key.<br/>
+   <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The element name, e.g., <code>my-element</code>.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">onFail</td>
-  <td><em>(componentName: string, error: Error, position: number, input: string) => void</em></td>
-  <td rowSpan="3">-</td>
+  <td colSpan="2"><em>(componentName: string, error: Error, position: number, input: string) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.</td>
+  <td colSpan="2">
+   The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.<br/>
+   <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The element name, e.g., <code>my-element</code>.<br/>
+   <kbd><strong>error*</strong></kbd> <em><code>Error</code></em>: The error.<br/>
+   <kbd><strong>position*</strong></kbd> <em><code>number</code></em>: The position in the input text where element started.<br/>
+   <kbd><strong>input*</strong></kbd> <em><code>string</code></em>: The input string.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">getContext</td>
-  <td><em>() => Object</em></td>
-  <td rowSpan="3">-</td>
+  <td colSpan="2"><em>() => !Object</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>The function to be called to get the properties to set on the child <em>Replaceable</em> started to recursively replace inner HTML. This is needed if the root <em>Replaceable</em> was assigned some properties that are referenced in components.</td>
+  <td colSpan="2">
+   The function to be called to get the properties to set on the child <em>Replaceable</em> started to recursively replace inner HTML. This is needed if the root <em>Replaceable</em> was assigned some properties that are referenced in components.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">getReplacements</td>
-  <td><em>(componentName: string, recursiveRenderAgain: boolean) => Array</em></td>
-  <td rowSpan="3">-</td>
+  <td colSpan="2"><em>(componentName: string, recursiveRenderAgain: boolean) => !Array&lt;!_restream.Rule&gt;</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>The function which should return the list of replacements for <code>renderAgain</code> method. By default, the initial rule generated by <em>Competent</em> is used. The first argument passed is the key, and the second argument is the value passed via the <code>renderAgain</code>, that is if the component might render recursively.</td>
+  <td colSpan="2">
+   The function which should return the list of replacements for <code>renderAgain</code> method. By default, the initial rule generated by <em>Competent</em> is used. The first argument passed is the key, and the second argument is the value passed via the <code>renderAgain</code>, that is if the component might render recursively.<br/>
+   <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: Component key.<br/>
+   <kbd><strong>recursiveRenderAgain*</strong></kbd> <em><code>boolean</code></em>: The value passed to <code>renderAgain</code>.
+  </td>
  </tr>
 </table>
 
@@ -284,27 +307,37 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center"><strong>export*</strong></td>
-  <td><em>(shouldExport?: boolean) => void</em></td>
+  <td><em>(shouldExport?: boolean) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>When called, marks the component for export and adds an <code>id</code> if the root element of the hyper result did not have it. Individual instances can pass the <code>false</code> value if they don't want to get exported.</td>
+  <td>
+   When called, marks the component for export and adds an <code>id</code> if the root element of the hyper result did not have it. Individual instances can pass the <code>false</code> value if they don't want to get exported.<br/>
+   <kbd>shouldExport</kbd> <em><code>boolean</code></em> (optional): Whether to export the component.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center"><strong>setPretty*</strong></td>
-  <td><em>(isPretty: boolean, lineLength?: number) => void</em></td>
+  <td><em>(isPretty: boolean, lineLength?: number) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>The function which controls whether to enable pretty printing, and the line width.</td>
+  <td>
+   The function which controls whether to enable pretty printing, and the line width.<br/>
+   <kbd><strong>isPretty*</strong></kbd> <em><code>boolean</code></em>: Whether to pretty print.<br/>
+   <kbd>lineLength</kbd> <em><code>number</code></em> (optional): Number of characters after which to wrap lines.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center"><strong>renderAgain*</strong></td>
-  <td><em>(recursiveRender?: boolean) => void</em></td>
+  <td><em>(recursiveRender?: boolean) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td>Render the result of the component again. This is needed when a component might contain other components when rendered. No recursion is allowed otherwise the program will get stuck. Use <code>getReplacements</code> to specify how to acquire the replacements for the new <em>Replaceable</em> stream. The argument passed specifies if the component might render recursively (default <code>false</code>).</td>
+  <td>
+   Render the result of the component again. This is needed when a component might contain other components when rendered. No recursion is allowed otherwise the program will get stuck. Use <code>getReplacements</code> to specify how to acquire the replacements for the new <em>Replaceable</em> stream. The argument passed specifies if the component might render recursively (default <code>false</code>).<br/>
+   <kbd>recursiveRender</kbd> <em><code>boolean</code></em> (optional): Whether to render element with the same name.
+  </td>
  </tr>
 </table>
 

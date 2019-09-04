@@ -1,5 +1,10 @@
 ## 4 September 2019
 
+### [2.1.0](https://github.com/artdecocode/competent/compare/v2.0.0...v2.1.0)
+
+- [feature] Add option to remove lines if components render empty string.
+- [fix] Fix regex to exclude component for child render.
+
 ### [2.0.0](https://github.com/artdecocode/competent/compare/v1.8.1...v2.0.0)
 
 - [api] Render again will always be called.

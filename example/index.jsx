@@ -1,4 +1,4 @@
-/* alanode example/ */
+/* start example */
 import competent from '../src'
 import aqt from '@rqt/aqt'
 import read from '@wrote/read'
@@ -70,3 +70,31 @@ const CompetentExample = async () => {
 }
 
 export default CompetentExample
+
+/* end example */
+
+export const debug = async () => {
+  let i = 0
+  const exported = []
+  const file = await read('example/index.html')
+  const rule = competent({
+    'hello-world': HelloWorld,
+    'npm-package': NpmPackage,
+    'friends': FriendCount,
+  }, {
+    getId() {
+      i++
+      return `c${i}`
+    },
+    getProps(props, meta) {
+      meta.setPretty(true, 60)
+      return { ...props, competent: meta }
+    },
+    markExported(key, id, props, children) {
+      exported.push({ key, id, props, children })
+    },
+  })
+  const r = new Replaceable(rule)
+  const res = await Replaceable.replace(r, file)
+  return { res, exported }
+}

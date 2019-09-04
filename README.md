@@ -16,6 +16,7 @@ yarn add competent
   * [`Config`](#type-config)
   * [`Props`](#type-props)
   * [`Meta`](#type-meta)
+- [`DEBUG=competent`](#debugcompetent)
 - [`makeComponentsScript(components, componentsLocation, props=, includeH=, io=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringprops-objectincludeh-booleanio-boolean-string)
   * [`ExportedComponent`](#type-exportedcomponent)
   * [Intersection Observer](#intersection-observer)
@@ -69,7 +70,6 @@ For example, the above HTML page can be rendered with <em>Competent</em> by crea
 <tr><td>
 
 ```jsx
-/* alanode example/ */
 import competent from 'competent'
 import aqt from '@rqt/aqt'
 import read from '@wrote/read'
@@ -361,6 +361,22 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
+## `DEBUG=competent`
+
+When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
+
+```
+2019-09-04T10:55:40.096Z competent render npm-package
+2019-09-04T10:55:40.133Z competent render npm-package
+2019-09-04T10:55:40.138Z competent render npm-package
+2019-09-04T10:55:40.140Z competent render hello-world
+2019-09-04T10:55:40.143Z competent render friends
+```
+
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
+</a></p>
+
 ## <code><ins>makeComponentsScript</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/></sub><code>): <i>string</i></code>
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
@@ -431,7 +447,7 @@ import Components from '../components'
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/3.svg?sanitize=true" width="25">
+  <img src="/.documentary/section-breaks/4.svg?sanitize=true" width="25">
 </a></p>
 
 ### Intersection Observer
@@ -509,7 +525,7 @@ const io = makeIo();[{
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
 </a></p>
 
 ## Known Limitations
@@ -531,7 +547,7 @@ Currently, it is not possible to match nested components.
 This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
 </a></p>
 
 ## Who Uses _Competent_
@@ -542,7 +558,7 @@ _Competent_ is used by:
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
 </a></p>
 
 ## Copyright

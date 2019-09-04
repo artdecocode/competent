@@ -58,3 +58,11 @@ The logging will be output to `stderr`.
 <typedef narrow flatten>types/index.xml</typedef>
 
 %~%
+
+## `DEBUG=competent`
+
+When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
+
+<fork stderr env="DEBUG=competent">example/debug</fork>
+
+%~%

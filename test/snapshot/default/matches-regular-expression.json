@@ -5,11 +5,13 @@
     "key": "test"
   },
   {
+    "s": "\n",
     "ws": "  ",
     "all": "<test-comp>World</test-comp>",
     "key": "test-comp"
   },
   {
+    "s": "\n",
     "ws": "  ",
     "all": "<test/>",
     "key": "test"

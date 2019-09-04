@@ -15,7 +15,7 @@ const T = {
     const html = `<test>Hello</test>
   <test-comp>World</test-comp>
   <test/>  <test-comp/>`
-    const m = mismatch(makeRe(keys), html, ['ws', 'all', 'key'])
+    const m = mismatch(makeRe(keys), html, ['s', 'ws', 'all', 'key'])
     return m
   },
   'makes a component re'() {

@@ -19,7 +19,7 @@ const competent = (components, conf = {}) => {
   const re = makeRe(Object.keys(components))
 
   /** @type {!_restream.AsyncReplacer} */
-  const replacement = async function (m, pad, Component, key, position, str) {
+  const replacement = async function (m, ws, pad, Component, key, position, str) {
     debug('render %s', key)
     try {
       const instance = components[key]
@@ -42,7 +42,7 @@ const competent = (components, conf = {}) => {
       let recursiveRenderAgain = false
       let pretty, lineLength
       let id
-      let childContext
+      let childContext, removeLine
       const props = getProps.call(this, {
         ...htmlProps,
         children,
@@ -51,6 +51,7 @@ const competent = (components, conf = {}) => {
         setPretty(p, l) { pretty = p; if (l) lineLength = l },
         renderAgain(doRender = true, v = false) { renderAgain = doRender, recursiveRenderAgain = v },
         setChildContext(context) { childContext = context },
+        removeLine(r = true) { removeLine = r },
       }), key)
       /** @type {preact.VNode} */
       let hyperResult
@@ -84,7 +85,10 @@ const competent = (components, conf = {}) => {
       } else {
         r = render(hyperResult, renderOptions)
       }
-      r = r.replace(/^/gm, pad)
+      if (!r && removeLine) {
+        return ''
+      }
+      r = (ws || '') + r.replace(/^/gm, pad)
       if (renderAgain) { // new v render again by default
         let childRules
         if (getReplacements) {
@@ -93,11 +97,7 @@ const competent = (components, conf = {}) => {
           if (recursiveRenderAgain)
           // exclude the actual element 🤷‍
             childRules = {
-              re: new RegExp(re.source.replace(new RegExp(`([|(])${key}([|)])`),
-                (_, pb, pa) => {
-                  if (pb && pa) return '|'
-                  return ''
-                }), re.flags),
+              re: upgradeRe(re, key),
               replacement,
             }
           else childRules = { re, replacement }
@@ -124,6 +124,17 @@ const competent = (components, conf = {}) => {
     re, replacement,
   }
   return rule
+}
+
+const upgradeRe = (re, key) => {
+  const ure = new RegExp(re.source.replace(new RegExp(`([|(])${key}([|)])`),
+    (m, pb, pa) => {
+      if (pb == '|' && pa == '|') return '|'
+      if (pa == ')') return pa
+      if (pb == '(') return pb
+      return ''
+    }), re.flags)
+  return ure
 }
 
 export default competent

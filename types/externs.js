@@ -85,6 +85,6 @@ _competent.Config.prototype.getReplacements = function(componentName, recursiveR
 _competent.Props
 /**
  * Service methods for `competent`.
- * @typedef {{ export: function(boolean=): void, setPretty: function(boolean,number=): void, renderAgain: function(boolean=,boolean=): void, setChildContext: function(!Object): void }}
+ * @typedef {{ export: function(boolean=): void, setPretty: function(boolean,number=): void, removeLine: function(boolean=): void, renderAgain: function(boolean=,boolean=): void, setChildContext: function(!Object): void }}
  */
 _competent.Meta

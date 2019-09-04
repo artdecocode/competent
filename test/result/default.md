@@ -123,3 +123,17 @@
 /* expected */
 <img src="test.jpg"><section-break />
 /**/
+
+## removes new line
+<hello>
+  <meta />
+  <remove-line />
+  <remove-line>keep with children<remove-line>
+</hello>
+
+/* expected */
+<hello>
+  <meta />
+  <remove-line>keep with children<remove-line>
+</hello>
+/**/

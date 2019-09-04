@@ -36,6 +36,10 @@ makeTestSuite('test/result/default', {
       'ajax-loader'() {
         return '<rendered-ajax-loader/>'
       },
+      'remove-line'({ removeLine, children }) {
+        removeLine()
+        return children
+      },
       'child-props'({ childProp }) {
         return `Hello ${childProp}`
       },

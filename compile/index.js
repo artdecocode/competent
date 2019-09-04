@@ -51,9 +51,10 @@ module.exports.makeComponentsScript = makeComponentsScript
  * @typedef {Object} _competent.Meta Service methods for `competent`.
  * @prop {(shouldExport?: boolean) => void} export When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.
  * @prop {(isPretty: boolean, lineLength?: number) => void} setPretty The function which controls whether to enable pretty printing, and the line width.
+ * @prop {(shouldRemove?: boolean) => void} removeLine If the component rendered a falsy value (e.g., `null`, `''`), and the `removeLine` was called, _Competent_ will remove `\n___＜component＞`. By default, this is switched off.
  * @prop {(doRender?: boolean, recursiveRender?: boolean) => void} renderAgain After rendering the component itself, the children by default are also rendered by spawning another _Replaceable_ stream. This is needed when a component might contain other components when rendered.
  * - When `recursiveRender` is set to false (default), the component key will be excluded from the rule to prevent recursion.
- * - No recursion is allowed otherwise the program will get stuck, unless `&lt;img/&gt;` renders `&lt;img&gt;` (no `/`) for example.
+ * - No recursion is allowed otherwise the program will get stuck, unless `＜img/＞` renders `＜img＞` (no `/`) for example.
  * - If `getReplacements` was used to specify how to acquire the replacements for the new child _Replaceable_ stream, the `recursiveRender` arg will be pased to it.
  * @prop {(context: !Object) => void} setChildContext JSX nodes are rendered breadth-first, meaning that siblings will receive the same `this` context. If one of them modifies it, the another one will also pass the updated one to children, which is not always desirable. To create a fork context unique for children of sibling nodes, the child context can be set. It will be passed as an argument to `getContext`.
  */

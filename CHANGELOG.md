@@ -1,3 +1,11 @@
+## 4 September 2019
+
+### [2.0.0](https://github.com/artdecocode/competent/compare/v1.8.1...v2.0.0)
+
+- [api] Render again will always be called.
+- [feature] Add `getChildContext` method.
+- [license] Relicense under Affero & Tech Nation Sucks License.
+
 ## 17 August 2019
 
 ### [1.8.1](https://github.com/artdecocode/competent/compare/v1.8.0...v1.8.1)

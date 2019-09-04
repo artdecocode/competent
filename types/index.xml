@@ -22,11 +22,11 @@
     <prop boolean name="removeOnError" default="false">
       If there was an error when rendering the component, controls whether the HTML should be be left on the page.
     </prop>
-    <fn name="onSuccess" opt>
+    <fn name="onSuccess" opt void>
       <arg string name="componentName">The element name, e.g., `my-element`.</arg>
       The callback at the end of a successful replacement with the component's key.
     </fn>
-    <fn opt name="onFail">
+    <fn opt name="onFail" void>
       <arg string name="componentName">The element name, e.g., `my-element`.</arg>
       <arg name="error" type="!Error">The error.</arg>
       <arg number name="position">The position in the input text where element started.</arg>
@@ -34,8 +34,8 @@
       The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
     </fn>
     <fn opt name="getContext" return="!Object">
-      <arg name="childContext" type="!Object">
-        The child context set by `meta.setChildContext`.
+      <arg opt name="childContext" type="!Object">
+        The child context set by `meta.setChildContext` with `undefined` if not set.
       </arg>
       The function to be called to get the properties to set on the child _Replaceable_ started to recursively replace inner HTML. This is needed if the root _Replaceable_ was assigned some properties that are referenced in components.
     </fn>
@@ -50,16 +50,16 @@
   </type>
 
   <type name="Meta" desc="Service methods for `competent`.">
-    <fn name="export">
+    <fn name="export" void>
       <arg boolean name="shouldExport" opt>Whether to export the component.</arg>
       When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.
     </fn>
-    <fn name="setPretty">
+    <fn name="setPretty" void>
       <arg boolean name="isPretty">Whether to pretty print.</arg>
       <arg number name="lineLength" opt>Number of characters after which to wrap lines.</arg>
       The function which controls whether to enable pretty printing, and the line width.
     </fn>
-    <fn name="renderAgain">
+    <fn name="renderAgain" void>
       <arg boolean name="doRender" opt>
         Whether to render component again to update its inner HTML. Default `true`.
       </arg>
@@ -68,10 +68,10 @@
       </arg>
       After rendering the component itself, the children by default are also rendered by spawning another _Replaceable_ stream. This is needed when a component might contain other components when rendered.
       - When `recursiveRender` is set to false (default), the component key will be excluded from the rule to prevent recursion.
-      - No recursion is allowed otherwise the program will get stuck, unless `<img/>` renders `<img>` (no `/`) for example.
+      - No recursion is allowed otherwise the program will get stuck, unless `&lt;img/&gt;` renders `&lt;img&gt;` (no `/`) for example.
       - If `getReplacements` was used to specify how to acquire the replacements for the new child _Replaceable_ stream, the `recursiveRender` arg will be pased to it.
     </fn>
-    <fn name="setChildContext">
+    <fn name="setChildContext" void>
       <arg type="!Object" name="context">
         The context specific for children of the node that calls `renderAgain`.
       </arg>

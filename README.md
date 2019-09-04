@@ -248,7 +248,7 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">onSuccess</td>
-  <td colSpan="2"><em>(componentName: string) => ?</em></td>
+  <td colSpan="2"><em>(componentName: string) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
@@ -259,7 +259,7 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">onFail</td>
-  <td colSpan="2"><em>(componentName: string, error: !Error, position: number, input: string) => ?</em></td>
+  <td colSpan="2"><em>(componentName: string, error: !Error, position: number, input: string) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
@@ -273,13 +273,13 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">getContext</td>
-  <td colSpan="2"><em>(childContext: !Object) => !Object</em></td>
+  <td colSpan="2"><em>(childContext?: !Object) => !Object</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td colSpan="2">
    The function to be called to get the properties to set on the child <em>Replaceable</em> started to recursively replace inner HTML. This is needed if the root <em>Replaceable</em> was assigned some properties that are referenced in components.<br/>
-   <kbd><strong>childContext*</strong></kbd> <em><code>!Object</code></em>: The child context set by <code>meta.setChildContext</code>.
+   <kbd>childContext</kbd> <em><code>!Object</code></em> (optional): The child context set by <code>meta.setChildContext</code> with <code>undefined</code> if not set.
   </td>
  </tr>
  <tr>
@@ -308,7 +308,7 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center"><strong>export*</strong></td>
-  <td><em>(shouldExport?: boolean) => ?</em></td>
+  <td><em>(shouldExport?: boolean) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
@@ -319,7 +319,7 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
  </tr>
  <tr>
   <td rowSpan="3" align="center"><strong>setPretty*</strong></td>
-  <td><em>(isPretty: boolean, lineLength?: number) => ?</em></td>
+  <td><em>(isPretty: boolean, lineLength?: number) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
@@ -331,14 +331,14 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
  </tr>
  <tr>
   <td rowSpan="3" align="center"><strong>renderAgain*</strong></td>
-  <td><em>(doRender?: boolean, recursiveRender?: boolean) => ?</em></td>
+  <td><em>(doRender?: boolean, recursiveRender?: boolean) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
    After rendering the component itself, the children by default are also rendered by spawning another <em>Replaceable</em> stream. This is needed when a component might contain other components when rendered.
    <li>When <code>recursiveRender</code> is set to false (default), the component key will be excluded from the rule to prevent recursion.</li>
-   <li>No recursion is allowed otherwise the program will get stuck, unless <code><img/></code> renders <code><img></code> (no <code>/</code>) for example.</li>
+   <li>No recursion is allowed otherwise the program will get stuck, unless <code>&lt;img/&gt;</code> renders <code>&lt;img&gt;</code> (no <code>/</code>) for example.</li>
    <li>If <code>getReplacements</code> was used to specify how to acquire the replacements for the new child <em>Replaceable</em> stream, the <code>recursiveRender</code> arg will be pased to it.<br/></li>
    <kbd>doRender</kbd> <em><code>boolean</code></em> (optional): Whether to render component again to update its inner HTML. Default <code>true</code>.<br/>
    <kbd>recursiveRender</kbd> <em><code>boolean</code></em> (optional): Whether to render element with the same name. Default <code>false</code>.
@@ -346,7 +346,7 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
  </tr>
  <tr>
   <td rowSpan="3" align="center"><strong>setChildContext*</strong></td>
-  <td><em>(context: !Object) => ?</em></td>
+  <td><em>(context: !Object) => void</em></td>
  </tr>
  <tr></tr>
  <tr>

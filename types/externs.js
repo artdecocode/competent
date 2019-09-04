@@ -60,17 +60,17 @@ _competent.Config.prototype.getProps = function(props, meta, componentName) {}
 _competent.Config.prototype.markExported = function(key, id, props, children) {}
 /**
  * The callback at the end of a successful replacement with the component's key.
- * @type {(function(string))|undefined}
+ * @type {(function(string): void)|undefined}
  */
 _competent.Config.prototype.onSuccess = function(componentName) {}
 /**
  * The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
- * @type {(function(string,!Error,number,string))|undefined}
+ * @type {(function(string,!Error,number,string): void)|undefined}
  */
 _competent.Config.prototype.onFail = function(componentName, error, position, input) {}
 /**
  * The function to be called to get the properties to set on the child _Replaceable_ started to recursively replace inner HTML. This is needed if the root _Replaceable_ was assigned some properties that are referenced in components.
- * @type {(function(!Object): !Object)|undefined}
+ * @type {(function(!Object=): !Object)|undefined}
  */
 _competent.Config.prototype.getContext = function(childContext) {}
 /**
@@ -85,6 +85,6 @@ _competent.Config.prototype.getReplacements = function(componentName, recursiveR
 _competent.Props
 /**
  * Service methods for `competent`.
- * @typedef {{ export: function(boolean=), setPretty: function(boolean,number=), renderAgain: function(boolean=,boolean=), setChildContext: function(!Object) }}
+ * @typedef {{ export: function(boolean=): void, setPretty: function(boolean,number=): void, renderAgain: function(boolean=,boolean=): void, setChildContext: function(!Object): void }}
  */
 _competent.Meta

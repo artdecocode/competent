@@ -2,6 +2,9 @@ import render from '@depack/render'
 import rexml from 'rexml'
 import { Replaceable } from 'restream'
 import { makeRe } from './lib'
+import Debug from '@idio/debug'
+
+const debug = Debug('competent')
 
 /**
  * Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.
@@ -17,6 +20,7 @@ const competent = (components, conf = {}) => {
 
   /** @type {!_restream.AsyncReplacer} */
   const replacement = async function (m, pad, Component, key, position, str) {
+    debug('render %s', key)
     try {
       const instance = components[key]
       const before = str.slice(0, position)
@@ -31,33 +35,28 @@ const competent = (components, conf = {}) => {
 
       const [{ content = '', props: htmlProps }] = rexml(key, Component)
       let child = content
-      if (child) {
-        const r = new Replaceable({ re, replacement })
-        if (getContext) {
-          const ctx = getContext.call(this)
-          Object.assign(r, ctx)
-        }
-        child = await Replaceable.replace(r, child)
-      }
+
       const children = [child]
       let exported = false
-      let renderAgain = false
+      let renderAgain = true
       let recursiveRenderAgain = false
       let pretty, lineLength
       let id
+      let childContext
       const props = getProps.call(this, {
         ...htmlProps,
         children,
       }, /** @type {!_competent.Meta} */ ({
         export(value = true) { exported = value },
         setPretty(p, l) { pretty = p; if (l) lineLength = l },
-        renderAgain(v = false) { renderAgain = true, recursiveRenderAgain = v },
+        renderAgain(doRender = true, v = false) { renderAgain = doRender, recursiveRenderAgain = v },
+        setChildContext(context) { childContext = context },
       }), key)
       /** @type {preact.VNode} */
       let hyperResult
       try {
-        const promise = instance(props)
-        hyperResult = await promise
+        const promise = instance.call(this, props)
+        hyperResult = promise instanceof Promise ? await promise : promise
       } catch (err) {
         if (!err.message.startsWith('Class constructor'))
           throw err
@@ -86,16 +85,26 @@ const competent = (components, conf = {}) => {
         r = render(hyperResult, renderOptions)
       }
       r = r.replace(/^/gm, pad)
-      if (renderAgain) {
+      if (renderAgain) { // new v render again by default
         let childRules
         if (getReplacements) {
           childRules = getReplacements.call(this, key, recursiveRenderAgain)
         } else {
-          childRules = { re, replacement }
+          if (recursiveRenderAgain)
+          // exclude the actual element 🤷‍
+            childRules = {
+              re: new RegExp(re.source.replace(new RegExp(`([|(])${key}([|)])`),
+                (_, pb, pa) => {
+                  if (pb && pa) return '|'
+                  return ''
+                }), re.flags),
+              replacement,
+            }
+          else childRules = { re, replacement }
         }
         const childRepl = new Replaceable(childRules)
         if (getContext) {
-          const ctx = getContext.call(this)
+          const ctx = getContext.call(this, childContext)
           Object.assign(childRepl, ctx)
         }
         r = await Replaceable.replace(childRepl, r)

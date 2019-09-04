@@ -153,7 +153,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.6.1</span>
+  <span class="ver">1.7.0</span>
   <p>Static Web Site Generator With JSX As HTML.</p>
 </div>
 <div style="background:green;" id="c2">
@@ -259,26 +259,27 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">onFail</td>
-  <td colSpan="2"><em>(componentName: string, error: Error, position: number, input: string) => ?</em></td>
+  <td colSpan="2"><em>(componentName: string, error: !Error, position: number, input: string) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td colSpan="2">
    The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.<br/>
    <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The element name, e.g., <code>my-element</code>.<br/>
-   <kbd><strong>error*</strong></kbd> <em><code>Error</code></em>: The error.<br/>
+   <kbd><strong>error*</strong></kbd> <em><code>!Error</code></em>: The error.<br/>
    <kbd><strong>position*</strong></kbd> <em><code>number</code></em>: The position in the input text where element started.<br/>
    <kbd><strong>input*</strong></kbd> <em><code>string</code></em>: The input string.
   </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">getContext</td>
-  <td colSpan="2"><em>() => !Object</em></td>
+  <td colSpan="2"><em>(childContext: !Object) => !Object</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td colSpan="2">
-   The function to be called to get the properties to set on the child <em>Replaceable</em> started to recursively replace inner HTML. This is needed if the root <em>Replaceable</em> was assigned some properties that are referenced in components.
+   The function to be called to get the properties to set on the child <em>Replaceable</em> started to recursively replace inner HTML. This is needed if the root <em>Replaceable</em> was assigned some properties that are referenced in components.<br/>
+   <kbd><strong>childContext*</strong></kbd> <em><code>!Object</code></em>: The child context set by <code>meta.setChildContext</code>.
   </td>
  </tr>
  <tr>
@@ -330,13 +331,28 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
  </tr>
  <tr>
   <td rowSpan="3" align="center"><strong>renderAgain*</strong></td>
-  <td><em>(recursiveRender?: boolean) => ?</em></td>
+  <td><em>(doRender?: boolean, recursiveRender?: boolean) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
-   Render the result of the component again. This is needed when a component might contain other components when rendered. No recursion is allowed otherwise the program will get stuck. Use <code>getReplacements</code> to specify how to acquire the replacements for the new <em>Replaceable</em> stream. The argument passed specifies if the component might render recursively (default <code>false</code>).<br/>
-   <kbd>recursiveRender</kbd> <em><code>boolean</code></em> (optional): Whether to render element with the same name.
+   After rendering the component itself, the children by default are also rendered by spawning another <em>Replaceable</em> stream. This is needed when a component might contain other components when rendered.
+   <li>When <code>recursiveRender</code> is set to false (default), the component key will be excluded from the rule to prevent recursion.</li>
+   <li>No recursion is allowed otherwise the program will get stuck, unless <code><img/></code> renders <code><img></code> (no <code>/</code>) for example.</li>
+   <li>If <code>getReplacements</code> was used to specify how to acquire the replacements for the new child <em>Replaceable</em> stream, the <code>recursiveRender</code> arg will be pased to it.<br/></li>
+   <kbd>doRender</kbd> <em><code>boolean</code></em> (optional): Whether to render component again to update its inner HTML. Default <code>true</code>.<br/>
+   <kbd>recursiveRender</kbd> <em><code>boolean</code></em> (optional): Whether to render element with the same name. Default <code>false</code>.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><strong>setChildContext*</strong></td>
+  <td><em>(context: !Object) => ?</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   JSX nodes are rendered breadth-first, meaning that siblings will receive the same <code>this</code> context. If one of them modifies it, the another one will also pass the updated one to children, which is not always desirable. To create a fork context unique for children of sibling nodes, the child context can be set. It will be passed as an argument to <code>getContext</code>.<br/>
+   <kbd><strong>context*</strong></kbd> <em><code>!Object</code></em>: The context specific for children of the node that calls <code>renderAgain</code>.
   </td>
  </tr>
 </table>

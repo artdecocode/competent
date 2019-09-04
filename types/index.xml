@@ -1,5 +1,5 @@
 <types namespace="_competent">
-  
+
    <type record name="Config" desc="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">
     <fn opt return="string" name="getId">
       The function which returns an `id` for the html element.
@@ -26,14 +26,17 @@
       <arg string name="componentName">The element name, e.g., `my-element`.</arg>
       The callback at the end of a successful replacement with the component's key.
     </fn>
-    <fn opt type="function(string, !Error, number, string)" name="onFail">
+    <fn opt name="onFail">
       <arg string name="componentName">The element name, e.g., `my-element`.</arg>
-      <arg name="error" type="Error">The error.</arg>
+      <arg name="error" type="!Error">The error.</arg>
       <arg number name="position">The position in the input text where element started.</arg>
       <arg string name="input">The input string.</arg>
       The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
     </fn>
     <fn opt name="getContext" return="!Object">
+      <arg name="childContext" type="!Object">
+        The child context set by `meta.setChildContext`.
+      </arg>
       The function to be called to get the properties to set on the child _Replaceable_ started to recursively replace inner HTML. This is needed if the root _Replaceable_ was assigned some properties that are referenced in components.
     </fn>
     <fn opt name="getReplacements" return="!Array<!_restream.Rule>">
@@ -45,7 +48,7 @@
 
   <type type="Object<string, *>" name="Props" desc="The properties extracted from HTML and to be passed to the component for rendering.">
   </type>
-  
+
   <type name="Meta" desc="Service methods for `competent`.">
     <fn name="export">
       <arg boolean name="shouldExport" opt>Whether to export the component.</arg>
@@ -57,10 +60,22 @@
       The function which controls whether to enable pretty printing, and the line width.
     </fn>
     <fn name="renderAgain">
-      <arg boolean name="recursiveRender" opt>
-        Whether to render element with the same name.
+      <arg boolean name="doRender" opt>
+        Whether to render component again to update its inner HTML. Default `true`.
       </arg>
-      Render the result of the component again. This is needed when a component might contain other components when rendered. No recursion is allowed otherwise the program will get stuck. Use `getReplacements` to specify how to acquire the replacements for the new _Replaceable_ stream. The argument passed specifies if the component might render recursively (default `false`).
+      <arg boolean name="recursiveRender" opt>
+        Whether to render element with the same name. Default `false`.
+      </arg>
+      After rendering the component itself, the children by default are also rendered by spawning another _Replaceable_ stream. This is needed when a component might contain other components when rendered.
+      - When `recursiveRender` is set to false (default), the component key will be excluded from the rule to prevent recursion.
+      - No recursion is allowed otherwise the program will get stuck, unless `<img/>` renders `<img>` (no `/`) for example.
+      - If `getReplacements` was used to specify how to acquire the replacements for the new child _Replaceable_ stream, the `recursiveRender` arg will be pased to it.
+    </fn>
+    <fn name="setChildContext">
+      <arg type="!Object" name="context">
+        The context specific for children of the node that calls `renderAgain`.
+      </arg>
+      JSX nodes are rendered breadth-first, meaning that siblings will receive the same `this` context. If one of them modifies it, the another one will also pass the updated one to children, which is not always desirable. To create a fork context unique for children of sibling nodes, the child context can be set. It will be passed as an argument to `getContext`.
     </fn>
   </type>
 </types>

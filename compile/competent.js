@@ -707,7 +707,7 @@ module.exports = {_competent:(a, b = {}) => {
       let C;
       "string" == typeof A ? C = A : Array.isArray(A) ? C = A.map(n => "string" == typeof n ? n : N(n, oa)).join("\n") : C = N(A, oa);
       if (!C && ma) {
-        return "";
+        return f && f.call(this, k), "";
       }
       C = (y || "") + C.replace(/^/gm, Q);
       if (w) {

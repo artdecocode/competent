@@ -86,6 +86,7 @@ const competent = (components, conf = {}) => {
         r = render(hyperResult, renderOptions)
       }
       if (!r && removeLine) {
+        if (onSuccess) onSuccess.call(this, key)
         return ''
       }
       r = (ws || '') + r.replace(/^/gm, pad)

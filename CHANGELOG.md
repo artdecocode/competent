@@ -1,3 +1,9 @@
+## 5 September 2019
+
+### [2.1.1](https://github.com/artdecocode/competent/compare/v2.1.0...v2.1.1)
+
+- [fix] Call `onSuccess` when removing a line.
+
 ## 4 September 2019
 
 ### [2.1.0](https://github.com/artdecocode/competent/compare/v2.0.0...v2.1.0)

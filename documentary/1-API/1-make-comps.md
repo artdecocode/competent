@@ -5,6 +5,10 @@
 %EXAMPLE: example/make-comps, ../src => competent%
 %FORK-js example/make-comps%
 
+Additional options are accepted. When a map of imports is passed, it allows to import components from the specified locations.
+
+<typedef narrow flatten>types/make-comps.xml</typedef>
+
 %~ width="25"%
 
 ### Intersection Observer

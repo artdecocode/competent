@@ -19,6 +19,7 @@ yarn add competent
 - [`DEBUG=competent`](#debugcompetent)
 - [`makeComponentsScript(components, componentsLocation, props=, includeH=, io=, options=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringprops-objectincludeh-booleanio-booleanoptions-makecompsconfig-string)
   * [`ExportedComponent`](#type-exportedcomponent)
+  * [`MakeCompsConfig`](#type-makecompsconfig)
   * [Intersection Observer](#intersection-observer)
 - [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
@@ -377,11 +378,11 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-06T20:17:10.056Z competent render npm-package
-2019-09-06T20:17:10.108Z competent render npm-package
-2019-09-06T20:17:10.113Z competent render npm-package
-2019-09-06T20:17:10.122Z competent render hello-world
-2019-09-06T20:17:10.126Z competent render friends
+2019-09-06T20:22:03.052Z competent render npm-package
+2019-09-06T20:22:03.094Z competent render npm-package
+2019-09-06T20:22:03.097Z competent render npm-package
+2019-09-06T20:22:03.099Z competent render hello-world
+2019-09-06T20:22:03.102Z competent render friends
 ```
 
 <p align="center"><a href="#table-of-contents">
@@ -396,7 +397,7 @@ Based on the exported components that were detected using the rule, generates a 
  - <kbd>props</kbd> <em>`Object`</em> (optional): Shared properties made available for each component in addition to its own properties.
  - <kbd>includeH</kbd> <em>`boolean`</em> (optional): Include `import { h } from 'preact'` on top of the file.
  - <kbd>io</kbd> <em>`boolean`</em> (optional): Include intersection observer.
- - <kbd>options</kbd> <em>`MakeCompsConfig`</em> (optional): The options for the make components script.
+ - <kbd>options</kbd> <em><code><a href="#type-makecompsconfig" title="The options for make components script.">MakeCompsConfig</a></code></em> (optional): The options for the make components script.
 
 __<a name="type-exportedcomponent">`ExportedComponent`</a>__: An exported component.
 
@@ -457,6 +458,34 @@ import Components from '../components'
     render(h(Comp, props, children), parent, el)
   })
 ```
+
+Additional options are accepted. When a map of imports is passed, it allows to import components from the specified locations.
+
+__<a name="type-makecompsconfig">`MakeCompsConfig`</a>__: The options for make components script.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center">map</td>
+  <td><em>!Object<string, !Array<?string></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+
+The map with locations from where components should be imported, e.g.,
+```js
+{
+  '../components/named.jsx': [null, 'named-component'],
+  '../components/default.jsx': ['default-component'],
+}
+```
+The default export must come first in the array.
+  </td>
+ </tr>
+</table>
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/4.svg?sanitize=true" width="25">

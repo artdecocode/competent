@@ -15,9 +15,10 @@
     "doc": "NODE_DEBUG=doc doc -o README.md -n _competent",
     "doc-dev": "NODE_DEBUG=doc doc-dev -o README.md -n _competent",
     "b": "alamode src -o build -s",
-    "d": "yarn-s d1 externs",
+    "d": "yarn-s externs template d1",
     "d1": "typal compile/index.js -u",
-    "externs": "typal types/externs.js",
+    "template": "typal compile/template.js -T compile/index.js -t types",
+    "externs": "typal types/externs.js -e",
     "build": "yarn-s d b doc",
     "e": "alanode"
   },
@@ -58,6 +59,7 @@
     "mismatch": "^1.2.0",
     "restream": "^3.7.4",
     "rexml": "^2.2.2",
+    "typal": "^1.22.6",
     "yarn-s": "1.1.0",
     "zoroaster": "^4.1.2"
   },

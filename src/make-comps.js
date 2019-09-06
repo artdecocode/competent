@@ -32,7 +32,7 @@ ${j}
  * @param {!Array<!_competent.ExportedComponent>} components
  */
 const makeJs = (components) => {
-  const s = components.map(makeComponent)
+  const s = components.map((c) => makeComponent(c))
   return '[' + s.join(',\n') + ']'
 }
 
@@ -43,6 +43,74 @@ const io = makeIo(${typeof io == 'string' ? `'${io}'` : ''});`
 }
 
 /**
+ * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
+ */
+const makeNamed = (components) => {
+  if (!components.length) throw new Error('No components were given')
+  const c = components
+    .map(({ key }) => cc(key))
+    .filter((e, i, a) => a.indexOf(e) == i)
+    .join(', ')
+  return `{ ${c} }`
+}
+
+const cc = (key) => {
+  return key.replace(/(?:^|-)(.)/g, (m, l) => l.toUpperCase())
+}
+
+/**
+ * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
+ */
+const makeNamedMap = (components) => {
+  const c = components
+    .map(({ key }) => `'${key}': ${cc(key)}`)
+    .filter((e, i, a) => a.indexOf(e) == i)
+    .join(',\n  ')
+  const map = `const Components = {\n  ${c},\n}`
+  return map
+}
+
+/**
+ * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
+ * @param {Object<string, Array<?string>>} map The map of where to find components.
+ */
+const makeImports = (components, map) => {
+  const keys = components.reduce((acc, { key }) => {
+    if (acc.includes(key)) return acc
+    acc.push(key)
+    return acc
+  }, [])
+  const locs = {}
+  keys.forEach((key) => {
+    Object.entries(map).forEach(([file, array]) => {
+      const i = array.indexOf(key)
+      if (i < 0) return
+      if (!locs[file]) locs[file] = []
+      locs[file][i] = key
+    })
+  })
+  const res = Object.entries(locs).map(([key, val]) => {
+    return makeImport(val, key)
+  }).join('\n')
+  return res
+}
+
+/**
+ * @param {Array<?string>} values The array with imports, where the default one always has index of 0.
+ */
+const makeImport = (values, location) => {
+  const [def, ...rest] = values
+  let s = 'import '
+  if (def) s += cc(def)
+  if (rest.length) {
+    s += def ? ', ' : ''
+    s += `{ ${rest.map(cc).join(', ')} }`
+  }
+  s += ` from '${location}'`
+  return s
+}
+
+/**
  * From the array of exported components, creates an ES6 modules script that will render them on a page using Preact.
  * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
  * @param {string} componentsLocation The location of the module which exports a default object with components relative to where this file will be placed.
@@ -50,12 +118,19 @@ const io = makeIo(${typeof io == 'string' ? `'${io}'` : ''});`
  * @param {!Object} [props] Properties.
  * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
  */
-const makeComponentsScript = (components, componentsLocation, includeH = false, props = {}, io = false ) => {
+const makeComponentsScript = (components, componentsLocation, includeH = false, props = {}, io = false, opts = {}) => {
+  const { map = {} } = opts
+
+  const imports = map
+    ? makeImports(components, map)
+    : `import Components from '${componentsLocation}`
+
   const p = Object.keys(props).map((propName) => {
     const val = props[propName]
     const s = `props.${propName} = ${val}`
     return s
   }).join('\n')
+
   const r = 'render(h(Comp, props, children), parent, el)'
   const ifIo = io ? `el.render = () => {
       ${r}
@@ -63,7 +138,9 @@ const makeComponentsScript = (components, componentsLocation, includeH = false, 
     el.render.meta = { key, id }
     io.observe(el)` : r
   const s = `import { render${includeH ? ', h' : ''} } from 'preact'
-`+`import Components from '${componentsLocation}'
+${imports}
+${ map ? `
+${makeNamedMap(components)}` : ''}
 
 ${defineIo(io)}${makeJs(components)}
   .map(({ key, id, props = {}, children }) => {

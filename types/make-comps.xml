@@ -1,0 +1,14 @@
+<types namespace="_competent">
+  <type record name="MakeCompsConfig" desc="The options for make components script.">
+    <prop name="map" type="!Object<string, !Array<?string>" opt>
+      The map with locations from where components should be imported, e.g.,
+      ```js
+      {
+        '../components/named.jsx': [null, 'named-component'],
+        '../components/default.jsx': ['default-component'],
+      }
+      ```
+      The default export must come first in the array.
+    </prop>
+  </type>
+</types>

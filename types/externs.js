@@ -3,7 +3,7 @@
  * @externs
  */
 
-/* typal types/exported.xml externs */
+/* typal types/exported.xml */
 /** @const */
 var _competent = {}
 /**
@@ -32,7 +32,7 @@ _competent.ExportedComponent.prototype.props
  */
 _competent.ExportedComponent.prototype.children
 
-/* typal types/index.xml externs */
+/* typal types/index.xml */
 /**
  * Options for the program. All functions will be called with the Replaceable instance as their `this` context.
  * @record
@@ -88,3 +88,22 @@ _competent.Props
  * @typedef {{ export: function(boolean=): void, setPretty: function(boolean,number=): void, removeLine: function(boolean=): void, renderAgain: function(boolean=,boolean=): void, setChildContext: function(!Object): void }}
  */
 _competent.Meta
+
+/* typal types/make-comps.xml */
+/**
+ * The options for make components script.
+ * @record
+ */
+_competent.MakeCompsConfig
+/**
+ * The map with locations from where components should be imported, e.g.,
+ * ```js
+ * {
+ *   '../components/named.jsx': [null, 'named-component'],
+ *   '../components/default.jsx': ['default-component'],
+ * }
+ * ```
+ * The default export must come first in the array.
+ * @type {(!Object<string, !Array<?string>)|undefined}
+ */
+_competent.MakeCompsConfig.prototype.map

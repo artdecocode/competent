@@ -26,7 +26,7 @@ function competent(components, config) {
  * @param {boolean=} [includeH] Include `import { h } from 'preact'` on top of the file.
  * @param {boolean=} [io] Include intersection observer.
  * @param {_competent.MakeCompsConfig} [options] The options for make components script.
- * @param {!Object<string, !Array<?string>} [options.map] The map with locations from where components should be imported, e.g.,
+ * @param {!Object<string, !Array<?string>>} [options.map] The map with locations from where components should be imported, e.g.,
  * ```js
  * {
  *   '../components/named.jsx': [null, 'named-component'],
@@ -100,7 +100,7 @@ module.exports.makeComponentsScript = makeComponentsScript
 /**
  * @typedef {_competent.MakeCompsConfig} MakeCompsConfig `＠record` The options for make components script.
  * @typedef {Object} _competent.MakeCompsConfig `＠record` The options for make components script.
- * @prop {!Object<string, !Array<?string>} [map] The map with locations from where components should be imported, e.g.,
+ * @prop {!Object<string, !Array<?string>>} [map] The map with locations from where components should be imported, e.g.,
  * ```js
  * {
  *   '../components/named.jsx': [null, 'named-component'],

@@ -1,6 +1,6 @@
 <types namespace="_competent">
   <type record name="MakeCompsConfig" desc="The options for make components script.">
-    <prop name="map" type="!Object<string, !Array<?string>" opt>
+    <prop name="map" type="!Object<string, !Array<?string>>" opt>
       The map with locations from where components should be imported, e.g.,
       ```js
       {

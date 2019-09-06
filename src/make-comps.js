@@ -72,7 +72,7 @@ const makeNamedMap = (components) => {
 
 /**
  * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
- * @param {Object<string, Array<?string>>} map The map of where to find components.
+ * @param {!Object<string, Array<?string>>} map The map of where to find components.
  */
 const makeImports = (components, map) => {
   const keys = components.reduce((acc, { key }) => {
@@ -96,7 +96,7 @@ const makeImports = (components, map) => {
 }
 
 /**
- * @param {Array<?string>} values The array with imports, where the default one always has index of 0.
+ * @param {!Array<?string>} values The array with imports, where the default one always has index of 0.
  */
 const makeImport = (values, location) => {
   const [def, ...rest] = values

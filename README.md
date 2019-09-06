@@ -378,11 +378,11 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-06T20:22:03.052Z competent render npm-package
-2019-09-06T20:22:03.094Z competent render npm-package
-2019-09-06T20:22:03.097Z competent render npm-package
-2019-09-06T20:22:03.099Z competent render hello-world
-2019-09-06T20:22:03.102Z competent render friends
+2019-09-06T20:25:46.869Z competent render npm-package
+2019-09-06T20:25:46.918Z competent render npm-package
+2019-09-06T20:25:46.923Z competent render npm-package
+2019-09-06T20:25:46.925Z competent render hello-world
+2019-09-06T20:25:46.942Z competent render friends
 ```
 
 <p align="center"><a href="#table-of-contents">
@@ -469,7 +469,7 @@ __<a name="type-makecompsconfig">`MakeCompsConfig`</a>__: The options for make c
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center">map</td>
-  <td><em>!Object<string, !Array<?string></em></td>
+  <td><em>!Object&lt;string, !Array&lt;?string&gt;&gt;</em></td>
  </tr>
  <tr></tr>
  <tr>

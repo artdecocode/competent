@@ -104,6 +104,6 @@ _competent.MakeCompsConfig
  * }
  * ```
  * The default export must come first in the array.
- * @type {(!Object<string, !Array<?string>)|undefined}
+ * @type {(!Object<string, !Array<?string>>)|undefined}
  */
 _competent.MakeCompsConfig.prototype.map

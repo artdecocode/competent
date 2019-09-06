@@ -12,12 +12,12 @@ yarn add competent
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`competent(components, config=): !restream.Rule`](#competentcomponents-objectstring-functionfunctionnew-preactcomponentconfig-config-restreamrule)
+- [`competent(components, config=): !_restream.Rule`](#competentcomponents-objectstring-functionfunctionnew-preactcomponentconfig-config-_restreamrule)
   * [`Config`](#type-config)
   * [`Props`](#type-props)
   * [`Meta`](#type-meta)
 - [`DEBUG=competent`](#debugcompetent)
-- [`makeComponentsScript(components, componentsLocation, props=, includeH=, io=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringprops-objectincludeh-booleanio-boolean-string)
+- [`makeComponentsScript(components, componentsLocation, props=, includeH=, io=, options=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringprops-objectincludeh-booleanio-booleanoptions-makecompsconfig-string)
   * [`ExportedComponent`](#type-exportedcomponent)
   * [Intersection Observer](#intersection-observer)
 - [Known Limitations](#known-limitations)
@@ -40,7 +40,7 @@ import competent from 'competent'
   <img src="/.documentary/section-breaks/1.svg?sanitize=true">
 </a></p>
 
-## <code><ins>competent</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Object<string, !Function|function(new: preact.Component)>,`<br/>&nbsp;&nbsp;`config=: !Config,`<br/></sub><code>): <i>!restream.Rule</i></code>
+## <code><ins>competent</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Object<string, !Function|function(new: preact.Component)>,`<br/>&nbsp;&nbsp;`config=: !Config,`<br/></sub><code>): <i>!_restream.Rule</i></code>
 Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
 
  - <kbd><strong>components*</strong></kbd> <em><code>!Object&lt;string, (!Function \| function(new: <a href="https://github.com/dpck/preact/wiki/Component" title="A base class that is usually subclassed to create stateful Preact components.">preact.Component</a>))&gt;</code></em>: Components to extract from HTML and render using _Preact's_ server-side rendering. Can be either a functional stateless component, or a _Preact_ component constructor.
@@ -330,6 +330,17 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
   </td>
  </tr>
  <tr>
+  <td rowSpan="3" align="center"><strong>removeLine*</strong></td>
+  <td><em>(shouldRemove?: boolean) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   If the component rendered a falsy value (e.g., <code>null</code>, <code>''</code>), and the <code>removeLine</code> was called, <em>Competent</em> will remove <code>\n___＜component＞</code>. By default, this is switched off.<br/>
+   <kbd>shouldRemove</kbd> <em><code>boolean</code></em> (optional): Sets whether the new line should be removed (default <code>true</code>).
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center"><strong>renderAgain*</strong></td>
   <td><em>(doRender?: boolean, recursiveRender?: boolean) => void</em></td>
  </tr>
@@ -338,7 +349,7 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
   <td>
    After rendering the component itself, the children by default are also rendered by spawning another <em>Replaceable</em> stream. This is needed when a component might contain other components when rendered.
    <li>When <code>recursiveRender</code> is set to false (default), the component key will be excluded from the rule to prevent recursion.</li>
-   <li>No recursion is allowed otherwise the program will get stuck, unless <code>&lt;img/&gt;</code> renders <code>&lt;img&gt;</code> (no <code>/</code>) for example.</li>
+   <li>No recursion is allowed otherwise the program will get stuck, unless <code>＜img/＞</code> renders <code>＜img＞</code> (no <code>/</code>) for example.</li>
    <li>If <code>getReplacements</code> was used to specify how to acquire the replacements for the new child <em>Replaceable</em> stream, the <code>recursiveRender</code> arg will be pased to it.<br/></li>
    <kbd>doRender</kbd> <em><code>boolean</code></em> (optional): Whether to render component again to update its inner HTML. Default <code>true</code>.<br/>
    <kbd>recursiveRender</kbd> <em><code>boolean</code></em> (optional): Whether to render element with the same name. Default <code>false</code>.
@@ -366,18 +377,18 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-04T10:55:40.096Z competent render npm-package
-2019-09-04T10:55:40.133Z competent render npm-package
-2019-09-04T10:55:40.138Z competent render npm-package
-2019-09-04T10:55:40.140Z competent render hello-world
-2019-09-04T10:55:40.143Z competent render friends
+2019-09-06T20:17:10.056Z competent render npm-package
+2019-09-06T20:17:10.108Z competent render npm-package
+2019-09-06T20:17:10.113Z competent render npm-package
+2019-09-06T20:17:10.122Z competent render hello-world
+2019-09-06T20:17:10.126Z competent render friends
 ```
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/3.svg?sanitize=true">
 </a></p>
 
-## <code><ins>makeComponentsScript</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/></sub><code>): <i>string</i></code>
+## <code><ins>makeComponentsScript</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>&nbsp;&nbsp;`options=: MakeCompsConfig,`<br/></sub><code>): <i>string</i></code>
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
  - <kbd><strong>components*</strong></kbd> <em><code>!Array&lt;<a href="#type-exportedcomponent" title="An exported component.">!ExportedComponent</a>&gt;</code></em>: All components that were made exportable by the rule.
@@ -385,6 +396,7 @@ Based on the exported components that were detected using the rule, generates a 
  - <kbd>props</kbd> <em>`Object`</em> (optional): Shared properties made available for each component in addition to its own properties.
  - <kbd>includeH</kbd> <em>`boolean`</em> (optional): Include `import { h } from 'preact'` on top of the file.
  - <kbd>io</kbd> <em>`boolean`</em> (optional): Include intersection observer.
+ - <kbd>options</kbd> <em>`MakeCompsConfig`</em> (optional): The options for the make components script.
 
 __<a name="type-exportedcomponent">`ExportedComponent`</a>__: An exported component.
 

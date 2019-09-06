@@ -119,11 +119,11 @@ const makeImport = (values, location) => {
  * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
  */
 const makeComponentsScript = (components, componentsLocation, includeH = false, props = {}, io = false, opts = {}) => {
-  const { map = {} } = opts
+  const { map } = opts
 
   const imports = map
     ? makeImports(components, map)
-    : `import Components from '${componentsLocation}`
+    : `import Components from '${componentsLocation}'`
 
   const p = Object.keys(props).map((propName) => {
     const val = props[propName]
@@ -140,8 +140,8 @@ const makeComponentsScript = (components, componentsLocation, includeH = false, 
   const s = `import { render${includeH ? ', h' : ''} } from 'preact'
 ${imports}
 ${ map ? `
-${makeNamedMap(components)}` : ''}
-
+${makeNamedMap(components)}
+` : ''}
 ${defineIo(io)}${makeJs(components)}
   .map(({ key, id, props = {}, children }) => {
     const el = document.getElementById(id)

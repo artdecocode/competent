@@ -10,12 +10,16 @@
   children: [''],
 }]
 
-## !imports named components
+## imports named components
 ../comps
+
+/* map */
+{ '../test': ['test', 'test-component'] }
+/**/
 
 /* expected */
 import { render } from 'preact'
-import { Test, TestComponent } from '../comps'
+import Test, { TestComponent } from '../test'
 
 const Components = {
   'test': Test,

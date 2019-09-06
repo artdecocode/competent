@@ -120,12 +120,7 @@ spawncommand@1.1.0:
   dependencies:
     catchment "^1.0.0"
 
-typal@^1.22.1:
-  version "1.22.3"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.22.3.tgz#e5b3a38778ecff7d96ff6205d7b8a34f9b728f94"
-  integrity sha512-4ZYAmGH7r906rHJGDvlsYGqHWYYC7sS1FJLYakUt/tJDyz5nvFakF26Kvl+1S5YL4yLvCcFcBbSz0J+RXrKu0Q==
-
-typal@^1.22.6:
+typal@^1.22.1, typal@^1.22.6:
   version "1.22.6"
   resolved "https://registry.yarnpkg.com/typal/-/typal-1.22.6.tgz#c3162f5f19e91ad6d830375220e6552fcb4a0936"
   integrity sha512-N6tkgC/r7OXwH0/hEFNRH6S/7zPfMXJU45w78KGgy8JLbt3lAbWPd4NWUZjQt6o2id23P34KeHSmNR4ddI/zZQ==

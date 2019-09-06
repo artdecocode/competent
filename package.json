@@ -25,7 +25,8 @@
   "files": [
     "compile",
     "src",
-    "types/externs.js"
+    "types/externs.js",
+    "COPYING"
   ],
   "externs": "types/externs.js",
   "repository": {

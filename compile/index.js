@@ -34,6 +34,7 @@ function competent(components, config) {
  * }
  * ```
  * The default export must come first in the array.
+ * @param {boolean|string} [options.fileIo=false] If passed, the `make-io` script will be imported from this file, rather than embedded. By default, when set to true the `competent/make-io` package path is used, but the custom string may be passed. Default `false`.
  * @return {string}
  */
 function makeComponentsScript(components, componentsLocation, includeH = false, props = {}, io = false, options) {
@@ -108,6 +109,7 @@ module.exports.makeComponentsScript = makeComponentsScript
  * }
  * ```
  * The default export must come first in the array.
+ * @prop {boolean|string} [fileIo=false] If passed, the `make-io` script will be imported from this file, rather than embedded. By default, when set to true the `competent/make-io` package path is used, but the custom string may be passed. Default `false`.
  */
 
 /**

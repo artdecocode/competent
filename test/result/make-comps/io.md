@@ -31,7 +31,8 @@ function makeIo(rootMargin = '0px 0px 76px 0px') {
   }, { rootMargin })
   return io
 }
-const io = makeIo();[{
+const io = makeIo();
+[{
   key: 'test',
   id: 'id1',
 }]

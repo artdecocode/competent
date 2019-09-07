@@ -378,11 +378,11 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-06T20:25:46.869Z competent render npm-package
-2019-09-06T20:25:46.918Z competent render npm-package
-2019-09-06T20:25:46.923Z competent render npm-package
-2019-09-06T20:25:46.925Z competent render hello-world
-2019-09-06T20:25:46.942Z competent render friends
+2019-09-07T02:10:18.807Z competent render npm-package
+2019-09-07T02:10:18.845Z competent render npm-package
+2019-09-07T02:10:18.851Z competent render npm-package
+2019-09-07T02:10:18.857Z competent render hello-world
+2019-09-07T02:10:18.863Z competent render friends
 ```
 
 <p align="center"><a href="#table-of-contents">
@@ -466,10 +466,12 @@ __<a name="type-makecompsconfig">`MakeCompsConfig`</a>__: The options for make c
  <thead><tr>
   <th>Name</th>
   <th>Type &amp; Description</th>
+  <th>Default</th>
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center">map</td>
   <td><em>!Object&lt;string, !Array&lt;?string&gt;&gt;</em></td>
+  <td rowSpan="3">-</td>
  </tr>
  <tr></tr>
  <tr>
@@ -483,6 +485,17 @@ The map with locations from where components should be imported, e.g.,
 }
 ```
 The default export must come first in the array.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">fileIo</td>
+  <td><em>(boolean | string)</em></td>
+  <td rowSpan="3"><code>false</code></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   If passed, the <code>make-io</code> script will be imported from this file, rather than embedded. By default, when set to true the <code>competent/make-io</code> package path is used, but the custom string may be passed.
   </td>
  </tr>
 </table>
@@ -524,7 +537,8 @@ function makeIo(rootMargin = '0px 0px 76px 0px') {
   }, { rootMargin })
   return io
 }
-const io = makeIo();[{
+const io = makeIo();
+[{
   key: 'npm-package',
   id: 'c1',
   props: {

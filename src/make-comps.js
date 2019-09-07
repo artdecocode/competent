@@ -36,23 +36,24 @@ const makeJs = (components) => {
   return '[' + s.join(',\n') + ']'
 }
 
-const defineIo = (io = true) => {
+const defineIo = (io = true, fileIo = false) => {
   if (!io) return ''
-  return `${makeIo}
-const io = makeIo(${typeof io == 'string' ? `'${io}'` : ''});`
+  return `${!fileIo ? makeIo + '\n' : ''
+  }const io = makeIo(${typeof io == 'string' ? `'${io}'` : ''});
+`
 }
 
-/**
- * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
- */
-const makeNamed = (components) => {
-  if (!components.length) throw new Error('No components were given')
-  const c = components
-    .map(({ key }) => cc(key))
-    .filter((e, i, a) => a.indexOf(e) == i)
-    .join(', ')
-  return `{ ${c} }`
-}
+// /**
+//  * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
+//  */
+// const makeNamed = (components) => {
+//   if (!components.length) throw new Error('No components were given')
+//   const c = components
+//     .map(({ key }) => cc(key))
+//     .filter((e, i, a) => a.indexOf(e) == i)
+//     .join(', ')
+//   return `{ ${c} }`
+// }
 
 const cc = (key) => {
   return key.replace(/(?:^|-)(.)/g, (m, l) => l.toUpperCase())
@@ -119,7 +120,7 @@ const makeImport = (values, location) => {
  * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
  */
 const makeComponentsScript = (components, componentsLocation, includeH = false, props = {}, io = false, opts = {}) => {
-  const { map } = opts
+  const { map, fileIo = false } = opts
 
   const imports = map
     ? makeImports(components, map)
@@ -138,11 +139,15 @@ const makeComponentsScript = (components, componentsLocation, includeH = false, 
     el.render.meta = { key, id }
     io.observe(el)` : r
   const s = `import { render${includeH ? ', h' : ''} } from 'preact'
-${imports}
+${imports}${
+  fileIo ? `
+`+`import makeIo from '${
+    typeof fileIo == 'string' ? fileIo : 'competent/make-io'}'` : ''
+}
 ${ map ? `
 ${makeNamedMap(components)}
 ` : ''}
-${defineIo(io)}${makeJs(components)}
+${defineIo(io, fileIo)}${makeJs(components)}
   .map(({ key, id, props = {}, children }) => {
     const el = document.getElementById(id)
     if (!el) {

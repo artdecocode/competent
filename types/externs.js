@@ -107,3 +107,8 @@ _competent.MakeCompsConfig
  * @type {(!Object<string, !Array<?string>>)|undefined}
  */
 _competent.MakeCompsConfig.prototype.map
+/**
+ * If passed, the `make-io` script will be imported from this file, rather than embedded. By default, when set to true the `competent/make-io` package path is used, but the custom string may be passed. Default `false`.
+ * @type {(boolean|string)|undefined}
+ */
+_competent.MakeCompsConfig.prototype.fileIo

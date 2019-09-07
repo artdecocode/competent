@@ -18,9 +18,10 @@ export const io = makeTestSuite('test/result/make-comps/io', {
 
 export const named = makeTestSuite('test/result/make-comps/named', {
   getResults() {
-    return makeComponentsScript(this.preamble, this.input, false, {}, false, {
-      map: this.map || {},
+    return makeComponentsScript(this.preamble, this.input, false, {}, this.io || false, {
+      map: this.map,
+      fileIo: this.fileIo,
     })
   },
-  jsProps: ['preamble', 'map'],
+  jsProps: ['preamble', 'map', 'fileIo'],
 })

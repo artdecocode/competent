@@ -1,4 +1,7 @@
-import makeIo from './lib/make-io'
+// import read from '@wrote/read'
+import write from '@wrote/write'
+// import makeIo from './lib/make-io'
+import { join } from 'path'
 
 const makeProps = (props) => {
   const keys = Object.keys(props)
@@ -29,6 +32,7 @@ ${j}
 }
 
 /**
+ * Page-specific meta object of how to invoke components.
  * @param {!Array<!_competent.ExportedComponent>} components
  */
 const makeJs = (components) => {
@@ -36,11 +40,12 @@ const makeJs = (components) => {
   return '[' + s.join(',\n') + ']'
 }
 
-const defineIo = (io = true, fileIo = false) => {
+const defineIo = (io = true) => {
   if (!io) return ''
-  return `${!fileIo ? makeIo + '\n' : ''
-  }const io = makeIo(${typeof io == 'string' ? `'${io}'` : ''});
-`
+  return `const io = makeIo(${typeof io != 'boolean' ? JSON.stringify(io)
+    .replace(/(,?)"(.+?)":/g, (m, c, k) => `${c ? ', ' : ''}${k}: `)
+    .replace(/^{/, '{ ')
+    .replace(/}$/, ' }') : ''});`
 }
 
 // /**
@@ -92,20 +97,20 @@ const makeImports = (components, map) => {
   })
   const res = Object.entries(locs).map(([key, val]) => {
     return makeImport(val, key)
-  }).join('\n')
+  })
   return res
 }
 
 /**
  * @param {!Array<?string>} values The array with imports, where the default one always has index of 0.
  */
-const makeImport = (values, location) => {
+const makeImport = (values, location, components = true) => {
   const [def, ...rest] = values
   let s = 'import '
-  if (def) s += cc(def)
+  if (def) s += components ? cc(def) : def
   if (rest.length) {
     s += def ? ', ' : ''
-    s += `{ ${rest.map(cc).join(', ')} }`
+    s += `{ ${(components ? rest.map(cc) : rest).join(', ')} }`
   }
   s += ` from '${location}'`
   return s
@@ -119,14 +124,36 @@ const makeImport = (values, location) => {
  * @param {!Object} [props] Properties.
  * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
  */
-const makeComponentsScript = (components, componentsLocation, includeH = false, props = {}, io = false, opts = {}) => {
-  const { map, fileIo = false } = opts
+export default async function makeComponentsScript(components, opts) {
+  if (typeof opts != 'object') throw new Error('Options are required.')
+  const { map, assetsPath, io = false,
+    includeH = false, props = {} } = opts
 
-  const imports = map
-    ? makeImports(components, map)
-    : `import Components from '${componentsLocation}'`
+  // if (!assetsPath) throw new Error('Please specify the path where to write lib files.')
+  if (!map) throw new Error('The map of where to import components from is required.')
 
-  const p = Object.keys(props).map((propName) => {
+  // ensured during the build step without compilation
+  const init = require(/*depack*/'./init')
+  const makeIo = require(/*depack*/'./make-io')
+
+  const Components = makeNamedMap(components)
+  if (assetsPath) {
+    await write(join(assetsPath, './init'), `${Components}
+
+  export default${init.toString()}`)
+    await write(join(assetsPath, './make-io'), `export default ${makeIo.toString()}`)
+  }
+
+  const imports = [
+    makeImport([null, 'render', ...(includeH ? ['h'] : [])], 'preact', false),
+    ...(assetsPath ? [
+      ...(io ? [makeImport(['makeIo'], './make-io', false)] : []),
+      makeImport(['init'], './init', false),
+    ] : []),
+    ...makeImports(components, map),
+  ].join('\n')
+
+  const extendProps = Object.keys(props).map((propName) => {
     const val = props[propName]
     const s = `props.${propName} = ${val}`
     return s
@@ -138,33 +165,20 @@ const makeComponentsScript = (components, componentsLocation, includeH = false, 
     }
     el.render.meta = { key, id }
     io.observe(el)` : r
-  const s = `import { render${includeH ? ', h' : ''} } from 'preact'
-${imports}${
-  fileIo ? `
-`+`import makeIo from '${
-    typeof fileIo == 'string' ? fileIo : 'competent/make-io'}'` : ''
-}
-${ map ? `
-${makeNamedMap(components)}
-` : ''}
-${defineIo(io, fileIo)}${makeJs(components)}
+
+  let s = imports + '\n\n'
+  if (!assetsPath) {
+    s += Components + '\n\n'
+    s += init.toString() + '\n\n'
+    if (io) s += makeIo.toString() + '\n\n'
+  }
+  if (io) s += defineIo(io) + '\n\n'
+  s += makeJs(components)
+  s += `
   .map(({ key, id, props = {}, children }) => {
-    const el = document.getElementById(id)
-    if (!el) {
-      console.warn('Parent element for component %s with id %s not found', key, id)
-      return
-    }
-    const parent = el.parentElement
-    if (!parent) {
-      console.warn('Parent of element for component %s with id %s not found', key, id)
-      return
-    }
-    const Comp = Components[key]
-    if (!Comp) {
-      console.warn('Component with key %s was not found.', key)
-      return
-    }
-${p ? `    ${p}` : ''}
+    const { Comp, parent, el } = init(id, key)
+    if (!Comp) return
+${extendProps ? `    ${extendProps}` : ''}
     ${ifIo}
   })
 `
@@ -173,9 +187,7 @@ ${p ? `    ${p}` : ''}
 
 // render(h(Comp, props, children), parent, el)
 
-export default makeComponentsScript
-
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('..').ExportedComponent} _competent.ExportedComponent
+ * @typedef {import('../..').ExportedComponent} _competent.ExportedComponent
  */

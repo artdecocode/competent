@@ -1,27 +1,43 @@
 import makeTestSuite from '@zoroaster/mask'
+import TempContext from 'temp-context'
 import { makeComponentsScript } from '../../src'
 
-export default
-makeTestSuite('test/result/make-comps/default', {
+export default makeTestSuite('test/result/make-comps/default', {
   getResults() {
-    return makeComponentsScript(this.preamble, this.input, false, this.props)
+    return makeComponentsScript(this.preamble, {
+      map: { [this.input]: ['test'] },
+      props: this.props,
+    })
   },
   jsProps: ['preamble', 'props'],
 })
 
 export const io = makeTestSuite('test/result/make-comps/io', {
-  getResults() {
-    return makeComponentsScript(this.preamble, this.input, false, this.props, this.io)
+  context: TempContext,
+  /**
+   * @param {TempContext} t
+   */
+  getResults({ TEMP }) {
+    return makeComponentsScript(this.preamble, {
+      map: { [this.input]: ['test'] },
+      io: this.io,
+      assetsPath: this.assetsPath ? TEMP : null,
+    })
   },
-  jsProps: ['preamble', 'io'],
+  jsProps: ['preamble', 'io', 'assetsPath'],
 })
 
 export const named = makeTestSuite('test/result/make-comps/named', {
-  getResults() {
-    return makeComponentsScript(this.preamble, this.input, false, {}, this.io || false, {
+  context: TempContext,
+  /**
+   * @param {TempContext} t
+   */
+  getResults({ TEMP }) {
+    return makeComponentsScript(this.preamble, {
       map: this.map,
-      fileIo: this.fileIo,
+      assetsPath: TEMP,
+      io: this.io,
     })
   },
-  jsProps: ['preamble', 'map', 'fileIo'],
+  jsProps: ['preamble', 'map', 'io'],
 })

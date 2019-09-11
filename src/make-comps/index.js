@@ -1,6 +1,4 @@
-// import read from '@wrote/read'
 import write from '@wrote/write'
-// import makeIo from './lib/make-io'
 import { join } from 'path'
 
 const makeProps = (props) => {
@@ -119,13 +117,10 @@ const makeImport = (values, location, components = true) => {
 /**
  * From the array of exported components, creates an ES6 modules script that will render them on a page using Preact.
  * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
- * @param {string} componentsLocation The location of the module which exports a default object with components relative to where this file will be placed.
- * @param {boolean} [includeH=false] Imports the `h` pragma from preact. By default is disabled, because can be added automatically by `Depack` and `@idio/frontend`.
- * @param {!Object} [props] Properties.
- * @param {boolean|string} [io=false] Should the generated script use the intersection observer. When a string is passed, it is used as the root margin option (default is, `0px 0px 76px 0px`)
+ * @param {!_competent.MakeCompsConfig} opts
  */
 export default async function makeComponentsScript(components, opts) {
-  if (typeof opts != 'object') throw new Error('Options are required.')
+  if (typeof opts != 'object') throw new Error('Options are required with at least a map.')
   const { map, assetsPath, io = false,
     includeH = false, props = {} } = opts
 
@@ -189,5 +184,5 @@ ${extendProps ? `    ${extendProps}` : ''}
 
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('../..').ExportedComponent} _competent.ExportedComponent
+ * @typedef {import('../..').MakeCompsConfig} _competent.MakeCompsConfig
  */

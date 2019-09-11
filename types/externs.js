@@ -108,7 +108,33 @@ _competent.MakeCompsConfig
  */
 _competent.MakeCompsConfig.prototype.map
 /**
- * If passed, the `make-io` script will be imported from this file, rather than embedded. By default, when set to true the `competent/make-io` package path is used, but the custom string may be passed. Default `false`.
- * @type {(boolean|string)|undefined}
+ * Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
+ * @type {(boolean|!_competent.IOOptions)|undefined}
  */
-_competent.MakeCompsConfig.prototype.fileIo
+_competent.MakeCompsConfig.prototype.io
+/**
+ * Shared properties made available for each component in addition to its own properties.
+ * @type {(!Object<string, *>)|undefined}
+ */
+_competent.MakeCompsConfig.prototype.props
+/**
+ * Include `import { h } from 'preact'` on top of the file.
+ * @type {boolean|undefined}
+ */
+_competent.MakeCompsConfig.prototype.includeH
+/**
+ * Where to save assets such as scripts to make an intersection observer and init method. If not passed, these functions are embedded into the result. Useful when creating more than one script.
+ * @type {string|undefined}
+ */
+_competent.MakeCompsConfig.prototype.assetsPath
+/**
+ * Options for the observer.
+ * @extends {IntersectionObserverInit}
+ * @constructor
+ */
+_competent.IOOptions = function() {}
+/**
+ * Whether to print a message to console when a component is rendered.
+ * @type {boolean}
+ */
+_competent.IOOptions.prototype.log

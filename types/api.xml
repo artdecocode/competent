@@ -15,18 +15,6 @@
     <arg type="!Array<!_competent.ExportedComponent>" name="components">
       All components that were made exportable by the rule.
     </arg>
-    <arg string name="componentsLocation">
-      Relative location from which to require components.
-    </arg>
-    <arg type="Object" name="props" opt>
-      Shared properties made available for each component in addition to its own properties.
-    </arg>
-    <arg boolean name="includeH" opt>
-      Include `import { h } from 'preact'` on top of the file.
-    </arg>
-    <arg boolean name="io" opt>
-      Include intersection observer.
-    </arg>
     <arg type="_competent.MakeCompsConfig" name="options" opt>
       The options for the make components script.
     </arg>

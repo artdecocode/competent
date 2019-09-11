@@ -21,10 +21,6 @@ function competent(components, config) {
 /**
  * Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
  * @param {!Array<!_competent.ExportedComponent>} components All components that were made exportable by the rule.
- * @param {string} componentsLocation Relative location from which to require components.
- * @param {Object=} [props] Shared properties made available for each component in addition to its own properties.
- * @param {boolean=} [includeH] Include `import { h } from 'preact'` on top of the file.
- * @param {boolean=} [io] Include intersection observer.
  * @param {_competent.MakeCompsConfig} [options] The options for make components script.
  * @param {!Object<string, !Array<?string>>} [options.map] The map with locations from where components should be imported, e.g.,
  * ```js
@@ -34,7 +30,10 @@ function competent(components, config) {
  * }
  * ```
  * The default export must come first in the array.
- * @param {boolean|string} [options.fileIo=false] If passed, the `make-io` script will be imported from this file, rather than embedded. By default, when set to true the `competent/make-io` package path is used, but the custom string may be passed. Default `false`.
+ * @param {boolean|!_competent.IOOptions} [options.io] Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
+ * @param {!Object<string, *>} [options.props] Shared properties made available for each component in addition to its own properties.
+ * @param {boolean} [options.includeH] Include `import { h } from 'preact'` on top of the file.
+ * @param {string} [options.assetsPath] Where to save assets such as scripts to make an intersection observer and init method. If not passed, these functions are embedded into the result. Useful when creating more than one script.
  * @return {string}
  */
 function makeComponentsScript(components, componentsLocation, includeH = false, props = {}, io = false, options) {
@@ -109,7 +108,14 @@ module.exports.makeComponentsScript = makeComponentsScript
  * }
  * ```
  * The default export must come first in the array.
- * @prop {boolean|string} [fileIo=false] If passed, the `make-io` script will be imported from this file, rather than embedded. By default, when set to true the `competent/make-io` package path is used, but the custom string may be passed. Default `false`.
+ * @prop {boolean|!_competent.IOOptions} [io] Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
+ * @prop {!Object<string, *>} [props] Shared properties made available for each component in addition to its own properties.
+ * @prop {boolean} [includeH] Include `import { h } from 'preact'` on top of the file.
+ * @prop {string} [assetsPath] Where to save assets such as scripts to make an intersection observer and init method. If not passed, these functions are embedded into the result. Useful when creating more than one script.
+ * @typedef {_competent.IOOptions} IOOptions `＠constructor` Options for the observer.
+ * @typedef {IntersectionObserverInit & _competent.$IOOptions} _competent.IOOptions `＠constructor` Options for the observer.
+ * @typedef {Object} _competent.$IOOptions `＠constructor` Options for the observer.
+ * @prop {boolean} log Whether to print a message to console when a component is rendered.
  */
 
 /**

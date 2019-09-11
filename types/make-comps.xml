@@ -10,8 +10,22 @@
       ```
       The default export must come first in the array.
     </prop>
-    <prop name="fileIo" type="boolean|string" default="false">
-      If passed, the `make-io` script will be imported from this file, rather than embedded. By default, when set to true the `competent/make-io` package path is used, but the custom string may be passed.
+    <prop name="io" type="boolean|!_competent.IOOptions" opt>
+      Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
+    </prop>
+    <prop type="!Object<string, *>" name="props" opt>
+      Shared properties made available for each component in addition to its own properties.
+    </prop>
+    <prop boolean name="includeH" opt>
+      Include `import { h } from 'preact'` on top of the file.
+    </prop>
+    <prop string name="assetsPath" opt>
+      Where to save assets such as scripts to make an intersection observer and init method. If not passed, these functions are embedded into the result. Useful when creating more than one script.
     </prop>
   </type>
+  <constructor name="IOOptions" extends="IntersectionObserverInit" desc="Options for the observer.">
+    <prop name="log" boolean>
+      Whether to print a message to console when a component is rendered.
+    </prop>
+  </constructor>
 </types>

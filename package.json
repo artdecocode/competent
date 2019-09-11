@@ -14,12 +14,12 @@
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc -o README.md -n _competent",
     "doc-dev": "NODE_DEBUG=doc doc-dev -o README.md -n _competent",
-    "b": "alamode src -o build -s",
+    "b": "alanode build",
     "d": "yarn-s externs template d1",
     "d1": "typal compile/index.js -u",
     "template": "typal compile/template.js -T compile/index.js -t types",
     "externs": "typal types/externs.js -e",
-    "build": "yarn-s d b doc",
+    "build": "yarn-s compile b",
     "e": "alanode"
   },
   "files": [
@@ -52,6 +52,7 @@
     "@externs/preact": "^1.2.6",
     "@idio/debug": "^1.2.3",
     "@rqt/aqt": "^1.3.0",
+    "@wrote/clone": "^1.2.1",
     "@wrote/read": "^1.0.4",
     "@wrote/write": "^1.0.4",
     "alamode": "^3.0.0",

@@ -41,10 +41,15 @@ const meta = [${s.join(',\n')}]`
 }
 
 // todo: test escaped \"prop\": value
-const defineIo = (io = true) => {
+/**
+ * @param {boolean|!Object} io
+ */
+export const defineIo = (io = true) => {
   if (!io) return ''
   return `const io = makeIo(${typeof io != 'boolean' ? JSON.stringify(io)
-    .replace(/(,?)(?:[^\\])"(.+?)":/g, (m, c, k) => `${c ? ', ' : ''}${k}: `)
+    .replace(/([^\\])"([^"]+?)":/g, (m, n, k) => {
+      return `${n == ',' ? ', ' : n}${k}: `
+    })
     .replace(/^{/, '{ ')
     .replace(/}$/, ' }') : ''})`
 }

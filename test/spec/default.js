@@ -3,6 +3,7 @@ import mismatch from 'mismatch'
 import Context from '../context'
 import competent from '../../src'
 import { makeRe } from '../../src/lib'
+import { defineIo } from '../../src/make-comps';
 
 /** @type {Object.<string, (c: Context)>} */
 const T = {
@@ -51,6 +52,9 @@ const T = {
     const re = makeRe(['img'])
     const res = mismatch(re, `<img src="test.jpg"><section-break />`, ['ws', 'test'])
     equal(res.length, 0)
+  },
+  '!define-io'() {
+    return defineIo({ rootMargin: '10px', threshold: 20 })
   },
 }
 

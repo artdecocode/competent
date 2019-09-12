@@ -1,0 +1,1 @@
+const io = makeIo({ rootMargin: "10px", threshold: 20 })

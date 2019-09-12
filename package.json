@@ -26,7 +26,8 @@
     "compile",
     "src",
     "types/externs.js",
-    "COPYING"
+    "COPYING",
+    "build.js"
   ],
   "externs": "types/externs.js",
   "repository": {
@@ -56,7 +57,7 @@
     "@wrote/read": "^1.0.4",
     "@wrote/write": "^1.0.4",
     "alamode": "^3.0.0",
-    "documentary": "^1.32.2",
+    "documentary": "^1.33.0",
     "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
     "mismatch": "^1.2.0",

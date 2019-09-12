@@ -1,9 +1,9 @@
 ## API
 
-The package is available by importing its default function:
+The package is available by importing its default and named functions:
 
 ```js
-import competent from 'competent'
+import competent, { makeComponentsScript, writeAssets } from 'competent'
 ```
 
 %~%

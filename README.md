@@ -21,7 +21,9 @@ yarn add competent
   * [`MakeCompsConfig`](#type-makecompsconfig)
   * [`IOOptions`](#type-iooptions)
   * [`ExportedComponent`](#type-exportedcomponent)
+  * [Assets](#assets)
   * [Intersection Observer](#intersection-observer)
+- [`async writeAssets(path): void`](#async-writeassetspath-string-void)
 - [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
 - [Copyright](#copyright)
@@ -32,10 +34,10 @@ yarn add competent
 
 ## API
 
-The package is available by importing its default function:
+The package is available by importing its default and named functions:
 
 ```js
-import competent from 'competent'
+import competent, { makeComponentsScript, writeAssets } from 'competent'
 ```
 
 <p align="center"><a href="#table-of-contents">
@@ -380,11 +382,11 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-12T20:10:15.678Z competent render npm-package
-2019-09-12T20:10:15.768Z competent render npm-package
-2019-09-12T20:10:15.772Z competent render npm-package
-2019-09-12T20:10:15.774Z competent render hello-world
-2019-09-12T20:10:15.778Z competent render friends
+2019-09-12T20:39:44.628Z competent render npm-package
+2019-09-12T20:39:44.669Z competent render npm-package
+2019-09-12T20:39:44.675Z competent render npm-package
+2019-09-12T20:39:44.676Z competent render hello-world
+2019-09-12T20:39:44.683Z competent render friends
 ```
 
 <p align="center"><a href="#table-of-contents">
@@ -458,7 +460,7 @@ The default export must come first in the array.
  <tr></tr>
  <tr>
   <td>
-   Whether the library functions should be required from a separate file, <code>./competent-lib</code>. Works together with <code>writeAssets</code> and is useful when generating more than one script.
+   Whether the library functions should be required from a separate file, <code>./__competent-lib</code>. Works together with <code>writeAssets</code> and is useful when generating more than one script.
   </td>
  </tr>
 </table>
@@ -501,6 +503,7 @@ import { makeComponentsScript } from 'competent'
   console.log(makeComponentsScript(exported, {
     map: {
       '../components/npm': ['npm-package'],
+      // default first then named
       '../components': ['hello-world', 'friends'],
     },
   }))
@@ -557,6 +560,14 @@ meta.forEach(({ key, id, props = {}, children }) => {
   <img src="/.documentary/section-breaks/4.svg?sanitize=true" width="25">
 </a></p>
 
+### Assets
+
+By default, the lib functions will be embedded into the source code. To place them in separate files for reuse across multiple generated scripts, the `externalAssets` option is used together with `writeAssets` method.
+
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true" width="25">
+</a></p>
+
 ### Intersection Observer
 
 Competent can generate code that will utilise the _IntesectionObserver_ browser capability to detect when the element into which the components needs to be rendered comes into view, and only mount it at that point. This will only work when _IntesectionObserver_ is present either natively, or via a polyfill. When the `io` argument value is passed as an object rather than boolean, it will be serialised, e.g., `{ rootMargin: '0 0 76px 0' }`.
@@ -574,50 +585,21 @@ import { makeComponentsScript } from 'competent'
         '../components': ['hello-world', 'friends'],
       },
       io: { threshold: 10, rootMargin: '50px' },
+      externalAssets: true,
     })
   )
 })()
 ```
 ```js
 import { render } from 'preact'
+import { makeIo, init } from './__competent-lib'
 import NpmPackage from '../components/npm'
 
 const __components = {
   'npm-package': NpmPackage,
 }
 
-function init(id, key) {
-  const el = document.getElementById(id)
-  if (!el) {
-    console.warn('Parent element for component %s with id %s not found', key, id)
-    return {}
-  }
-  const parent = el.parentElement
-  if (!parent) {
-    console.warn('Parent of element for component %s with id %s not found', key, id)
-    return {}
-  }
-  return { parent, el  }
-}
-
-function makeIo(options = {}) {
-  const { rootMargin = '76px', log = true, ...rest } = options
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(({ target, isIntersecting }) => {
-      if (isIntersecting) {
-        if (target.render) {
-          if (log) console.warn('Rendering component %s into the element %s ',
-            target.render.meta.key, target.render.meta.id)
-          target.render()
-          io.unobserve(target)
-        }
-      }
-    })
-  }, { rootMargin, ...rest })
-  return io
-}
-
-const io = makeIo(threshold: 10rootMargin: "50px" })
+const io = makeIo({ threshold: 10, rootMargin: "50px" })
 
 /** @type {!Array<!preact.PreactProps>} */
 const meta = [{
@@ -649,7 +631,57 @@ meta.forEach(({ key, id, props = {}, children }) => {
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
+</a></p>
+
+## <code>async <ins>writeAssets</ins>(</code><sub><br/>&nbsp;&nbsp;`path: string,`<br/></sub><code>): <i>void</i></code>
+ - <kbd><strong>path*</strong></kbd> <em>`string`</em>: The folder where to create the `__competent-lib.js` file, when the `externalAssets` option is passed to _makeComps_.
+
+```js
+import { writeAssets } from 'competent'
+
+(async () => {
+  await writeAssets('example')
+})()
+```
+
+
+
+```js
+export function init(id, key) {
+  const el = document.getElementById(id)
+  if (!el) {
+    console.warn('Parent element for component %s with id %s not found', key, id)
+    return {}
+  }
+  const parent = el.parentElement
+  if (!parent) {
+    console.warn('Parent of element for component %s with id %s not found', key, id)
+    return {}
+  }
+  return { parent, el  }
+}
+
+export function makeIo(options = {}) {
+  const { rootMargin = '76px', log = true, ...rest } = options
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      if (isIntersecting) {
+        if (target.render) {
+          if (log) console.warn('Rendering component %s into the element %s ',
+            target.render.meta.key, target.render.meta.id)
+          target.render()
+          io.unobserve(target)
+        }
+      }
+    })
+  }, { rootMargin, ...rest })
+  return io
+}
+```
+
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
 </a></p>
 
 ## Known Limitations
@@ -671,7 +703,7 @@ Currently, it is not possible to match nested components.
 This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
 </a></p>
 
 ## Who Uses _Competent_
@@ -682,7 +714,7 @@ _Competent_ is used by:
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
 </a></p>
 
 ## Copyright

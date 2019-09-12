@@ -20,7 +20,7 @@
       Include `import { h } from 'preact'` on top of the file.
     </prop>
     <prop boolean name="externalAssets" opt>
-      Whether the library functions should be required from a separate file, `./competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
+      Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
     </prop>
   </type>
   <constructor name="IOOptions" extends="IntersectionObserverInit" desc="Options for the observer.">

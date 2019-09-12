@@ -6,6 +6,7 @@ import { makeComponentsScript } from '../src'
   console.log(makeComponentsScript(exported, {
     map: {
       '../components/npm': ['npm-package'],
+      // default first then named
       '../components': ['hello-world', 'friends'],
     },
   }))

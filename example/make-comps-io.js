@@ -10,6 +10,7 @@ import { makeComponentsScript } from '../src'
         '../components': ['hello-world', 'friends'],
       },
       io: { threshold: 10, rootMargin: '50px' },
+      externalAssets: true,
     })
   )
 })()

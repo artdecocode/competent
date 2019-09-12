@@ -1,4 +1,4 @@
-const { _competent: __competent, _makeComponentsScript } = require('./competent')
+const { _competent: __competent, _makeComponentsScript, _writeAssets } = require('./competent')
 
 /**
  * @methodType {_competent.competent}
@@ -10,12 +10,20 @@ function competent(components, config) {
 /**
  * @methodType {_competent.makeComponentsScript}
  */
-function makeComponentsScript(components, componentsLocation, includeH = false, props = {}, io = false, options) {
-  return _makeComponentsScript(components, componentsLocation, includeH, props, io, options)
+function makeComponentsScript(components, options) {
+  return _makeComponentsScript(components, options)
+}
+
+/**
+ * @methodType {_competent.writeAssets}
+ */
+function writeAssets(path) {
+  return _writeAssets(path)
 }
 
 module.exports = competent
 module.exports.makeComponentsScript = makeComponentsScript
+module.exports.writeAssets = writeAssets
 
 /* typal types/index.xml namespace */
 

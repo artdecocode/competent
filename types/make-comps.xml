@@ -19,8 +19,8 @@
     <prop boolean name="includeH" opt>
       Include `import { h } from 'preact'` on top of the file.
     </prop>
-    <prop string name="assetsPath" opt>
-      Where to save assets such as scripts to make an intersection observer and init method. If not passed, these functions are embedded into the result. Useful when creating more than one script.
+    <prop boolean name="externalAssets" opt>
+      Whether the library functions should be required from a separate file, `./competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
     </prop>
   </type>
   <constructor name="IOOptions" extends="IntersectionObserverInit" desc="Options for the observer.">
@@ -29,3 +29,5 @@
     </prop>
   </constructor>
 </types>
+
+<!-- Where to save assets such as scripts to make an intersection observer and init method. If not passed, these functions are embedded into the result. Useful when creating more than one script. -->

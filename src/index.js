@@ -86,7 +86,7 @@ const competent = (components, conf = {}) => {
         r = render(hyperResult, renderOptions)
       }
       if (!r && removeLine) {
-        if (onSuccess) onSuccess.call(this, key)
+        if (onSuccess) onSuccess.call(this, key, htmlProps)
         return ''
       }
       r = (ws || '') + r.replace(/^/gm, pad)
@@ -112,7 +112,7 @@ const competent = (components, conf = {}) => {
       }
       if (exported)
         markExported.call(this, key, hyperResult.attributes.id, htmlProps, children)
-      if (onSuccess) onSuccess.call(this, key)
+      if (onSuccess) onSuccess.call(this, key, htmlProps)
       return r
     } catch (err) {
       if (onFail) onFail.call(this, key, err, position, str)
@@ -139,7 +139,7 @@ const upgradeRe = (re, key) => {
 }
 
 export default competent
-export { default as makeComponentsScript } from './make-comps'
+export { default as makeComponentsScript, writeAssets } from './make-comps'
 
 /**
  * @suppress {nonStandardJsDocs}

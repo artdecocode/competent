@@ -17,6 +17,7 @@ const makeProps = (props) => {
 const makeComponent = (component) => {
   const arr = []
   arr.push(`key: '${component.key}'`)
+  // arr.push(`Comp: ${cc(component.key)}`)
   arr.push(`id: '${component.id}'`)
   if (Object.keys(component.props).length)
     arr.push(`props: ${makeProps(component.props)}`)
@@ -35,15 +36,17 @@ ${j}
  */
 const makeJs = (components) => {
   const s = components.map((c) => makeComponent(c))
-  return '[' + s.join(',\n') + ']'
+  return `/** @type {!Array<!preact.PreactProps>} */
+const meta = [${s.join(',\n')}]`
 }
 
+// todo: test escaped \"prop\": value
 const defineIo = (io = true) => {
   if (!io) return ''
   return `const io = makeIo(${typeof io != 'boolean' ? JSON.stringify(io)
-    .replace(/(,?)"(.+?)":/g, (m, c, k) => `${c ? ', ' : ''}${k}: `)
+    .replace(/(,?)(?:[^\\])"(.+?)":/g, (m, c, k) => `${c ? ', ' : ''}${k}: `)
     .replace(/^{/, '{ ')
-    .replace(/}$/, ' }') : ''});`
+    .replace(/}$/, ' }') : ''})`
 }
 
 // /**
@@ -70,7 +73,7 @@ const makeNamedMap = (components) => {
     .map(({ key }) => `'${key}': ${cc(key)}`)
     .filter((e, i, a) => a.indexOf(e) == i)
     .join(',\n  ')
-  const map = `const Components = {\n  ${c},\n}`
+  const map = `const __components = {\n  ${c},\n}`
   return map
 }
 
@@ -114,36 +117,36 @@ const makeImport = (values, location, components = true) => {
   return s
 }
 
+
+// ensured during the build step without compilation
+const init = require(/*depack*/'./init')
+const makeIo = require(/*depack*/'./make-io')
+
+export const writeAssets = async (path) => {
+  await write(join(path, './__competent-lib.js'), `export ${init.toString()}
+
+export ${makeIo.toString()}`)
+}
+
 /**
  * From the array of exported components, creates an ES6 modules script that will render them on a page using Preact.
  * @param {!Array<!_competent.ExportedComponent>} components The list of exported components
  * @param {!_competent.MakeCompsConfig} opts
  */
-export default async function makeComponentsScript(components, opts) {
+export default function makeComponentsScript(components, opts) {
   if (typeof opts != 'object') throw new Error('Options are required with at least a map.')
-  const { map, assetsPath, io = false,
+  const { map, externalAssets = false, io = false,
     includeH = false, props = {} } = opts
 
   // if (!assetsPath) throw new Error('Please specify the path where to write lib files.')
   if (!map) throw new Error('The map of where to import components from is required.')
 
-  // ensured during the build step without compilation
-  const init = require(/*depack*/'./init')
-  const makeIo = require(/*depack*/'./make-io')
-
-  const Components = makeNamedMap(components)
-  if (assetsPath) {
-    await write(join(assetsPath, './init'), `${Components}
-
-  export default${init.toString()}`)
-    await write(join(assetsPath, './make-io'), `export default ${makeIo.toString()}`)
-  }
-
   const imports = [
     makeImport([null, 'render', ...(includeH ? ['h'] : [])], 'preact', false),
-    ...(assetsPath ? [
-      ...(io ? [makeImport(['makeIo'], './make-io', false)] : []),
-      makeImport(['init'], './init', false),
+    ...(externalAssets ? [
+      makeImport([null, ...(io ? ['makeIo'] : []), 'init'], './__competent-lib', false),
+      // ...(io ? [makeImport(['makeIo'], './make-io', false)] : []),
+      // makeImport(['init'], './init', false),
     ] : []),
     ...makeImports(components, map),
   ].join('\n')
@@ -156,26 +159,27 @@ export default async function makeComponentsScript(components, opts) {
 
   const r = 'render(h(Comp, props, children), parent, el)'
   const ifIo = io ? `el.render = () => {
-      ${r}
-    }
-    el.render.meta = { key, id }
-    io.observe(el)` : r
+    ${r}
+  }
+  el.render.meta = { key, id }
+  io.observe(el)` : r
 
   let s = imports + '\n\n'
-  if (!assetsPath) {
-    s += Components + '\n\n'
+  const Components = makeNamedMap(components)
+  s += Components + '\n\n'
+  if (!externalAssets) {
     s += init.toString() + '\n\n'
     if (io) s += makeIo.toString() + '\n\n'
   }
   if (io) s += defineIo(io) + '\n\n'
   s += makeJs(components)
   s += `
-  .map(({ key, id, props = {}, children }) => {
-    const { Comp, parent, el } = init(id, key)
-    if (!Comp) return
-${extendProps ? `    ${extendProps}` : ''}
-    ${ifIo}
-  })
+meta.forEach(({ key, id, props = {}, children }) => {
+  const { parent, el } = init(id, key)
+  const Comp = __components[key]
+${extendProps ? `  ${extendProps}` : ''}
+  ${ifIo}
+})
 `
   return s
 }

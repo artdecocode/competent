@@ -19,10 +19,16 @@
 
 /* expected */
 import { render } from 'preact'
-import init from './init'
+import { init } from './__competent-lib'
 import Test, { TestComponent } from '../test'
 
-[{
+const __components = {
+  'test': Test,
+  'test-component': TestComponent,
+}
+
+/** @type {!Array<!preact.PreactProps>} */
+const meta = [{
   key: 'test',
   id: 'id1',
 },
@@ -30,11 +36,11 @@ import Test, { TestComponent } from '../test'
   key: 'test-component',
   id: 'id2',
 }]
-  .map(({ key, id, props = {}, children }) => {
-    const { Comp, parent, el } = init(id, key)
-    if (!Comp) return
+meta.forEach(({ key, id, props = {}, children }) => {
+  const { parent, el } = init(id, key)
+  const Comp = __components[key]
 
-    render(h(Comp, props, children), parent, el)
-  })
+  render(h(Comp, props, children), parent, el)
+})
 
 /**/

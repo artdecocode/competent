@@ -60,9 +60,9 @@ _competent.Config.prototype.getProps = function(props, meta, componentName) {}
 _competent.Config.prototype.markExported = function(key, id, props, children) {}
 /**
  * The callback at the end of a successful replacement with the component's key.
- * @type {(function(string): void)|undefined}
+ * @type {(function(string,!Object<string, string>): void)|undefined}
  */
-_competent.Config.prototype.onSuccess = function(componentName) {}
+_competent.Config.prototype.onSuccess = function(componentName, htmlProps) {}
 /**
  * The callback at the end of failed replacement with the component's key, error object, position number and the string which was fed to the rule.
  * @type {(function(string,!Error,number,string): void)|undefined}
@@ -123,10 +123,10 @@ _competent.MakeCompsConfig.prototype.props
  */
 _competent.MakeCompsConfig.prototype.includeH
 /**
- * Where to save assets such as scripts to make an intersection observer and init method. If not passed, these functions are embedded into the result. Useful when creating more than one script.
- * @type {string|undefined}
+ * Whether the library functions should be required from a separate file, `./competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
+ * @type {boolean|undefined}
  */
-_competent.MakeCompsConfig.prototype.assetsPath
+_competent.MakeCompsConfig.prototype.externalAssets
 /**
  * Options for the observer.
  * @extends {IntersectionObserverInit}

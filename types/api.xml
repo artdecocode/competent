@@ -19,4 +19,10 @@
       The options for the make components script.
     </arg>
   </method>
+
+  <method name="writeAssets" async void>
+    <arg string name="path">
+      The folder where to create the `__competent-lib.js` file, when the `externalAssets` option is passed to _makeComps_.
+    </arg>
+  </method>
 </types>

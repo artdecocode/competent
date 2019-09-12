@@ -24,6 +24,7 @@
     </prop>
     <fn name="onSuccess" opt void>
       <arg string name="componentName">The element name, e.g., `my-element`.</arg>
+      <arg type="!Object<string, string>" name="htmlProps">The properties with which the component was initialised.</arg>
       The callback at the end of a successful replacement with the component's key.
     </fn>
     <fn opt name="onFail" void>

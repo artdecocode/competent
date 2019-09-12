@@ -14,17 +14,14 @@ export default makeTestSuite('test/result/make-comps/default', {
 
 export const io = makeTestSuite('test/result/make-comps/io', {
   context: TempContext,
-  /**
-   * @param {TempContext} t
-   */
-  getResults({ TEMP }) {
+  getResults() {
     return makeComponentsScript(this.preamble, {
       map: { [this.input]: ['test'] },
       io: this.io,
-      assetsPath: this.assetsPath ? TEMP : null,
+      externalAssets: this.externalAssets,
     })
   },
-  jsProps: ['preamble', 'io', 'assetsPath'],
+  jsProps: ['preamble', 'io', 'externalAssets'],
 })
 
 export const named = makeTestSuite('test/result/make-comps/named', {
@@ -32,10 +29,10 @@ export const named = makeTestSuite('test/result/make-comps/named', {
   /**
    * @param {TempContext} t
    */
-  getResults({ TEMP }) {
+  getResults() {
     return makeComponentsScript(this.preamble, {
       map: this.map,
-      assetsPath: TEMP,
+      externalAssets: true,
       io: this.io,
     })
   },

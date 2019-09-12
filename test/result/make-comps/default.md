@@ -12,7 +12,7 @@
 import { render } from 'preact'
 import Test from '../comps'
 
-const Components = {
+const __components = {
   'test': Test,
 }
 
@@ -27,24 +27,20 @@ function init(id, key) {
     console.warn('Parent of element for component %s with id %s not found', key, id)
     return {}
   }
-  const Comp = Components[key]
-  if (!Comp) {
-    console.warn('Component with key %s was not found.', key)
-    return {}
-  }
-  return { Comp, parent, el  }
+  return { parent, el  }
 }
 
-[{
+/** @type {!Array<!preact.PreactProps>} */
+const meta = [{
   key: 'test',
   id: 'id1',
 }]
-  .map(({ key, id, props = {}, children }) => {
-    const { Comp, parent, el } = init(id, key)
-    if (!Comp) return
+meta.forEach(({ key, id, props = {}, children }) => {
+  const { parent, el } = init(id, key)
+  const Comp = __components[key]
 
-    render(h(Comp, props, children), parent, el)
-  })
+  render(h(Comp, props, children), parent, el)
+})
 
 /**/
 
@@ -59,7 +55,7 @@ function init(id, key) {
 import { render } from 'preact'
 import Test from '../comps'
 
-const Components = {
+const __components = {
   'test': Test,
 }
 
@@ -74,23 +70,19 @@ function init(id, key) {
     console.warn('Parent of element for component %s with id %s not found', key, id)
     return {}
   }
-  const Comp = Components[key]
-  if (!Comp) {
-    console.warn('Component with key %s was not found.', key)
-    return {}
-  }
-  return { Comp, parent, el  }
+  return { parent, el  }
 }
 
-[{
+/** @type {!Array<!preact.PreactProps>} */
+const meta = [{
   key: 'test',
   id: 'id1',
 }]
-  .map(({ key, id, props = {}, children }) => {
-    const { Comp, parent, el } = init(id, key)
-    if (!Comp) return
-    props.splendid = { export() {} }
-    render(h(Comp, props, children), parent, el)
-  })
+meta.forEach(({ key, id, props = {}, children }) => {
+  const { parent, el } = init(id, key)
+  const Comp = __components[key]
+  props.splendid = { export() {} }
+  render(h(Comp, props, children), parent, el)
+})
 
 /**/

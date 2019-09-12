@@ -90,7 +90,7 @@ const __components = {
   'test': Test,
 }
 
-const io = makeIo(log: falserootMargin: "55px" })
+const io = makeIo({ log: false, rootMargin: "55px" })
 
 /** @type {!Array<!preact.PreactProps>} */
 const meta = [{

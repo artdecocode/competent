@@ -15,6 +15,7 @@
     "doc": "NODE_DEBUG=doc doc -o README.md -n _competent",
     "doc-dev": "NODE_DEBUG=doc doc-dev -o README.md -n _competent",
     "b": "alanode build",
+    "b1": "alamode compile -o compile -s",
     "d": "yarn-s externs template d1",
     "d1": "typal compile/index.js -u",
     "template": "typal compile/template.js -T compile/index.js -t types",

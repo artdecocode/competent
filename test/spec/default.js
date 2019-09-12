@@ -53,7 +53,7 @@ const T = {
     const res = mismatch(re, `<img src="test.jpg"><section-break />`, ['ws', 'test'])
     equal(res.length, 0)
   },
-  '!define-io'() {
+  'define-io'() {
     return defineIo({ rootMargin: '10px', threshold: 20 })
   },
 }

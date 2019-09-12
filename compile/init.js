@@ -1,7 +1,7 @@
 /**
  * Gets the data required to render the component. Components map is replaced dynamically.
  */
-export default function init(id, key) {
+module.exports = function init(id, key) {
   const el = document.getElementById(id)
   if (!el) {
     console.warn('Parent element for component %s with id %s not found', key, id)

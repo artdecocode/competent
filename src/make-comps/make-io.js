@@ -1,4 +1,4 @@
-export default function makeIo(options = {}) {
+module.exports = function makeIo(options = {}) {
   const { rootMargin = '76px', log = true, ...rest } = options
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {

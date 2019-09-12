@@ -1,3 +1,9 @@
+## 13 September 2019
+
+### [3.0.1](https://github.com/artdecocode/competent/compare/v3.0.0...v3.0.1)
+
+- [fix] Transpile `init` and `makeIo`.
+
 ## 12 September 2019
 
 ### [3.0.0](https://github.com/artdecocode/competent/compare/v2.2.0...v3.0.0)

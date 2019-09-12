@@ -17,9 +17,10 @@ yarn add competent
   * [`Props`](#type-props)
   * [`Meta`](#type-meta)
 - [`DEBUG=competent`](#debugcompetent)
-- [`makeComponentsScript(components, componentsLocation, props=, includeH=, io=, options=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentcomponentslocation-stringprops-objectincludeh-booleanio-booleanoptions-makecompsconfig-string)
-  * [`ExportedComponent`](#type-exportedcomponent)
+- [`makeComponentsScript(components, options=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentoptions-makecompsconfig-string)
   * [`MakeCompsConfig`](#type-makecompsconfig)
+  * [`IOOptions`](#type-iooptions)
+  * [`ExportedComponent`](#type-exportedcomponent)
   * [Intersection Observer](#intersection-observer)
 - [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
@@ -249,13 +250,14 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">onSuccess</td>
-  <td colSpan="2"><em>(componentName: string) => void</em></td>
+  <td colSpan="2"><em>(componentName: string, htmlProps: !Object&lt;string, string&gt;) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td colSpan="2">
    The callback at the end of a successful replacement with the component's key.<br/>
-   <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The element name, e.g., <code>my-element</code>.
+   <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The element name, e.g., <code>my-element</code>.<br/>
+   <kbd><strong>htmlProps*</strong></kbd> <em><code>!Object&lt;string, string&gt;</code></em>: The properties with which the component was initialised.
   </td>
  </tr>
  <tr>
@@ -378,26 +380,107 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-07T02:10:18.807Z competent render npm-package
-2019-09-07T02:10:18.845Z competent render npm-package
-2019-09-07T02:10:18.851Z competent render npm-package
-2019-09-07T02:10:18.857Z competent render hello-world
-2019-09-07T02:10:18.863Z competent render friends
+2019-09-12T20:10:15.678Z competent render npm-package
+2019-09-12T20:10:15.768Z competent render npm-package
+2019-09-12T20:10:15.772Z competent render npm-package
+2019-09-12T20:10:15.774Z competent render hello-world
+2019-09-12T20:10:15.778Z competent render friends
 ```
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/3.svg?sanitize=true">
 </a></p>
 
-## <code><ins>makeComponentsScript</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`componentsLocation: string,`<br/>&nbsp;&nbsp;`props=: Object,`<br/>&nbsp;&nbsp;`includeH=: boolean,`<br/>&nbsp;&nbsp;`io=: boolean,`<br/>&nbsp;&nbsp;`options=: MakeCompsConfig,`<br/></sub><code>): <i>string</i></code>
+## <code><ins>makeComponentsScript</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`options=: MakeCompsConfig,`<br/></sub><code>): <i>string</i></code>
 Based on the exported components that were detected using the rule, generates a script for the web browser to dynamically render them with _Preact_.
 
  - <kbd><strong>components*</strong></kbd> <em><code>!Array&lt;<a href="#type-exportedcomponent" title="An exported component.">!ExportedComponent</a>&gt;</code></em>: All components that were made exportable by the rule.
- - <kbd><strong>componentsLocation*</strong></kbd> <em>`string`</em>: Relative location from which to require components.
- - <kbd>props</kbd> <em>`Object`</em> (optional): Shared properties made available for each component in addition to its own properties.
- - <kbd>includeH</kbd> <em>`boolean`</em> (optional): Include `import { h } from 'preact'` on top of the file.
- - <kbd>io</kbd> <em>`boolean`</em> (optional): Include intersection observer.
  - <kbd>options</kbd> <em><code><a href="#type-makecompsconfig" title="The options for make components script.">MakeCompsConfig</a></code></em> (optional): The options for the make components script.
+
+__<a name="type-makecompsconfig">`MakeCompsConfig`</a>__: The options for make components script.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center">map</td>
+  <td><em>!Object&lt;string, !Array&lt;?string&gt;&gt;</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+
+The map with locations from where components should be imported, e.g.,
+```js
+{
+  '../components/named.jsx': [null, 'named-component'],
+  '../components/default.jsx': ['default-component'],
+}
+```
+The default export must come first in the array.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">io</td>
+  <td><em>(boolean | <a href="#type-iooptions" title="Options for the observer.">!IOOptions</a>)</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Whether to use an <em>IntersectionObserver</em> to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (<code>rootMargin: '76px'</code>).
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">props</td>
+  <td><em>!Object&lt;string, *&gt;</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Shared properties made available for each component in addition to its own properties.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">includeH</td>
+  <td><em>boolean</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Include <code>import { h } from 'preact'</code> on top of the file.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">externalAssets</td>
+  <td><em>boolean</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Whether the library functions should be required from a separate file, <code>./competent-lib</code>. Works together with <code>writeAssets</code> and is useful when generating more than one script.
+  </td>
+ </tr>
+</table>
+
+
+__<a name="type-iooptions">`IOOptions`</a> extends `IntersectionObserverInit`__: Options for the observer.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>log</ins></td>
+  <td><em>boolean</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Whether to print a message to console when a component is rendered.
+  </td>
+ </tr>
+</table>
 
 __<a name="type-exportedcomponent">`ExportedComponent`</a>__: An exported component.
 
@@ -415,14 +498,38 @@ import { makeComponentsScript } from 'competent'
 
 (async () => {
   const { exported } = await CompetentExample()
-  console.log(makeComponentsScript(exported, '../components'))
+  console.log(makeComponentsScript(exported, {
+    map: {
+      '../components/npm': ['npm-package'],
+      '../components': ['hello-world', 'friends'],
+    },
+  }))
 })()
 ```
 ```js
 import { render } from 'preact'
-import Components from '../components'
+import NpmPackage from '../components/npm'
 
-[{
+const __components = {
+  'npm-package': NpmPackage,
+}
+
+function init(id, key) {
+  const el = document.getElementById(id)
+  if (!el) {
+    console.warn('Parent element for component %s with id %s not found', key, id)
+    return {}
+  }
+  const parent = el.parentElement
+  if (!parent) {
+    console.warn('Parent of element for component %s with id %s not found', key, id)
+    return {}
+  }
+  return { parent, el  }
+}
+
+/** @type {!Array<!preact.PreactProps>} */
+const meta = [{
   key: 'npm-package',
   id: 'c1',
   props: {
@@ -438,67 +545,13 @@ import Components from '../components'
   },
   children: ["@a-la/jsx"],
 }]
-  .map(({ key, id, props = {}, children }) => {
-    const el = document.getElementById(id)
-    if (!el) {
-      console.warn('Parent element for component %s with id %s not found', key, id)
-      return
-    }
-    const parent = el.parentElement
-    if (!parent) {
-      console.warn('Parent of element for component %s with id %s not found', key, id)
-      return
-    }
-    const Comp = Components[key]
-    if (!Comp) {
-      console.warn('Component with key %s was not found.', key)
-      return
-    }
+meta.forEach(({ key, id, props = {}, children }) => {
+  const { parent, el } = init(id, key)
+  const Comp = __components[key]
 
-    render(h(Comp, props, children), parent, el)
-  })
+  render(h(Comp, props, children), parent, el)
+})
 ```
-
-Additional options are accepted. When a map of imports is passed, it allows to import components from the specified locations.
-
-__<a name="type-makecompsconfig">`MakeCompsConfig`</a>__: The options for make components script.
-<table>
- <thead><tr>
-  <th>Name</th>
-  <th>Type &amp; Description</th>
-  <th>Default</th>
- </tr></thead>
- <tr>
-  <td rowSpan="3" align="center">map</td>
-  <td><em>!Object&lt;string, !Array&lt;?string&gt;&gt;</em></td>
-  <td rowSpan="3">-</td>
- </tr>
- <tr></tr>
- <tr>
-  <td>
-
-The map with locations from where components should be imported, e.g.,
-```js
-{
-  '../components/named.jsx': [null, 'named-component'],
-  '../components/default.jsx': ['default-component'],
-}
-```
-The default export must come first in the array.
-  </td>
- </tr>
- <tr>
-  <td rowSpan="3" align="center">fileIo</td>
-  <td><em>(boolean | string)</em></td>
-  <td rowSpan="3"><code>false</code></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>
-   If passed, the <code>make-io</code> script will be imported from this file, rather than embedded. By default, when set to true the <code>competent/make-io</code> package path is used, but the custom string may be passed.
-  </td>
- </tr>
-</table>
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/4.svg?sanitize=true" width="25">
@@ -506,7 +559,7 @@ The default export must come first in the array.
 
 ### Intersection Observer
 
-Competent can generate code that will utilise the _IntesectionObserver_ browser capability to detect when the element into which the components needs to be rendered comes into view, and only mount it at that point. This will only work when _IntesectionObserver_ is present either natively, or via a polyfill. When the `io` argument value is passed as a string, it will be set as the root margin, e.g., `0 0 76px 0`. The other options are not available at the moment.
+Competent can generate code that will utilise the _IntesectionObserver_ browser capability to detect when the element into which the components needs to be rendered comes into view, and only mount it at that point. This will only work when _IntesectionObserver_ is present either natively, or via a polyfill. When the `io` argument value is passed as an object rather than boolean, it will be serialised, e.g., `{ rootMargin: '0 0 76px 0' }`.
 
 ```js
 import CompetentExample from './'
@@ -515,30 +568,59 @@ import { makeComponentsScript } from 'competent'
 (async () => {
   const { exported } = await CompetentExample()
   console.log(
-    makeComponentsScript(exported, '../components', false, {}, true))
+    makeComponentsScript(exported, {
+      map: {
+        '../components/npm': ['npm-package'],
+        '../components': ['hello-world', 'friends'],
+      },
+      io: { threshold: 10, rootMargin: '50px' },
+    })
+  )
 })()
 ```
 ```js
 import { render } from 'preact'
-import Components from '../components'
+import NpmPackage from '../components/npm'
 
-function makeIo(rootMargin = '0px 0px 76px 0px') {
+const __components = {
+  'npm-package': NpmPackage,
+}
+
+function init(id, key) {
+  const el = document.getElementById(id)
+  if (!el) {
+    console.warn('Parent element for component %s with id %s not found', key, id)
+    return {}
+  }
+  const parent = el.parentElement
+  if (!parent) {
+    console.warn('Parent of element for component %s with id %s not found', key, id)
+    return {}
+  }
+  return { parent, el  }
+}
+
+function makeIo(options = {}) {
+  const { rootMargin = '76px', log = true, ...rest } = options
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
       if (isIntersecting) {
         if (target.render) {
-          console.warn('rendering component %s into the element %s ',
+          if (log) console.warn('Rendering component %s into the element %s ',
             target.render.meta.key, target.render.meta.id)
           target.render()
           io.unobserve(target)
         }
       }
     })
-  }, { rootMargin })
+  }, { rootMargin, ...rest })
   return io
 }
-const io = makeIo();
-[{
+
+const io = makeIo(threshold: 10rootMargin: "50px" })
+
+/** @type {!Array<!preact.PreactProps>} */
+const meta = [{
   key: 'npm-package',
   id: 'c1',
   props: {
@@ -554,29 +636,16 @@ const io = makeIo();
   },
   children: ["@a-la/jsx"],
 }]
-  .map(({ key, id, props = {}, children }) => {
-    const el = document.getElementById(id)
-    if (!el) {
-      console.warn('Parent element for component %s with id %s not found', key, id)
-      return
-    }
-    const parent = el.parentElement
-    if (!parent) {
-      console.warn('Parent of element for component %s with id %s not found', key, id)
-      return
-    }
-    const Comp = Components[key]
-    if (!Comp) {
-      console.warn('Component with key %s was not found.', key)
-      return
-    }
+meta.forEach(({ key, id, props = {}, children }) => {
+  const { parent, el } = init(id, key)
+  const Comp = __components[key]
 
-    el.render = () => {
-      render(h(Comp, props, children), parent, el)
-    }
-    el.render.meta = { key, id }
-    io.observe(el)
-  })
+  el.render = () => {
+    render(h(Comp, props, children), parent, el)
+  }
+  el.render.meta = { key, id }
+  io.observe(el)
+})
 ```
 
 <p align="center"><a href="#table-of-contents">

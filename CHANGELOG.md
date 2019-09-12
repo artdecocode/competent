@@ -1,3 +1,9 @@
+## 12 September 2019
+
+### [3.0.0](https://github.com/artdecocode/competent/compare/v2.2.0...v3.0.0)
+
+- [api] New _API_ for `makeComponentScript`.
+
 ## 6 September 2019
 
 ### [2.2.0](https://github.com/artdecocode/competent/compare/v2.1.1...v2.2.0)

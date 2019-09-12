@@ -649,7 +649,7 @@ const gb = a => {
 ${b.map(c => `  ${c}`).join(",\n") + ","}
 }`;
 }, ib = a => `/** @type {!Array<!preact.PreactProps>} */
-const meta = [${a.map(b => hb(b)).join(",\n")}]`, jb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/(,?)(?:[^\\])"(.+?)":/g, (b, c, d) => `${c ? ", " : ""}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", Y = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), kb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${Y(b)}`).filter((b, c, d) => d.indexOf(b) == c).join(",\n  ")},\n}`, lb = (a, b) => {
+const meta = [${a.map(b => hb(b)).join(",\n")}]`, jb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", Y = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), kb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${Y(b)}`).filter((b, c, d) => d.indexOf(b) == c).join(",\n  ")},\n}`, lb = (a, b) => {
   const c = {};
   a.reduce((d, {key:e}) => {
     if (d.includes(e)) {

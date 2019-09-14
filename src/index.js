@@ -21,6 +21,7 @@ const competent = (components, conf = {}) => {
   /** @type {!_restream.AsyncReplacer} */
   const replacement = async function (m, ws, pad, Component, key, position, str) {
     debug('render %s', key)
+    const SKIP_ERROR = new Error('Skip render')
     try {
       const instance = components[key]
       const before = str.slice(0, position)
@@ -52,6 +53,7 @@ const competent = (components, conf = {}) => {
         renderAgain(doRender = true, v = false) { renderAgain = doRender, recursiveRenderAgain = v },
         setChildContext(context) { childContext = context },
         removeLine(r = true) { removeLine = r },
+        skipRender() { throw SKIP_ERROR },
       }), key)
       /** @type {preact.VNode} */
       let hyperResult
@@ -115,6 +117,7 @@ const competent = (components, conf = {}) => {
       if (onSuccess) onSuccess.call(this, key, htmlProps)
       return r
     } catch (err) {
+      if (err === SKIP_ERROR) return m
       if (onFail) onFail.call(this, key, err, position, str)
       if (removeOnError) return ''
       return m

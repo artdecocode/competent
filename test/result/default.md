@@ -137,3 +137,12 @@
   <remove-line>keep with children<remove-line>
 </hello>
 /**/
+
+## skips rendering
+<skip-render />
+<skip-render do-skip />
+
+/* expected */
+<skipped-render>OK</skipped-render>
+<skip-render do-skip />
+/**/

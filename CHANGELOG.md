@@ -1,3 +1,10 @@
+## 14 September 2019
+
+### [3.1.0](https://github.com/artdecocode/competent/compare/v3.0.1...v3.1.0)
+
+- [fix] Correct indentation in `make-comps-script`, escape `'` in props and default `children = []`.
+- [feature] Skip render meta method.
+
 ## 13 September 2019
 
 ### [3.0.1](https://github.com/artdecocode/competent/compare/v3.0.0...v3.0.1)

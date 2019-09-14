@@ -33,7 +33,7 @@ function competent(components, config) {
  * @param {boolean|!_competent.IOOptions} [options.io] Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
  * @param {!Object<string, *>} [options.props] Shared properties made available for each component in addition to its own properties.
  * @param {boolean} [options.includeH] Include `import { h } from 'preact'` on top of the file.
- * @param {boolean} [options.externalAssets] Whether the library functions should be required from a separate file, `./competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
+ * @param {boolean} [options.externalAssets] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
  * @return {string}
  */
 function makeComponentsScript(components, options) {
@@ -69,6 +69,7 @@ module.exports.writeAssets = writeAssets
  * @typedef {_competent.Meta} Meta Service methods for `competent`.
  * @typedef {Object} _competent.Meta Service methods for `competent`.
  * @prop {(shouldExport?: boolean) => void} export When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.
+ * @prop {() => void} skipRender If this method is called, _Competent_ will return the original match without rendering the component into static HTML. This should be used together with `export` to provide run-time dynamic browser rendering, without static HTML code generation.
  * @prop {(isPretty: boolean, lineLength?: number) => void} setPretty The function which controls whether to enable pretty printing, and the line width.
  * @prop {(shouldRemove?: boolean) => void} removeLine If the component rendered a falsy value (e.g., `null`, `''`), and the `removeLine` was called, _Competent_ will remove `\n___＜component＞`. By default, this is switched off.
  * @prop {(doRender?: boolean, recursiveRender?: boolean) => void} renderAgain After rendering the component itself, the children by default are also rendered by spawning another _Replaceable_ stream. This is needed when a component might contain other components when rendered.
@@ -120,7 +121,7 @@ module.exports.writeAssets = writeAssets
  * @prop {boolean|!_competent.IOOptions} [io] Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
  * @prop {!Object<string, *>} [props] Shared properties made available for each component in addition to its own properties.
  * @prop {boolean} [includeH] Include `import { h } from 'preact'` on top of the file.
- * @prop {boolean} [externalAssets] Whether the library functions should be required from a separate file, `./competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
+ * @prop {boolean} [externalAssets] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
  * @typedef {_competent.IOOptions} IOOptions `＠constructor` Options for the observer.
  * @typedef {IntersectionObserverInit & _competent.$IOOptions} _competent.IOOptions `＠constructor` Options for the observer.
  * @typedef {Object} _competent.$IOOptions `＠constructor` Options for the observer.

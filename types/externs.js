@@ -4,8 +4,6 @@
  */
 
 /* typal types/exported.xml */
-/** @const */
-var _competent = {}
 /**
  * An exported component.
  * @record
@@ -33,6 +31,8 @@ _competent.ExportedComponent.prototype.props
 _competent.ExportedComponent.prototype.children
 
 /* typal types/index.xml */
+/** @const */
+var _competent = {}
 /**
  * Options for the program. All functions will be called with the Replaceable instance as their `this` context.
  * @record
@@ -85,7 +85,7 @@ _competent.Config.prototype.getReplacements = function(componentName, recursiveR
 _competent.Props
 /**
  * Service methods for `competent`.
- * @typedef {{ export: function(boolean=): void, setPretty: function(boolean,number=): void, removeLine: function(boolean=): void, renderAgain: function(boolean=,boolean=): void, setChildContext: function(!Object): void }}
+ * @typedef {{ export: function(boolean=): void, skipRender: function(): void, setPretty: function(boolean,number=): void, removeLine: function(boolean=): void, renderAgain: function(boolean=,boolean=): void, setChildContext: function(!Object): void }}
  */
 _competent.Meta
 
@@ -123,7 +123,7 @@ _competent.MakeCompsConfig.prototype.props
  */
 _competent.MakeCompsConfig.prototype.includeH
 /**
- * Whether the library functions should be required from a separate file, `./competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
+ * Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
  * @type {boolean|undefined}
  */
 _competent.MakeCompsConfig.prototype.externalAssets

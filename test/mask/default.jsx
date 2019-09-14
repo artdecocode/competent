@@ -40,6 +40,10 @@ makeTestSuite('test/result/default', {
         removeLine()
         return children
       },
+      'skip-render'({ 'do-skip': doSkip, skipRender }) {
+        if (doSkip) skipRender()
+        return (<skipped-render>OK</skipped-render>)
+      },
       'child-props'({ childProp }) {
         return `Hello ${childProp}`
       },

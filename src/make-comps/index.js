@@ -4,11 +4,11 @@ import { join } from 'path'
 const makeProps = (props) => {
   const keys = Object.keys(props)
   return `{
-    ${keys.map((key) => {
+  ${keys.map((key) => {
     const k = /-/.test(key) ? `'${key}'` : key
-    return `${k}: '${props[key]}'`
-  }).join(',\n')}${keys.length ? ',' : ''}
-  }`
+    return `${k}: '${`${props[key]}`.replace(/'/g, '\\\'')}'`
+  }).join(',\n  ')}${keys.length ? ',' : ''}
+}`
 }
 
 /**
@@ -24,7 +24,7 @@ const makeComponent = (component) => {
   const c = component.children.filter(Boolean)
   if (c.length)
     arr.push(`children: ${JSON.stringify(component.children)}`)
-  const j = arr.map((l) => `  ${l}`).join(',\n') + ','
+  const j = arr.map((l) => l.replace(/^/mg, '  ')).join(',\n') + ','
   return `{
 ${j}
 }`
@@ -111,7 +111,8 @@ const makeImports = (components, map) => {
  * @param {!Array<?string>} values The array with imports, where the default one always has index of 0.
  */
 const makeImport = (values, location, components = true) => {
-  const [def, ...rest] = values
+  let [def, ...rest] = values
+  rest = rest.filter(Boolean)
   let s = 'import '
   if (def) s += components ? cc(def) : def
   if (rest.length) {
@@ -179,7 +180,7 @@ export default function makeComponentsScript(components, opts) {
   if (io) s += defineIo(io) + '\n\n'
   s += makeJs(components)
   s += `
-meta.forEach(({ key, id, props = {}, children }) => {
+meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 ${extendProps ? `  ${extendProps}` : ''}

@@ -55,6 +55,9 @@
       <arg boolean name="shouldExport" opt>Whether to export the component.</arg>
       When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.
     </fn>
+    <fn name="skipRender" void>
+      If this method is called, _Competent_ will return the original match without rendering the component into static HTML. This should be used together with `export` to provide run-time dynamic browser rendering, without static HTML code generation.
+    </fn>
     <fn name="setPretty" void>
       <arg boolean name="isPretty">Whether to pretty print.</arg>
       <arg number name="lineLength" opt>Number of characters after which to wrap lines.</arg>

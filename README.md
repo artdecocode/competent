@@ -26,7 +26,7 @@ yarn add competent
 - [`async writeAssets(path): void`](#async-writeassetspath-string-void)
 - [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
-- [Copyright](#copyright)
+- [License & Copyright](#license--copyright)
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/0.svg?sanitize=true">
@@ -157,7 +157,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.7.0</span>
+  <span class="ver">1.8.0</span>
   <p>Static Web Site Generator With JSX As HTML.</p>
 </div>
 <div style="background:green;" id="c2">
@@ -323,6 +323,16 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
   </td>
  </tr>
  <tr>
+  <td rowSpan="3" align="center"><strong>skipRender*</strong></td>
+  <td><em>() => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   If this method is called, <em>Competent</em> will return the original match without rendering the component into static HTML. This should be used together with <code>export</code> to provide run-time dynamic browser rendering, without static HTML code generation.
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center"><strong>setPretty*</strong></td>
   <td><em>(isPretty: boolean, lineLength?: number) => void</em></td>
  </tr>
@@ -382,11 +392,11 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-12T20:39:44.628Z competent render npm-package
-2019-09-12T20:39:44.669Z competent render npm-package
-2019-09-12T20:39:44.675Z competent render npm-package
-2019-09-12T20:39:44.676Z competent render hello-world
-2019-09-12T20:39:44.683Z competent render friends
+2019-09-14T19:33:51.605Z competent render npm-package
+2019-09-14T19:33:51.648Z competent render npm-package
+2019-09-14T19:33:51.653Z competent render npm-package
+2019-09-14T19:33:51.655Z competent render hello-world
+2019-09-14T19:33:51.659Z competent render friends
 ```
 
 <p align="center"><a href="#table-of-contents">
@@ -548,7 +558,7 @@ const meta = [{
   },
   children: ["@a-la/jsx"],
 }]
-meta.forEach(({ key, id, props = {}, children }) => {
+meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
@@ -618,7 +628,7 @@ const meta = [{
   },
   children: ["@a-la/jsx"],
 }]
-meta.forEach(({ key, id, props = {}, children }) => {
+meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
@@ -717,7 +727,24 @@ _Competent_ is used by:
   <img src="/.documentary/section-breaks/9.svg?sanitize=true">
 </a></p>
 
-## Copyright
+## License & Copyright
+
+```
+Dual licensed under Affero GPL and a commercial license.
+
+- Within the UK: no commercial use is allowed until the
+  organisation signs up. After: see below. Sign up at:
+  https://www.technation.sucks/license/.
+- Across the globe: Affero GPL. No companies affiliated
+  with Tech Nation in any way (e.g., participation in
+  their programs, being part of their network, hiring
+  their directors), are allowed to use the software
+  unless they sign up.
+
+(c) 2019 Art Deco Code
+
+The COPYING file contains the full text of the public license.
+```
 
 <table>
   <tr>

@@ -35,7 +35,7 @@ const meta = [{
   key: 'test',
   id: 'id1',
 }]
-meta.forEach(({ key, id, props = {}, children }) => {
+meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
@@ -78,7 +78,7 @@ const meta = [{
   key: 'test',
   id: 'id1',
 }]
-meta.forEach(({ key, id, props = {}, children }) => {
+meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
   props.splendid = { export() {} }

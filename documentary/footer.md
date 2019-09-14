@@ -28,8 +28,10 @@ _Competent_ is used by:
 
 %~%
 
-## Copyright
+## License & Copyright
 
-<Footer />
+%EXAMPLE: LICENSE%
+
+<footer />
 
 %~ -1%

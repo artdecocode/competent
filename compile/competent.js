@@ -637,8 +637,8 @@ export ${fb.toString()}`;
 const hb = a => {
   const b = Object.keys(a);
   return `{
-    ${b.map(c => `${/-/.test(c) ? `'${c}'` : c}: '${a[c]}'`).join(",\n")}${b.length ? "," : ""}
-  }`;
+  ${b.map(c => `${/-/.test(c) ? `'${c}'` : c}: '${`${a[c]}`.replace(/'/g, "\\'")}'`).join(",\n  ")}${b.length ? "," : ""}
+}`;
 }, ib = a => {
   const b = [];
   b.push(`key: '${a.key}'`);
@@ -646,7 +646,7 @@ const hb = a => {
   Object.keys(a.props).length && b.push(`props: ${hb(a.props)}`);
   a.children.filter(Boolean).length && b.push(`children: ${JSON.stringify(a.children)}`);
   return `{
-${b.map(c => `  ${c}`).join(",\n") + ","}
+${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
 }`;
 }, jb = a => `/** @type {!Array<!preact.PreactProps>} */
 const meta = [${a.map(b => ib(b)).join(",\n")}]`, kb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", Y = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), lb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${Y(b)}`).filter((b, c, d) => d.indexOf(b) == c).join(",\n  ")},\n}`, mb = (a, b) => {
@@ -799,7 +799,7 @@ module.exports = {_competent:(a, b = {}) => {
   e && (k += kb(e) + "\n\n");
   k += jb(a);
   return k + `
-meta.forEach(({ key, id, props = {}, children }) => {
+meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 ${b ? `  ${b}` : ""}

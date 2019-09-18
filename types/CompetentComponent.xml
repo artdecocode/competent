@@ -6,7 +6,7 @@
   <import name="PreactProps" from="@externs/preact" ns="preact"
   link="https://github.com/dpck/preact/wiki/API#type-preactprops" />
 
-  <interface name="CompetentComponent" extends="preact.Component" desc="A component could have an additional API understood by _Competent_.">
+  <constructor name="CompetentComponent" extends="preact.Component" desc="A component could have an additional API understood by _Competent_.">
     <fn name="serverRender"
       return="preact.AcceptedChild|!Array<preact.AcceptedChild>">
       <arg type="!preact.PreactProps" name="props" opt>
@@ -19,5 +19,5 @@
         A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.
       </arg>
     </static>
-  </interface>
+  </constructor>
 </types>

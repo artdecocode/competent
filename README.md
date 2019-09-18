@@ -483,11 +483,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-18T01:46:52.616Z competent render npm-package
-2019-09-18T01:46:52.654Z competent render npm-package
-2019-09-18T01:46:52.659Z competent render npm-package
-2019-09-18T01:46:52.661Z competent render hello-world
-2019-09-18T01:46:52.665Z competent render friends
+2019-09-18T02:04:25.941Z competent render npm-package
+2019-09-18T02:04:25.977Z competent render npm-package
+2019-09-18T02:04:25.982Z competent render npm-package
+2019-09-18T02:04:25.983Z competent render hello-world
+2019-09-18T02:04:25.987Z competent render friends
 ```
 
 

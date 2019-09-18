@@ -143,7 +143,7 @@ _competent.IOOptions.prototype.log
 /**
  * A component could have an additional API understood by _Competent_.
  * @extends {preact.Component}
- * @interface
+ * @constructor
  */
 _competent.CompetentComponent = function() {}
 /**

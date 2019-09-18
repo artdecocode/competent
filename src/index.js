@@ -65,8 +65,8 @@ const competent = (components, conf = {}) => {
           throw err
         const Instance = /** @type {function(new:_competent.CompetentComponent)} */ (instance)
         const i = new Instance()
-        hyperResult = i.serverRender ? i.serverRender(props) : i.render(props)
-        if (hyperResult instanceof Promise) hyperResult = await hyperResult
+        const hr = i.serverRender ? i.serverRender(props) : i.render(props)
+        if (hr instanceof Promise) hyperResult = await hyperResult
       }
       if (exported) {
         const hr = Array.isArray(hyperResult) ? hyperResult[0] : hyperResult

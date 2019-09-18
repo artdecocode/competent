@@ -93,27 +93,27 @@ function M(a, b = {}, c = {}, d = !1, e = !1, f) {
   let {lineLength:D = 40} = b;
   D -= B;
   let {nodeName:l, attributes:L = {}} = a;
-  var q = ["textarea", "pre"].includes(l), x = " ".repeat(B);
-  const y = "string" == typeof g ? g : `  ${x}`;
+  var q = ["textarea", "pre"].includes(l), w = " ".repeat(B);
+  const x = "string" == typeof g ? g : `  ${w}`;
   if ("object" != typeof a && !l) {
     return G(a);
   }
   if ("function" == typeof l) {
     if (!k || !d && p) {
-      return x = ca(a), l.prototype && "function" == typeof l.prototype.render ? (q = new l(x, c), q._disable = q.__x = !0, q.props = x, q.context = c, l.getDerivedStateFromProps ? q.state = {...q.state, ...l.getDerivedStateFromProps(q.props, q.state)} : q.componentWillMount && q.componentWillMount(), x = q.render(q.props, q.state, q.context), q.getChildContext && (c = {...c, ...q.getChildContext()})) : x = l(x, c), M(x, b, c, h, e, f);
+      return w = ca(a), l.prototype && "function" == typeof l.prototype.render ? (q = new l(w, c), q._disable = q.__x = !0, q.props = w, q.context = c, l.getDerivedStateFromProps ? q.state = {...q.state, ...l.getDerivedStateFromProps(q.props, q.state)} : q.componentWillMount && q.componentWillMount(), w = q.render(q.props, q.state, q.context), q.getChildContext && (c = {...c, ...q.getChildContext()})) : w = l(w, c), M(w, b, c, h, e, f);
     }
     l = l.displayName || l !== Function && l.name || ia(l);
   }
   let r = "";
   ({A:F, v:d, l:f} = da(L, l, {allAttributes:u, xml:t, w:e, sort:m, l:f}));
   if (g) {
-    let z = `<${l}`.length;
+    let y = `<${l}`.length;
     r = F.reduce((v, I) => {
-      const J = z + 1 + I.length;
+      const J = y + 1 + I.length;
       if (J > D) {
-        return z = y.length, `${v}\n${y}${I}`;
+        return y = x.length, `${v}\n${x}${I}`;
       }
-      z = J;
+      y = J;
       return `${v} ${I}`;
     }, "");
   } else {
@@ -127,18 +127,18 @@ function M(a, b = {}, c = {}, d = !1, e = !1, f) {
   R && F && (r = r.replace(/>$/, " />"));
   let C = [];
   if (d) {
-    !q && g && (ba(d) || d.length + ja(r) > D) && (d = "\n" + y + `${d}`.replace(/(\n+)/g, "$1" + (y || "\t"))), r += d;
+    !q && g && (ba(d) || d.length + ja(r) > D) && (d = "\n" + x + `${d}`.replace(/(\n+)/g, "$1" + (x || "\t"))), r += d;
   } else {
     if (a.children) {
-      let z = g && r.includes("\n");
+      let y = g && r.includes("\n");
       C = a.children.map(v => {
         if (null != v && !1 !== v && (v = M(v, b, c, !0, "svg" == l ? !0 : "foreignObject" == l ? !1 : e, f))) {
-          return g && v.length + ja(r) > D && (z = !0), v;
+          return g && v.length + ja(r) > D && (y = !0), v;
         }
       }).filter(Boolean);
-      if (g && z && !q) {
+      if (g && y && !q) {
         for (a = C.length; a--;) {
-          C[a] = "\n" + y + `${C[a]}`.replace(/(\n+)/g, "$1" + (y || "\t"));
+          C[a] = "\n" + x + `${C[a]}`.replace(/(\n+)/g, "$1" + (x || "\t"));
         }
       }
     }
@@ -150,7 +150,7 @@ function M(a, b = {}, c = {}, d = !1, e = !1, f) {
       return r.substring(0, r.length - 1) + " />";
     }
   }
-  F || (a = C[C.length - 1], `${l}`.match(fa) && (a ? !/>$/.test(a) : 1) || q || !g || !r.includes("\n") || (r += `\n${x}`), r += `</${l}>`);
+  F || (a = C[C.length - 1], `${l}`.match(fa) && (a ? !/>$/.test(a) : 1) || q || !g || !r.includes("\n") || (r += `\n${w}`), r += `</${l}>`);
   return r;
 }
 function ia(a) {
@@ -716,71 +716,70 @@ const ob = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`),
 module.exports = {_competent:(a, b = {}) => {
   async function c(t, B, R, D, l, L, q) {
     nb("render %s", l);
-    const x = Error("Skip render");
+    const w = Error("Skip render");
     try {
-      const y = a[l], r = q.slice(0, L), F = q.slice(L + t.length);
+      const x = a[l], r = q.slice(0, L), F = q.slice(L + t.length);
       if (/\x3c!--\s*$/.test(r) && /^\s*--\x3e/.test(F)) {
         return t;
       }
-      const [{content:C = "", props:z}] = oa(l, D);
+      const [{content:C = "", props:y}] = oa(l, D);
       D = [C];
       let v = !1, I = !0, J = !1, pa, qa, O, ra, sa;
-      const X = e.call(this, {...z, children:D}, {export(n = !0) {
+      const X = e.call(this, {...y, children:D}, {export(n = !0) {
         v = n;
-      }, setPretty(n, A) {
+      }, setPretty(n, z) {
         pa = n;
-        A && (qa = A);
-      }, renderAgain(n = !0, A = !1) {
+        z && (qa = z);
+      }, renderAgain(n = !0, z = !1) {
         I = n;
-        J = A;
+        J = z;
       }, setChildContext(n) {
         ra = n;
       }, removeLine(n = !0) {
         sa = n;
       }, skipRender() {
-        throw x;
+        throw w;
       }}, l);
-      let w;
+      let A;
       try {
-        const n = y.call(this, X);
-        w = n instanceof Promise ? await n : n;
+        const n = x.call(this, X);
+        A = n instanceof Promise ? await n : n;
       } catch (n) {
         if (!n.message.startsWith("Class constructor")) {
           throw n;
         }
-        const A = new y;
-        w = A.serverRender ? A.serverRender(X) : A.render(X);
-        w instanceof Promise && (w = await w);
+        const z = new x;
+        (z.serverRender ? z.serverRender(X) : z.render(X)) instanceof Promise && (A = await A);
       }
       if (v) {
-        const n = Array.isArray(w) ? w[0] : w;
+        const n = Array.isArray(A) ? A[0] : A;
         n.attributes.id ? O = n.attributes.id : (O = d.call(this), n.attributes.id = O);
       }
       const ta = {pretty:pa, lineLength:qa};
       let E;
-      "string" == typeof w ? E = w : Array.isArray(w) ? E = w.map(n => "string" == typeof n ? n : ha(n, ta)).join("\n") : E = ha(w, ta);
+      "string" == typeof A ? E = A : Array.isArray(A) ? E = A.map(n => "string" == typeof n ? n : ha(n, ta)).join("\n") : E = ha(A, ta);
       if (!E && sa) {
-        return g && g.call(this, l, z), "";
+        return g && g.call(this, l, y), "";
       }
       E = (B || "") + E.replace(/^/gm, R);
       if (I) {
         let n;
         m ? n = m.call(this, l, J) : J ? n = {re:ob(u, l), replacement:c} : n = {re:u, replacement:c};
-        const A = new Ma(n);
+        const z = new Ma(n);
         if (h) {
           const pb = h.call(this, ra);
-          Object.assign(A, pb);
+          Object.assign(z, pb);
         }
-        E = await Ka(A, E);
+        E = await Ka(z, E);
       }
-      v && f.call(this, l, O, z, D);
-      g && g.call(this, l, z);
+      v && f.call(this, l, O, y, D);
+      g && g.call(this, l, y);
       return E;
-    } catch (y) {
-      if (y === x) {
+    } catch (x) {
+      if (x === w) {
         return t;
       }
-      k && k.call(this, l, y, L, q);
+      k && k.call(this, l, x, L, q);
       return p ? "" : t;
     }
   }

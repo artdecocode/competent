@@ -55,7 +55,25 @@ The logging will be output to `stderr`.
 </td></tr>
 </table>
 
-<typedef narrow flatten>types/index.xml</typedef>
+<typedef narrow flatten name="Config">types/index.xml</typedef>
+
+The meta methods are usually used by the components in the `render`/`serverRender` methods, to control how the specific component instance should be rendered. If the `getProps` is not passed in the config, by default they will extend the HTML properties of the component.
+
+<typedef narrow flatten name="Meta">types/index.xml</typedef>
+
+%~%
+
+## Additional Methods
+
+_Competent_ can work with additional API of components, in which case they must extend the _Preact_ class and implement these additional methods.
+
+<typedef narrow>types/SplendidComponent.xml</typedef>
+
+For example, we could implement a component that loads additional libraries and JSON data, and only renders when they are ready in the following way:
+
+%EXAMPLE: example/splendid%
+
+When compiling with _Closure Compiler_ (or _Depack_), the static methods need to be written in quotes like `static 'method'()`, otherwise Closure will rename them. The `checkTypes` warning should also be suppressed. The other way to do that would be to write static methods normally, but then [reassign them](https://github.com/google/closure-compiler/issues/3447): `Example['staticMethod'] = Example.staticMethod;`
 
 %~%
 
@@ -65,10 +83,5 @@ When the `DEBUG` env variable is set to _competent_, the program will print some
 
 <fork stderr env="DEBUG=competent">example/debug</fork>
 
-## _SplendidComponent_
-
-A component could have an additional API understood by _Competent_, including:
-
-<typedef narrow>types/SplendidComponent.xml</typedef>
 
 %~%

@@ -14,11 +14,10 @@ yarn add competent
 - [API](#api)
 - [`competent(components, config=): !_restream.Rule`](#competentcomponents-objectstring-functionfunctionnew-preactcomponentconfig-config-_restreamrule)
   * [`Config`](#type-config)
-  * [`Props`](#type-props)
   * [`Meta`](#type-meta)
-- [`DEBUG=competent`](#debugcompetent)
-- [_SplendidComponent_](#splendidcomponent)
+- [Additional Methods](#additional-methods)
   * [`SplendidComponent`](#type-splendidcomponent)
+- [`DEBUG=competent`](#debugcompetent)
 - [`makeComponentsScript(components, options=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentoptions-makecompsconfig-string)
   * [`MakeCompsConfig`](#type-makecompsconfig)
   * [`IOOptions`](#type-iooptions)
@@ -227,20 +226,20 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">getProps</td>
-  <td colSpan="2"><em>(props: <a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a>, meta: <a href="#type-meta" title="Service methods for `competent`.">!Meta</a>, componentName: string) => Object</em></td>
+  <td colSpan="2"><em>(props: !Props, meta: <a href="#type-meta" title="Service methods for `competent`.">!Meta</a>, componentName: string) => Object</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td colSpan="2">
    The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with <em>meta</em>.<br/>
-   <kbd><strong>props*</strong></kbd> <em><code><a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a></code></em>: Properties.<br/>
+   <kbd><strong>props*</strong></kbd> <em><code>!Props</code></em>: Properties.<br/>
    <kbd><strong>meta*</strong></kbd> <em><code><a href="#type-meta" title="Service methods for `competent`.">!Meta</a></code></em>: Meta properties.<br/>
    <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The name of the component.
   </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center">markExported</td>
-  <td colSpan="2"><em>(key: string, id: string, props: <a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a>, children: !Array&lt;string&gt;) => ?</em></td>
+  <td colSpan="2"><em>(key: string, id: string, props: !Props, children: !Array&lt;string&gt;) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
@@ -248,7 +247,7 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
    If the component called the <code>export</code> meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.<br/>
    <kbd><strong>key*</strong></kbd> <em><code>string</code></em>: Component key.<br/>
    <kbd><strong>id*</strong></kbd> <em><code>string</code></em>: The ID assigned manually either via the element's id attribute, or with the <code>getId</code> function automatically.<br/>
-   <kbd><strong>props*</strong></kbd> <em><code><a href="#type-props" title="The properties extracted from HTML and to be passed to the component for rendering.">!Props</a></code></em>: Component properties.<br/>
+   <kbd><strong>props*</strong></kbd> <em><code>!Props</code></em>: Component properties.<br/>
    <kbd><strong>children*</strong></kbd> <em><code>!Array&lt;string&gt;</code></em>: Component children.
   </td>
  </tr>
@@ -303,9 +302,7 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
 </table>
 
-
-<code>Object&lt;string, *&gt;</code> __<a name="type-props">`Props`</a>__: The properties extracted from HTML and to be passed to the component for rendering.
-
+The meta methods are usually used by the components in the `render`/`serverRender` methods, to control how the specific component instance should be rendered. If the `getProps` is not passed in the config, by default they will extend the HTML properties of the component.
 
 __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 <table>
@@ -389,39 +386,16 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
-## `DEBUG=competent`
+## Additional Methods
 
-When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
+_Competent_ can work with additional API of components, in which case they must extend the _Preact_ class and implement these additional methods.
 
-```
-2019-09-18T01:26:38.486Z competent render npm-package
-2019-09-18T01:26:38.528Z competent render npm-package
-2019-09-18T01:26:38.531Z competent render npm-package
-2019-09-18T01:26:38.532Z competent render hello-world
-2019-09-18T01:26:38.536Z competent render friends
-```
-
-## _SplendidComponent_
-
-A component could have an additional API understood by _Competent_, including:
-
-__<a name="type-splendidcomponent">`SplendidComponent`</a> extends <a title="A base class that is usually subclassed to create stateful Preact components." href="https://github.com/dpck/preact/wiki/Component">`preact.Component`</a>__
+__<a name="type-splendidcomponent">`SplendidComponent`</a> extends <a title="A base class that is usually subclassed to create stateful Preact components." href="https://github.com/dpck/preact/wiki/Component">`preact.Component`</a>__: A component could have an additional API understood by _Competent_.
 <table>
  <thead><tr>
   <th>Name</th>
   <th>Type &amp; Description</th>
  </tr></thead>
- <tr>
-  <td rowSpan="3" align="center"><kbd>static</kbd> <ins>serverRender</ins></td>
-  <td><em>(props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => (<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a> | !Array&lt;<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a>&gt;)</em></td>
- </tr>
- <tr></tr>
- <tr>
-  <td>
-   The same as render, but for the server only. Called by <em>Component</em> and not preact, hence it's static as the actual component is not initialised and no life-cycle hooks are fired.<br/>
-   <kbd>props</kbd> <em><code><a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
-  </td>
- </tr>
  <tr>
   <td rowSpan="3" align="center"><kbd>static</kbd> <ins>load</ins></td>
   <td><em>(callback: function(Error, !Object=): void) => void</em></td>
@@ -432,10 +406,93 @@ __<a name="type-splendidcomponent">`SplendidComponent`</a> extends <a title="A b
    <kbd><strong>callback*</strong></kbd> <em><code>function(Error, !Object=): void</code></em>: A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.
   </td>
  </tr>
+ <tr>
+  <td rowSpan="3" align="center"><ins>serverRender</ins></td>
+  <td><em>(props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => (<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a> | !Array&lt;<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a>&gt;)</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   The same as render, but for the server only. Called by <em>Component</em> using <em>NodeJS</em> runtime and not by <em>Preact</em> in browser, therefore <em>NodeJS</em> API could be used here.<br/>
+   <kbd>props</kbd> <em><code><a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
+  </td>
+ </tr>
 </table>
+
+For example, we could implement a component that loads additional libraries and JSON data, and only renders when they are ready in the following way:
+
+```js
+/* eslint-env browser */
+import loadScripts from '@lemuria/load-scripts'
+import { Component } from 'preact'
+
+export default class Menu extends Component {
+  /**
+   * @suppress {checkTypes}
+   */
+  static 'load'(callback) {
+    loadScripts([
+      'js/menu.json',
+      'snapsvg/dist/snap.svg-min.js',
+      'js/svg-anim.js',
+    ], (err, res) => {
+      if (err) return callback(err)
+      try {
+        const [json] = /** @type {!Array<string>}*/ (res)
+        callback(null, { json: JSON.parse(json) })
+      } catch (er) {
+        callback(er)
+      }
+    })
+  }
+  serverRender({ splendid }) {
+    splendid.export()
+    splendid.addFile('js/menu.json')
+    splendid.addFile('js/svg-anim.js.map')
+    splendid.addFile('img/menu.svg')
+    splendid.polyfill('replace-with', true)
+    splendid.addExtern('node_modules://@artdeco/snapsvg-animator/types/externs.js')
+    return (<div id="menu" style="width:100%;">
+      <img style="max-width:100%;" alt="menu" src="img/menu.svg" />
+    </div>)
+  }
+  render({ json }) {
+    const width = 1226
+    const height = 818
+
+    /** @type {!_snapsvgAnimator.SVGAnim} */
+    const comp = new window['SVGAnim'](json, width, height)
+    const n = comp.s.node
+    n.style['max-width'] = '100%'
+
+    return (<div id="menu" style="width:100%;" ref={(el) => {
+      el.appendChild(n)
+    }}/>)
+  }
+}
+```
+
+When compiling with _Closure Compiler_ (or _Depack_), the static methods need to be written in quotes like `static 'method'()`, otherwise Closure will rename them. The `checkTypes` warning should also be suppressed. The other way to do that would be to write static methods normally, but then [reassign them](https://github.com/google/closure-compiler/issues/3447): `Example['staticMethod'] = Example.staticMethod;`
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/3.svg?sanitize=true">
+</a></p>
+
+## `DEBUG=competent`
+
+When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
+
+```
+2019-09-18T01:40:06.759Z competent render npm-package
+2019-09-18T01:40:06.803Z competent render npm-package
+2019-09-18T01:40:06.808Z competent render npm-package
+2019-09-18T01:40:06.809Z competent render hello-world
+2019-09-18T01:40:06.813Z competent render friends
+```
+
+
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
 </a></p>
 
 ## <code><ins>makeComponentsScript</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Array<!ExportedComponent>,`<br/>&nbsp;&nbsp;`options=: MakeCompsConfig,`<br/></sub><code>): <i>string</i></code>
@@ -607,7 +664,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/4.svg?sanitize=true" width="25">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true" width="25">
 </a></p>
 
 ### Assets
@@ -615,7 +672,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
 By default, the lib functions will be embedded into the source code. To place them in separate files for reuse across multiple generated scripts, the `externalAssets` option is used together with `writeAssets` method.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/5.svg?sanitize=true" width="25">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true" width="25">
 </a></p>
 
 ### Intersection Observer
@@ -686,7 +743,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
 </a></p>
 
 ## <code>async <ins>writeAssets</ins>(</code><sub><br/>&nbsp;&nbsp;`path: string,`<br/></sub><code>): <i>void</i></code>
@@ -734,7 +791,7 @@ export function makeIo(options = {}) {
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
 </a></p>
 
 ## Known Limitations
@@ -756,7 +813,7 @@ Currently, it is not possible to match nested components.
 This is because the RegExp is not capable of doing that sort of thing, because it cannot balance matches, however when _Competent_ switches to a non-regexp parser it will become possible.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
 </a></p>
 
 ## Who Uses _Competent_
@@ -767,7 +824,7 @@ _Competent_ is used by:
 - [_Splendid_](https://github.com/artdecocode/splendid): a static website generator that allows to write JSX components in HTML, and bundles JS compiler with _Google Closure Compiler_ to also dynamically render them on the page.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/10.svg?sanitize=true">
 </a></p>
 
 ## License & Copyright

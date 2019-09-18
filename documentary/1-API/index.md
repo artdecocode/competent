@@ -65,4 +65,10 @@ When the `DEBUG` env variable is set to _competent_, the program will print some
 
 <fork stderr env="DEBUG=competent">example/debug</fork>
 
+## _SplendidComponent_
+
+A component could have an additional API understood by _Competent_, including:
+
+<typedef narrow>types/SplendidComponent.xml</typedef>
+
 %~%

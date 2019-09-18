@@ -1,0 +1,23 @@
+<types namespace="_competent">
+  <import name="Component" from="@externs/preact" ns="preact"
+  link="https://github.com/dpck/preact/wiki/Component#type-component" />
+  <import name="AcceptedChild" from="@externs/preact" ns="preact"
+  link="https://github.com/dpck/preact/wiki/API#type-acceptedchild" />
+  <import name="PreactProps" from="@externs/preact" ns="preact"
+  link="https://github.com/dpck/preact/wiki/API#type-preactprops" />
+
+  <interface name="SplendidComponent" extends="preact.Component">
+    <static name="serverRender"
+      return="preact.AcceptedChild|!Array<preact.AcceptedChild>">
+      <arg type="!preact.PreactProps" name="props" opt>
+        Component properties.
+      </arg>
+      The same as render, but for the server only. Called by _Component_ and not preact, hence it's static as the actual component is not initialised and no life-cycle hooks are fired.
+    </static>
+    <static name="load" void>
+      <arg name="callback" type="function(Error, !Object=): void">
+        A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.
+      </arg>
+    </static>
+  </interface>
+</types>

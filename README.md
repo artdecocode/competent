@@ -17,6 +17,8 @@ yarn add competent
   * [`Props`](#type-props)
   * [`Meta`](#type-meta)
 - [`DEBUG=competent`](#debugcompetent)
+- [_SplendidComponent_](#splendidcomponent)
+  * [`SplendidComponent`](#type-splendidcomponent)
 - [`makeComponentsScript(components, options=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentoptions-makecompsconfig-string)
   * [`MakeCompsConfig`](#type-makecompsconfig)
   * [`IOOptions`](#type-iooptions)
@@ -157,7 +159,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.8.0</span>
+  <span class="ver">1.9.5</span>
   <p>Static Web Site Generator With JSX As HTML.</p>
 </div>
 <div style="background:green;" id="c2">
@@ -392,12 +394,45 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-14T19:33:51.605Z competent render npm-package
-2019-09-14T19:33:51.648Z competent render npm-package
-2019-09-14T19:33:51.653Z competent render npm-package
-2019-09-14T19:33:51.655Z competent render hello-world
-2019-09-14T19:33:51.659Z competent render friends
+2019-09-18T01:23:18.199Z competent render npm-package
+2019-09-18T01:23:18.256Z competent render npm-package
+2019-09-18T01:23:18.262Z competent render npm-package
+2019-09-18T01:23:18.267Z competent render hello-world
+2019-09-18T01:23:18.270Z competent render friends
 ```
+
+## _SplendidComponent_
+
+A component could have an additional API understood by _Competent_, including:
+
+__<a name="type-splendidcomponent">`SplendidComponent`</a> extends <a title="A base class that is usually subclassed to create stateful Preact components." href="https://github.com/dpck/preact/wiki/Component">`preact.Component`</a>__
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><kbd>static</kbd> <ins>serverRender</ins></td>
+  <td><em>(props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => ([preact.AcceptedChild](https://github.com/dpck/preact/wiki/API#type-acceptedchild) | !Array&lt;[preact.AcceptedChild](https://github.com/dpck/preact/wiki/API#type-acceptedchild)&gt;)</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   The same as render, but for the server only. Called by <em>Component</em> and not preact, hence it's static as the actual component is not initialised and no life-cycle hooks are fired.<br/>
+   <kbd>props</kbd> <em><code><a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><kbd>static</kbd> <ins>load</ins></td>
+  <td><em>(callback: function(Error, !Object=): void) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   <kbd><strong>callback*</strong></kbd> <em><code>function(Error, !Object=): void</code></em>: A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.
+  </td>
+ </tr>
+</table>
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/3.svg?sanitize=true">
@@ -562,7 +597,12 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
-  render(h(Comp, props, children), parent, el)
+  if (Comp.load) {
+      Comp.load((err, data) => {
+        if (data) Object.assign(props, data)
+        if (!err) render(h(Comp, props, children), parent, el)
+      }, el)
+    } else render(h(Comp, props, children), parent, el)
 })
 ```
 
@@ -633,7 +673,12 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
-    render(h(Comp, props, children), parent, el)
+    if (Comp.load) {
+      Comp.load((err, data) => {
+        if (data) Object.assign(props, data)
+        if (!err) render(h(Comp, props, children), parent, el)
+      }, el)
+    } else render(h(Comp, props, children), parent, el)
   }
   el.render.meta = { key, id }
   io.observe(el)
@@ -677,12 +722,10 @@ export function makeIo(options = {}) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
       if (isIntersecting) {
-        if (target.render) {
-          if (log) console.warn('Rendering component %s into the element %s ',
-            target.render.meta.key, target.render.meta.id)
-          target.render()
-          io.unobserve(target)
-        }
+        if (log) console.warn('Rendering component %s into the element %s ',
+          target.render.meta.key, target.render.meta.id)
+        io.unobserve(target)
+        target.render()
       }
     })
   }, { rootMargin, ...rest })

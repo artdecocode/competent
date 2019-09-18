@@ -17,12 +17,10 @@ export function makeIo(options = {}) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
       if (isIntersecting) {
-        if (target.render) {
-          if (log) console.warn('Rendering component %s into the element %s ',
-            target.render.meta.key, target.render.meta.id)
-          target.render()
-          io.unobserve(target)
-        }
+        if (log) console.warn('Rendering component %s into the element %s ',
+          target.render.meta.key, target.render.meta.id)
+        io.unobserve(target)
+        target.render()
       }
     })
   }, { rootMargin, ...rest })

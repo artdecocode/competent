@@ -1,6 +1,6 @@
 # competent
 
-[![npm version](https://badge.fury.io/js/competent.svg)](https://npmjs.org/package/competent)
+[![npm version](https://badge.fury.io/js/competent.svg)](https://www.npmjs.com/package/competent)
 
 `competent` Extracts, Renders And Exports For Dynamic Render _JSX_ Components From Within HTML.
 
@@ -394,11 +394,11 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-18T01:23:18.199Z competent render npm-package
-2019-09-18T01:23:18.256Z competent render npm-package
-2019-09-18T01:23:18.262Z competent render npm-package
-2019-09-18T01:23:18.267Z competent render hello-world
-2019-09-18T01:23:18.270Z competent render friends
+2019-09-18T01:26:38.486Z competent render npm-package
+2019-09-18T01:26:38.528Z competent render npm-package
+2019-09-18T01:26:38.531Z competent render npm-package
+2019-09-18T01:26:38.532Z competent render hello-world
+2019-09-18T01:26:38.536Z competent render friends
 ```
 
 ## _SplendidComponent_
@@ -413,7 +413,7 @@ __<a name="type-splendidcomponent">`SplendidComponent`</a> extends <a title="A b
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center"><kbd>static</kbd> <ins>serverRender</ins></td>
-  <td><em>(props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => ([preact.AcceptedChild](https://github.com/dpck/preact/wiki/API#type-acceptedchild) | !Array&lt;[preact.AcceptedChild](https://github.com/dpck/preact/wiki/API#type-acceptedchild)&gt;)</em></td>
+  <td><em>(props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => (<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a> | !Array&lt;<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a>&gt;)</em></td>
  </tr>
  <tr></tr>
  <tr>

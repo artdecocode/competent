@@ -1,5 +1,9 @@
 ## 18 September 2019
 
+### [3.2.2](https://github.com/artdecocode/competent/compare/v3.2.1...v3.2.2)
+
+- [fix] Pass properties to the load method.
+
 ### [3.2.1](https://github.com/artdecocode/competent/compare/v3.2.0...v3.2.1)
 
 - [fix] Fix server rendering method.

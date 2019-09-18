@@ -65,7 +65,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
         if (!err) render(h(Comp, props, children), parent, el)
-      }, el)
+      }, el, props)
     } else render(h(Comp, props, children), parent, el)
   }
   el.render.meta = { key, id }
@@ -109,7 +109,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
         if (!err) render(h(Comp, props, children), parent, el)
-      }, el)
+      }, el, props)
     } else render(h(Comp, props, children), parent, el)
   }
   el.render.meta = { key, id }

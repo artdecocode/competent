@@ -156,12 +156,12 @@ The output will contain rendered <strong>JSX</strong>.
 ```html
 <html lang="en">
 
-<div style="background:red;" id="c1">
+<div style="background:red;" id="c2">
   <span class="name">splendid</span>
   <span class="ver">1.9.5</span>
   <p>Static Web Site Generator With JSX As HTML.</p>
 </div>
-<div style="background:green;" id="c2">
+<div style="background:green;" id="c1">
   <span class="name">@a-la/jsx</span>
   <span class="ver">1.6.0</span>
   <p>The JSX Transform For ÀLaMode And Other Packages.</p>
@@ -186,12 +186,12 @@ Package unknown-package not found.
 Exported packages:
 [ { key: 'npm-package',
     id: 'c1',
-    props: { style: 'background:red;' },
-    children: [ 'splendid' ] },
+    props: { style: 'background:green;' },
+    children: [ '@a-la/jsx' ] },
   { key: 'npm-package',
     id: 'c2',
-    props: { style: 'background:green;' },
-    children: [ '@a-la/jsx' ] } ]
+    props: { style: 'background:red;' },
+    children: [ 'splendid' ] } ]
 ```
 </td></tr>
 </table>
@@ -398,12 +398,14 @@ __<a name="type-competentcomponent">`CompetentComponent`</a> extends <a title="A
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center"><kbd>static</kbd> <ins>load</ins></td>
-  <td><em>(callback: function(Error, !Object=): void) => void</em></td>
+  <td><em>(callback: function(Error, !Object=): void, element: Element, props: !Object) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
-   <kbd><strong>callback*</strong></kbd> <em><code>function(Error, !Object=): void</code></em>: A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.
+   <kbd><strong>callback*</strong></kbd> <em><code>function(Error, !Object=): void</code></em>: A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.<br/>
+   <kbd><strong>element*</strong></kbd> <em><code>Element</code></em>: The element into which the component will be rendered.<br/>
+   <kbd><strong>props*</strong></kbd> <em><code>!Object</code></em>: The properties that the component will receive.
   </td>
  </tr>
  <tr>
@@ -483,11 +485,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-18T02:28:24.205Z competent render npm-package
-2019-09-18T02:28:24.285Z competent render npm-package
-2019-09-18T02:28:24.296Z competent render npm-package
-2019-09-18T02:28:24.297Z competent render hello-world
-2019-09-18T02:28:24.302Z competent render friends
+2019-09-18T04:25:17.974Z competent render npm-package
+2019-09-18T04:25:18.037Z competent render npm-package
+2019-09-18T04:25:18.040Z competent render npm-package
+2019-09-18T04:25:18.042Z competent render hello-world
+2019-09-18T04:25:18.046Z competent render friends
 ```
 
 
@@ -658,7 +660,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
         if (!err) render(h(Comp, props, children), parent, el)
-      }, el)
+      }, el, props)
     } else render(h(Comp, props, children), parent, el)
 })
 ```
@@ -734,7 +736,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
         if (!err) render(h(Comp, props, children), parent, el)
-      }, el)
+      }, el, props)
     } else render(h(Comp, props, children), parent, el)
   }
   el.render.meta = { key, id }

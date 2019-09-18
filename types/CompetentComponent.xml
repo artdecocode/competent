@@ -18,6 +18,12 @@
       <arg name="callback" type="function(Error, !Object=): void">
         A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.
       </arg>
+      <arg name="element" type="Element">
+        The element into which the component will be rendered.
+      </arg>
+      <arg name="props" type="!Object">
+        The properties that the component will receive.
+      </arg>
     </static>
   </constructor>
 </types>

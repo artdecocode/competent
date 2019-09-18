@@ -146,3 +146,10 @@
 <skipped-render>OK</skipped-render>
 <skip-render do-skip />
 /**/
+
+## server-rendering
+<server-render test="10" />
+
+/* expected */
+<div>OK-10</div>
+/**/

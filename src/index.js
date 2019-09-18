@@ -63,9 +63,9 @@ const competent = (components, conf = {}) => {
       } catch (err) {
         if (!err.message.startsWith('Class constructor'))
           throw err
-        const Instance = /** @type {function(new:preact.Component)} */ (instance)
+        const Instance = /** @type {function(new:_competent.CompetentComponent)} */ (instance)
         const i = new Instance()
-        hyperResult = i['serverRender'] ? i['serverRender'](props) : i.render(props)
+        hyperResult = i.serverRender ? i.serverRender(props) : i.render(props)
         if (hyperResult instanceof Promise) hyperResult = await hyperResult
       }
       if (exported) {

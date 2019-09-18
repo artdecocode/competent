@@ -47,6 +47,9 @@ makeTestSuite('test/result/default', {
       'child-props'({ childProp }) {
         return `Hello ${childProp}`
       },
+      'server-render'({ test }) {
+        return (<div>OK-{test}</div>)
+      },
     }, { getProps(props, meta) {
       return { ...props, ...meta }
     }, ...this.options, ...this.JSOptions })

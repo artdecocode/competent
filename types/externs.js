@@ -4,6 +4,8 @@
  */
 
 /* typal types/exported.xml */
+/** @const */
+var _competent = {}
 /**
  * An exported component.
  * @record
@@ -31,8 +33,6 @@ _competent.ExportedComponent.prototype.props
 _competent.ExportedComponent.prototype.children
 
 /* typal types/index.xml */
-/** @const */
-var _competent = {}
 /**
  * Options for the program. All functions will be called with the Replaceable instance as their `this` context.
  * @record
@@ -138,3 +138,21 @@ _competent.IOOptions = function() {}
  * @type {boolean}
  */
 _competent.IOOptions.prototype.log
+
+/* typal types/CompetentComponent.xml */
+/**
+ * A component could have an additional API understood by _Competent_.
+ * @extends {preact.Component}
+ * @interface
+ */
+_competent.CompetentComponent = function() {}
+/**
+ * @param {function(Error, !Object=): void} callback A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.
+ */
+_competent.CompetentComponent.load = function(callback) {}
+/**
+ * The same as render, but for the server only. Called by _Component_ using _NodeJS_ runtime and not by _Preact_ in browser, therefore _NodeJS_ API could be used here.
+ * @param {!preact.PreactProps=} [props] Component properties.
+ * @return {(preact.AcceptedChild|!Array<preact.AcceptedChild>)}
+ */
+_competent.CompetentComponent.prototype.serverRender = function(props) {}

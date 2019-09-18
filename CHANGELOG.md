@@ -1,5 +1,9 @@
 ## 18 September 2019
 
+### [3.2.3](https://github.com/artdecocode/competent/compare/v3.2.2...v3.2.3)
+
+- [deps] Upgrade `@depack/render`.
+
 ### [3.2.2](https://github.com/artdecocode/competent/compare/v3.2.1...v3.2.2)
 
 - [fix] Pass properties to the load method.

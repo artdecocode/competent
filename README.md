@@ -483,11 +483,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-18T02:04:25.941Z competent render npm-package
-2019-09-18T02:04:25.977Z competent render npm-package
-2019-09-18T02:04:25.982Z competent render npm-package
-2019-09-18T02:04:25.983Z competent render hello-world
-2019-09-18T02:04:25.987Z competent render friends
+2019-09-18T02:28:24.205Z competent render npm-package
+2019-09-18T02:28:24.285Z competent render npm-package
+2019-09-18T02:28:24.296Z competent render npm-package
+2019-09-18T02:28:24.297Z competent render hello-world
+2019-09-18T02:28:24.302Z competent render friends
 ```
 
 
@@ -830,7 +830,8 @@ _Competent_ is used by:
 ## License & Copyright
 
 ```
-Dual licensed under Affero GPL and a commercial license.
+Dual licensed under limited Affero GPL and a commercial license.
+The limitations on the standard AGPL text are as follows:
 
 - Within the UK: no commercial use is allowed until the
   organisation signs up. After: see below. Sign up at:
@@ -845,6 +846,17 @@ Dual licensed under Affero GPL and a commercial license.
 
 The COPYING file contains the full text of the public license.
 ```
+
+<details>
+<summary>
+The Affero GPL 101 (only dev-dep: commercial OK), click to expand.
+</summary>
+
+- You can use _Competent_ as dev dependency to render HTML code, and the components invocation script in any personal/commercial project. For example, you can build a website for your client by writing a script that uses *Competent* to generate HTML.
+- However, you cannot use the software as part of an online service such as a cloud website builder because then it's not a dev dependency that you run to generate HTML of your website once, but a runtime-linking prod dependency.
+- In other words, when you need to link to the package during runtime, i.e., use it as a standard dependency in your own software (even if bundled), you're creating an extension of the main program with this plugin, and thus have to release your source code under _AGPL_, or obtain the commercial license.
+- Contact `license@artd.eco` for more information.
+</details>
 
 <table>
   <tr>

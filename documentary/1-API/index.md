@@ -67,7 +67,7 @@ The meta methods are usually used by the components in the `render`/`serverRende
 
 _Competent_ can work with additional API of components, in which case they must extend the _Preact_ class and implement these additional methods.
 
-<typedef narrow>types/SplendidComponent.xml</typedef>
+<typedef narrow>types/CompetentComponent.xml</typedef>
 
 For example, we could implement a component that loads additional libraries and JSON data, and only renders when they are ready in the following way:
 

@@ -16,7 +16,7 @@ yarn add competent
   * [`Config`](#type-config)
   * [`Meta`](#type-meta)
 - [Additional Methods](#additional-methods)
-  * [`SplendidComponent`](#type-splendidcomponent)
+  * [`CompetentComponent`](#type-competentcomponent)
 - [`DEBUG=competent`](#debugcompetent)
 - [`makeComponentsScript(components, options=): string`](#makecomponentsscriptcomponents-arrayexportedcomponentoptions-makecompsconfig-string)
   * [`MakeCompsConfig`](#type-makecompsconfig)
@@ -390,7 +390,7 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 
 _Competent_ can work with additional API of components, in which case they must extend the _Preact_ class and implement these additional methods.
 
-__<a name="type-splendidcomponent">`SplendidComponent`</a> extends <a title="A base class that is usually subclassed to create stateful Preact components." href="https://github.com/dpck/preact/wiki/Component">`preact.Component`</a>__: A component could have an additional API understood by _Competent_.
+__<a name="type-competentcomponent">`CompetentComponent`</a> extends <a title="A base class that is usually subclassed to create stateful Preact components." href="https://github.com/dpck/preact/wiki/Component">`preact.Component`</a>__: A component could have an additional API understood by _Competent_.
 <table>
  <thead><tr>
   <th>Name</th>
@@ -483,11 +483,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-18T01:40:06.759Z competent render npm-package
-2019-09-18T01:40:06.803Z competent render npm-package
-2019-09-18T01:40:06.808Z competent render npm-package
-2019-09-18T01:40:06.809Z competent render hello-world
-2019-09-18T01:40:06.813Z competent render friends
+2019-09-18T01:46:52.616Z competent render npm-package
+2019-09-18T01:46:52.654Z competent render npm-package
+2019-09-18T01:46:52.659Z competent render npm-package
+2019-09-18T01:46:52.661Z competent render hello-world
+2019-09-18T01:46:52.665Z competent render friends
 ```
 
 

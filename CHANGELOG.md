@@ -4,6 +4,7 @@
 
 - [feature] Add static `serverRender` and `load` methods to the component.
 - [fix] Read and assign the ID of the first element in the returned array.
+- [license] Explain the licensing conditions.
 
 ## 14 September 2019
 

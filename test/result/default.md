@@ -153,3 +153,10 @@
 /* expected */
 <div>OK-10</div>
 /**/
+
+## server-rendering async-array
+<server-render test="10" asyncArray addid />
+
+/* expected */
+<div id="test-id">OK-10</div>
+/**/

@@ -47,12 +47,17 @@ makeTestSuite('test/result/default', {
       'child-props'({ childProp }) {
         return `Hello ${childProp}`
       },
-      'server-render'({ test }) {
-        return (<div>OK-{test}</div>)
+      'server-render': class {
+        serverRender ({ test, asyncArray, addid, export: e }) {
+          if (addid) e()
+          if (asyncArray) return Promise.resolve([(<div>OK-{test}</div>)])
+          return (<div>OK-{test}</div>)
+        }
       },
     }, { getProps(props, meta) {
       return { ...props, ...meta }
-    }, ...this.options, ...this.JSOptions })
+    }, getId() { return 'test-id' },
+    markExported() {},  ...this.options, ...this.JSOptions })
     const re = new Replaceable(comp)
     return re
   },

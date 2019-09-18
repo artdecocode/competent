@@ -65,11 +65,15 @@ const competent = (components, conf = {}) => {
           throw err
         const Instance = /** @type {function(new:preact.Component)} */ (instance)
         const i = new Instance()
-        hyperResult = i.render(props)
+        hyperResult = i['serverRender'] ? i['serverRender'](props) : i.render(props)
+        if (hyperResult instanceof Promise) hyperResult = await hyperResult
       }
-      if (exported && !hyperResult.attributes.id) {
-        id = getId.call(this) // `c${splendid.random()}`
-        hyperResult.attributes.id = id
+      if (exported) {
+        const hr = Array.isArray(hyperResult) ? hyperResult[0] : hyperResult
+        if (!hr.attributes.id) {
+          id = getId.call(this)
+          hr.attributes.id = id
+        } else id = hr.attributes.id
       }
       const renderOptions = {
         pretty,
@@ -113,7 +117,7 @@ const competent = (components, conf = {}) => {
         r = await Replaceable.replace(childRepl, r)
       }
       if (exported)
-        markExported.call(this, key, hyperResult.attributes.id, htmlProps, children)
+        markExported.call(this, key, id, htmlProps, children)
       if (onSuccess) onSuccess.call(this, key, htmlProps)
       return r
     } catch (err) {

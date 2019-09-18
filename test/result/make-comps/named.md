@@ -40,7 +40,12 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
-  render(h(Comp, props, children), parent, el)
+  if (Comp.load) {
+      Comp.load((err, data) => {
+        if (data) Object.assign(props, data)
+        if (!err) render(h(Comp, props, children), parent, el)
+      }, el)
+    } else render(h(Comp, props, children), parent, el)
 })
 
 /**/

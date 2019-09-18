@@ -39,12 +39,10 @@ function makeIo(options = {}) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
       if (isIntersecting) {
-        if (target.render) {
-          if (log) console.warn('Rendering component %s into the element %s ',
-            target.render.meta.key, target.render.meta.id)
-          target.render()
-          io.unobserve(target)
-        }
+        if (log) console.warn('Rendering component %s into the element %s ',
+          target.render.meta.key, target.render.meta.id)
+        io.unobserve(target)
+        target.render()
       }
     })
   }, { rootMargin, ...rest })
@@ -63,7 +61,12 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
-    render(h(Comp, props, children), parent, el)
+    if (Comp.load) {
+      Comp.load((err, data) => {
+        if (data) Object.assign(props, data)
+        if (!err) render(h(Comp, props, children), parent, el)
+      }, el)
+    } else render(h(Comp, props, children), parent, el)
   }
   el.render.meta = { key, id }
   io.observe(el)
@@ -102,7 +105,12 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
-    render(h(Comp, props, children), parent, el)
+    if (Comp.load) {
+      Comp.load((err, data) => {
+        if (data) Object.assign(props, data)
+        if (!err) render(h(Comp, props, children), parent, el)
+      }, el)
+    } else render(h(Comp, props, children), parent, el)
   }
   el.render.meta = { key, id }
   io.observe(el)

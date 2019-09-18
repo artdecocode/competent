@@ -1,3 +1,10 @@
+## 18 September 2019
+
+### [3.2.0](https://github.com/artdecocode/competent/compare/v3.1.0...v3.2.0)
+
+- [feature] Add static `serverRender` and `load` methods to the component.
+- [fix] Read and assign the ID of the first element in the returned array.
+
 ## 14 September 2019
 
 ### [3.1.0](https://github.com/artdecocode/competent/compare/v3.0.1...v3.1.0)

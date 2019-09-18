@@ -163,7 +163,12 @@ export default function makeComponentsScript(components, opts) {
     return s
   }).join('\n')
 
-  const r = 'render(h(Comp, props, children), parent, el)'
+  const r = `if (Comp.load) {
+      Comp.load((err, data) => {
+        if (data) Object.assign(props, data)
+        if (!err) render(h(Comp, props, children), parent, el)
+      }, el)
+    } else render(h(Comp, props, children), parent, el)`
   const ifIo = io ? `el.render = () => {
     ${r}
   }

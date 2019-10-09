@@ -497,11 +497,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-10-09T16:55:09.331Z competent render npm-package
-2019-10-09T16:55:09.368Z competent render npm-package
-2019-10-09T16:55:09.373Z competent render npm-package
-2019-10-09T16:55:09.375Z competent render hello-world
-2019-10-09T16:55:09.381Z competent render friends
+2019-10-09T22:06:45.854Z competent render npm-package
+2019-10-09T22:06:45.890Z competent render npm-package
+2019-10-09T22:06:45.896Z competent render npm-package
+2019-10-09T22:06:45.897Z competent render hello-world
+2019-10-09T22:06:45.902Z competent render friends
 ```
 
 
@@ -669,7 +669,8 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   const r = () => {
-      if (!Component.isPrototypeOf(Comp)) {
+      if (/^\s*class\s+/.test(Comp.toString())
+        && !Component.isPrototypeOf(Comp)) {
         const comp = new Comp(el, parent)
         comp.render({ ...props, children })
       } else render(h(Comp, props, children), parent, el)
@@ -751,7 +752,8 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
 
   el.render = () => {
     const r = () => {
-      if (!Component.isPrototypeOf(Comp)) {
+      if (/^\s*class\s+/.test(Comp.toString())
+        && !Component.isPrototypeOf(Comp)) {
         const comp = new Comp(el, parent)
         comp.render({ ...props, children })
       } else render(h(Comp, props, children), parent, el)

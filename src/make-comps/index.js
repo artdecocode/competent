@@ -164,7 +164,8 @@ export default function makeComponentsScript(components, opts) {
   }).join('\n')
 
   const r = `const r = () => {
-      if (!Component.isPrototypeOf(Comp)) {
+      if (/^\\s*class\\s+/.test(Comp.toString())
+        && !Component.isPrototypeOf(Comp)) {
         const comp = new Comp(el, parent)
         comp.render({ ...props, children })
       } else render(h(Comp, props, children), parent, el)

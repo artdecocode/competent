@@ -41,7 +41,8 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   const r = () => {
-      if (!Component.isPrototypeOf(Comp)) {
+      if (/^\s*class\s+/.test(Comp.toString())
+        && !Component.isPrototypeOf(Comp)) {
         const comp = new Comp(el, parent)
         comp.render({ ...props, children })
       } else render(h(Comp, props, children), parent, el)

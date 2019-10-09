@@ -1,3 +1,9 @@
+## 10 October 2019
+
+### [3.2.5](https://github.com/artdecocode/competent/compare/v3.2.4...v3.2.5)
+
+- [fix] Check that the component is a class first to decide whether to render with _Preact_.
+
 ## 9 October 2019
 
 ### [3.2.4](https://github.com/artdecocode/competent/compare/v3.2.3...v3.2.4)

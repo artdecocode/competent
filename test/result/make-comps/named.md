@@ -18,7 +18,7 @@
 /**/
 
 /* expected */
-import { render } from 'preact'
+import { Component, render } from 'preact'
 import { init } from './__competent-lib'
 import Test, { TestComponent } from '../test'
 
@@ -40,12 +40,18 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
-  if (Comp.load) {
+  const r = () => {
+      if (!Component.isPrototypeOf(Comp)) {
+        const comp = new Comp(el, parent)
+        comp.render({ ...props, children })
+      } else render(h(Comp, props, children), parent, el)
+    }
+    if (Comp.load) {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
-        if (!err) render(h(Comp, props, children), parent, el)
+        if (!err) r()
       }, el, props)
-    } else render(h(Comp, props, children), parent, el)
+    } else r()
 })
 
 /**/

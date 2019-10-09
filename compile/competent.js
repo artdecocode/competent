@@ -8,8 +8,8 @@ const path = require('path');
 const fs = require('fs');             
 const aa = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
 let ba = a => `${a}`.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"), ca = a => 40 < `${a}`.length || -1 != `${a}`.indexOf("\n") || -1 !== `${a}`.indexOf("<");
-const da = {};
-function ea(a) {
+const ea = {};
+function fa(a) {
   const b = {...a.attributes, children:a.children};
   a = a.nodeName.defaultProps;
   if (void 0 !== a) {
@@ -19,11 +19,11 @@ function ea(a) {
   }
   return b;
 }
-;const fa = (a, b, {allAttributes:c, xml:d, w:e, sort:f, l:g} = {}) => {
+;const ha = (a, b, {allAttributes:c, xml:d, B:e, sort:f, l:g} = {}) => {
   let k;
-  const p = Object.keys(a);
-  f && p.sort();
-  return {A:p.map(h => {
+  const n = Object.keys(a);
+  f && n.sort();
+  return {C:n.map(h => {
     var m = a[h];
     if ("children" != h && !h.match(/[\s\n\\/='"\0<>]/) && (c || !["key", "ref"].includes(h))) {
       if ("className" == h) {
@@ -52,7 +52,7 @@ function ea(a) {
           let t = "";
           for (var w in m) {
             let D = m[w];
-            null != D && (t && (t += " "), t += da[w] || (da[w] = w.replace(/([A-Z])/g, "-$1").toLowerCase()), t += ": ", t += D, "number" == typeof D && !1 === aa.test(w) && (t += "px"), t += ";");
+            null != D && (t && (t += " "), t += ea[w] || (ea[w] = w.replace(/([A-Z])/g, "-$1").toLowerCase()), t += ": ", t += D, "number" == typeof D && !1 === aa.test(w) && (t += "px"), t += ";");
           }
           m = t || void 0;
         }
@@ -78,9 +78,9 @@ function ea(a) {
         }
       }
     }
-  }).filter(Boolean), v:k, l:g};
+  }).filter(Boolean), A:k, l:g};
 };
-const K = [], ha = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/, ia = /^(a|abbr|acronym|audio|b|bdi|bdo|big|br|button|canvas|cite|code|data|datalist|del|dfn|em|embed|i|iframe|img|input|ins|kbd|label|map|mark|meter|noscript|object|output|picture|progress|q|ruby|s|samp|slot|small|span|strong|sub|sup|svg|template|textarea|time|u|tt|var|video|wbr)$/, ja = (a, b = {}) => {
+const K = [], ia = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/, ja = /^(a|abbr|acronym|audio|b|bdi|bdo|big|br|button|canvas|cite|code|data|datalist|del|dfn|em|embed|i|iframe|img|input|ins|kbd|label|map|mark|meter|noscript|object|output|picture|progress|q|ruby|s|samp|slot|small|span|strong|sub|sup|svg|template|textarea|time|u|tt|var|video|wbr)$/, ka = (a, b = {}) => {
   const {addDoctype:c, pretty:d} = b;
   a = L(a, b, {});
   return c ? `<!doctype html>${d ? "\n" : ""}${a}` : a;
@@ -89,93 +89,93 @@ function L(a, b = {}, c = {}, d = !1, e = !1, f) {
   if (null == a || "boolean" == typeof a) {
     return "";
   }
-  const {pretty:g = !1, shallow:k = !1, renderRootComponent:p = !1, shallowHighOrder:h = !1, sortAttributes:m, allAttributes:w, xml:t, initialPadding:D = 0, closeVoidTags:X = !1} = b;
+  const {pretty:g = !1, shallow:k = !1, renderRootComponent:n = !1, shallowHighOrder:h = !1, sortAttributes:m, allAttributes:w, xml:t, initialPadding:D = 0, closeVoidTags:X = !1} = b;
   let {lineLength:E = 40} = b;
   E -= D;
-  let {nodeName:l, attributes:P = {}} = a;
+  let {nodeName:l, attributes:Q = {}} = a;
   var x = ["textarea", "pre"].includes(l);
-  const Q = " ".repeat(D), y = "string" == typeof g ? g : `  ${Q}`;
+  const R = " ".repeat(D), y = "string" == typeof g ? g : `  ${R}`;
   if ("object" != typeof a && !l) {
     return ba(a);
   }
   if ("function" == typeof l) {
-    if (!k || !d && p) {
-      return x = ea(a), l.prototype && "function" == typeof l.prototype.render ? (a = new l(x, c), a._disable = a.__x = !0, a.props = x, a.context = c, l.getDerivedStateFromProps ? a.state = {...a.state, ...l.getDerivedStateFromProps(a.props, a.state)} : a.componentWillMount && a.componentWillMount(), x = a.render(a.props, a.state, a.context), a.getChildContext && (c = {...c, ...a.getChildContext()})) : x = l(x, c), L(x, b, c, h, e, f);
+    if (!k || !d && n) {
+      return x = fa(a), l.prototype && "function" == typeof l.prototype.render ? (a = new l(x, c), a._disable = a.__x = !0, a.props = x, a.context = c, l.getDerivedStateFromProps ? a.state = {...a.state, ...l.getDerivedStateFromProps(a.props, a.state)} : a.componentWillMount && a.componentWillMount(), x = a.render(a.props, a.state, a.context), a.getChildContext && (c = {...c, ...a.getChildContext()})) : x = l(x, c), L(x, b, c, h, e, f);
     }
-    l = l.displayName || l !== Function && l.name || ka(l);
+    l = l.displayName || l !== Function && l.name || la(l);
   }
-  let q = "";
-  ({A:J, v:d, l:f} = fa(P, l, {allAttributes:w, xml:t, w:e, sort:m, l:f}));
+  let p = "";
+  ({C:H, A:d, l:f} = ha(Q, l, {allAttributes:w, xml:t, B:e, sort:m, l:f}));
   if (g) {
-    let A = `<${l}`.length;
-    q = J.reduce((G, r) => {
-      const v = A + 1 + r.length;
+    let B = `<${l}`.length;
+    p = H.reduce((F, q) => {
+      const v = B + 1 + q.length;
       if (v > E) {
-        return A = y.length, `${G}\n${y}${r}`;
+        return B = y.length, `${F}\n${y}${q}`;
       }
-      A = v;
-      return `${G} ${r}`;
+      B = v;
+      return `${F} ${q}`;
     }, "");
   } else {
-    q = J.length ? " " + J.join(" ") : "";
+    p = H.length ? " " + H.join(" ") : "";
   }
-  q = `<${l}${q}>`;
+  p = `<${l}${p}>`;
   if (`${l}`.match(/[\s\n\\/='"\0<>]/)) {
-    throw q;
+    throw p;
   }
-  var J = `${l}`.match(ha);
-  X && J && (q = q.replace(/>$/, " />"));
-  let H = [];
+  var H = `${l}`.match(ia);
+  X && H && (p = p.replace(/>$/, " />"));
+  let G = [];
   if (d) {
-    !x && g && (ca(d) || d.length + la(q) > E) && (d = "\n" + y + `${d}`.replace(/(\n+)/g, "$1" + (y || "\t"))), q += d;
+    !x && g && (ca(d) || d.length + ma(p) > E) && (d = "\n" + y + `${d}`.replace(/(\n+)/g, "$1" + (y || "\t"))), p += d;
   } else {
     if (a.children) {
-      let A = g && q.includes("\n");
-      const G = [];
-      H = a.children.map((r, v) => {
-        if (null != r && !1 !== r) {
-          var z = L(r, b, c, !0, "svg" == l ? !0 : "foreignObject" == l ? !1 : e, f);
+      let B = g && p.includes("\n");
+      const F = [];
+      G = a.children.map((q, v) => {
+        if (null != q && !1 !== q) {
+          var z = L(q, b, c, !0, "svg" == l ? !0 : "foreignObject" == l ? !1 : e, f);
           if (z) {
-            g && z.length + la(q) > E && (A = !0);
-            var u = z.replace(new RegExp(`</${r.nodeName}>$`), "");
-            ma(r.nodeName, u) && (G[v] = z.length);
+            g && z.length + ma(p) > E && (B = !0);
+            var u = z.replace(new RegExp(`</${q.nodeName}>$`), "");
+            na(q.nodeName, u) && (F[v] = z.length);
             return z;
           }
         }
       }).filter(Boolean);
-      g && A && !x && (H = H.reduce((r, v, z) => {
-        var u = (z = G[z - 1]) && /^<([\s\S]+?)>/.exec(v);
-        u && ([, u] = u, u = !ia.test(u));
+      g && B && !x && (G = G.reduce((q, v, z) => {
+        var u = (z = F[z - 1]) && /^<([\s\S]+?)>/.exec(v);
+        u && ([, u] = u, u = !ja.test(u));
         if (z && !u) {
           u = /[^<]*?(\s)/y;
-          var B;
-          let M = !0, N;
-          for (; null !== (B = u.exec(v));) {
-            const [R] = B;
-            [, N] = B;
-            u.lastIndex + R.length - 1 > E - (M ? z : 0) && (B = v.slice(0, u.lastIndex - 1), v = v.slice(u.lastIndex), M ? (r.push(B), M = !1) : r.push("\n" + y + `${B}`.replace(/(\n+)/g, "$1" + (y || "\t"))), u.lastIndex = 0);
+          var A;
+          let I = !0, M;
+          for (; null !== (A = u.exec(v));) {
+            const [J] = A;
+            [, M] = A;
+            u.lastIndex + J.length - 1 > E - (I ? z : 0) && (A = v.slice(0, u.lastIndex - 1), v = v.slice(u.lastIndex), I ? (q.push(A), I = !1) : q.push("\n" + y + `${A}`.replace(/(\n+)/g, "$1" + (y || "\t"))), u.lastIndex = 0);
           }
-          N && r.push(N);
-          r.push(v);
+          M && q.push(M);
+          q.push(v);
         } else {
-          r.push("\n" + y + `${v}`.replace(/(\n+)/g, "$1" + (y || "\t")));
+          q.push("\n" + y + `${v}`.replace(/(\n+)/g, "$1" + (y || "\t")));
         }
-        return r;
+        return q;
       }, []));
     }
   }
-  if (H.length) {
-    q += H.join("");
+  if (G.length) {
+    p += G.join("");
   } else {
     if (t) {
-      return q.substring(0, q.length - 1) + " />";
+      return p.substring(0, p.length - 1) + " />";
     }
   }
-  J || (!ma(l, H[H.length - 1]) && !x && g && q.includes("\n") && (q += `\n${Q}`), q += `</${l}>`);
-  return q;
+  H || (!na(l, G[G.length - 1]) && !x && g && p.includes("\n") && (p += `\n${R}`), p += `</${l}>`);
+  return p;
 }
-const ma = (a, b) => `${a}`.match(ia) && (b ? !/>$/.test(b) : !0);
-function ka(a) {
+const na = (a, b) => `${a}`.match(ja) && (b ? !/>$/.test(b) : !0);
+function la(a) {
   var b = (Function.prototype.toString.call(a).match(/^\s*function\s+([^( ]+)/) || "")[1];
   if (!b) {
     b = -1;
@@ -190,43 +190,43 @@ function ka(a) {
   }
   return b;
 }
-const la = a => {
+const ma = a => {
   a = a.split("\n");
   return a[a.length - 1].length;
 };
-function na(a, b, c) {
+function oa(a, b, c) {
   const d = [];
   b.replace(a, (e, ...f) => {
-    e = f.slice(0, f.length - 2).reduce((g, k, p) => {
-      p = c[p];
-      if (!p || void 0 === k) {
+    e = f.slice(0, f.length - 2).reduce((g, k, n) => {
+      n = c[n];
+      if (!n || void 0 === k) {
         return g;
       }
-      g[p] = k;
+      g[n] = k;
       return g;
     }, {});
     d.push(e);
   });
   return d;
 }
-;const oa = new RegExp(`${/([^\s>=/]+)/.source}(?:\\s*=\\s*${/(?:"([\s\S]*?)"|'([\s\S]*?)')/.source})?`, "g"), pa = new RegExp(`(?:\\s+((?:${oa.source}\\s*)*))`);
-const ra = (a, b) => {
+;const pa = new RegExp(`${/([^\s>=/]+)/.source}(?:\\s*=\\s*${/(?:"([\s\S]*?)"|'([\s\S]*?)')/.source})?`, "g"), qa = new RegExp(`(?:\\s+((?:${pa.source}\\s*)*))`);
+const sa = (a, b) => {
   a = (Array.isArray(a) ? a : [a]).join("|");
-  return na(new RegExp(`<(${a})${pa.source}?(?:${/\s*\/>/.source}|${/>([\s\S]+?)?<\/\1>/.source})`, "g"), b, "t a v v1 v2 c".split(" ")).map(({t:c, a:d = "", c:e = ""}) => {
+  return oa(new RegExp(`<(${a})${qa.source}?(?:${/\s*\/>/.source}|${/>([\s\S]+?)?<\/\1>/.source})`, "g"), b, "t a v v1 v2 c".split(" ")).map(({t:c, a:d = "", c:e = ""}) => {
     d = d.replace(/\/$/, "").trim();
-    d = qa(d);
+    d = ra(d);
     return {content:e, props:d, tag:c};
   });
-}, qa = a => na(oa, a, ["key", "val", "def", "f"]).reduce((b, {key:c, val:d}) => {
+}, ra = a => oa(pa, a, ["key", "val", "def", "f"]).reduce((b, {key:c, val:d}) => {
   if (void 0 === d) {
     return b[c] = !0, b;
   }
   b[c] = "true" == d ? !0 : "false" == d ? !1 : /^\d+$/.test(d) ? parseInt(d, 10) : d;
   return b;
 }, {});
-var sa = stream;
-const {Transform:ta, Writable:ua} = stream;
-function va(a) {
+var ta = stream;
+const {Transform:ua, Writable:va} = stream;
+function wa(a) {
   if ("object" != typeof a) {
     return !1;
   }
@@ -250,7 +250,7 @@ const xa = (a, b) => {
   throw b;
 };
 const {homedir:ya} = os;
-const za = /\s+at.*(?:\(|\s)(.*)\)?/, Aa = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, Ba = ya(), O = a => {
+const za = /\s+at.*(?:\(|\s)(.*)\)?/, Aa = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, Ba = ya(), N = a => {
   const {pretty:b = !1, ignoredModules:c = ["pirates"]} = {}, d = c.join("|"), e = new RegExp(Aa.source.replace("IGNORED_MODULES", d));
   return a.replace(/\\/g, "/").split("\n").filter(f => {
     f = f.match(za);
@@ -276,7 +276,7 @@ function Fa(a, b, c = !1) {
     var e = Ea(arguments), {stack:f} = Error();
     const g = Ca(f, 2, !0), k = (f = d instanceof Error) ? d.message : d;
     e = [`Error: ${k}`, ...null !== e && a === e || c ? [b] : [g, b]].join("\n");
-    e = O(e);
+    e = N(e);
     return Object.assign(f ? d : Error(), {message:k, stack:e});
   };
 }
@@ -292,12 +292,12 @@ function Fa(a, b, c = !1) {
   });
   return b;
 };
-class Ha extends ua {
+class Ha extends va {
   constructor(a) {
-    const {binary:b = !1, rs:c = null, ...d} = a || {}, {u:e = S(!0), proxyError:f} = a || {}, g = (k, p) => e(p);
+    const {binary:b = !1, rs:c = null, ...d} = a || {}, {w:e = S(!0), proxyError:f} = a || {}, g = (k, n) => e(n);
     super(d);
     this.g = [];
-    this.m = new Promise((k, p) => {
+    this.u = new Promise((k, n) => {
       this.on("finish", () => {
         let h;
         b ? h = Buffer.concat(this.g) : h = this.g.join("");
@@ -308,11 +308,11 @@ class Ha extends ua {
         if (-1 == h.stack.indexOf("\n")) {
           g`${h}`;
         } else {
-          const m = O(h.stack);
+          const m = N(h.stack);
           h.stack = m;
           f && g`${h}`;
         }
-        p(h);
+        n(h);
       });
       c && Ga(this, c).pipe(this);
     });
@@ -322,20 +322,20 @@ class Ha extends ua {
     c();
   }
   get i() {
-    return this.m;
+    return this.u;
   }
 }
 const Ia = async a => {
-  ({i:a} = new Ha({rs:a, u:S(!0)}));
+  ({i:a} = new Ha({rs:a, w:S(!0)}));
   return await a;
 };
 async function Ja(a, b) {
   return Ka(a, b);
 }
-class La extends ta {
+class La extends ua {
   constructor(a, b) {
     super(b);
-    this.i = (Array.isArray(a) ? a : [a]).filter(va);
+    this.i = (Array.isArray(a) ? a : [a]).filter(wa);
     this.g = !1;
     this.j = b;
   }
@@ -363,13 +363,13 @@ class La extends ta {
       } else {
         const e = [];
         let f;
-        const g = b.replace(c, (k, ...p) => {
+        const g = b.replace(c, (k, ...n) => {
           f = Error();
           try {
             if (this.g) {
               return e.length ? e.push(Promise.resolve(k)) : k;
             }
-            const h = d.call(this, k, ...p);
+            const h = d.call(this, k, ...n);
             h instanceof Promise && e.push(h);
             return h;
           } catch (h) {
@@ -396,12 +396,12 @@ class La extends ta {
       this.push(d);
       c();
     } catch (d) {
-      a = O(d.stack), d.stack = a, c(d);
+      a = N(d.stack), d.stack = a, c(d);
     }
   }
 }
 async function Ka(a, b) {
-  b instanceof sa ? b.pipe(a) : a.end(b);
+  b instanceof ta ? b.pipe(a) : a.end(b);
   return await Ia(a);
 }
 ;const Ma = a => {
@@ -421,7 +421,7 @@ function Qa(a) {
     return Ra(a);
   }
   if ("number" == c && isFinite(a)) {
-    return b.C ? (b = Math.abs(a), a = 864E5 <= b ? U(a, b, 864E5, "day") : 36E5 <= b ? U(a, b, 36E5, "hour") : 6E4 <= b ? U(a, b, 6E4, "minute") : 1000 <= b ? U(a, b, 1000, "second") : a + " ms") : (b = Math.abs(a), a = 864E5 <= b ? Math.round(a / 864E5) + "d" : 36E5 <= b ? Math.round(a / 36E5) + "h" : 6E4 <= b ? Math.round(a / 6E4) + "m" : 1000 <= b ? Math.round(a / 1000) + "s" : a + "ms"), a;
+    return b.F ? (b = Math.abs(a), a = 864E5 <= b ? U(a, b, 864E5, "day") : 36E5 <= b ? U(a, b, 36E5, "hour") : 6E4 <= b ? U(a, b, 6E4, "minute") : 1000 <= b ? U(a, b, 1000, "second") : a + " ms") : (b = Math.abs(a), a = 864E5 <= b ? Math.round(a / 864E5) + "d" : 36E5 <= b ? Math.round(a / 36E5) + "h" : 6E4 <= b ? Math.round(a / 6E4) + "m" : 1000 <= b ? Math.round(a / 1000) + "s" : a + "ms"), a;
   }
   throw Error("val is not a non-empty string or a valid number. val=" + JSON.stringify(a));
 }
@@ -485,8 +485,8 @@ function W(a, b) {
   if (!Number.isFinite(a)) {
     return null;
   }
-  const c = Math.abs(a), d = b && b.D || "", e = b && b.G || "", f = b && void 0 !== b.s ? b.s : 2, g = !(!b || !b.B);
-  (b = b && b.F || "") && V[b.toLowerCase()] || (b = c >= V.pb ? "PB" : c >= V.tb ? "TB" : c >= V.gb ? "GB" : c >= V.mb ? "MB" : c >= V.kb ? "KB" : "B");
+  const c = Math.abs(a), d = b && b.G || "", e = b && b.I || "", f = b && void 0 !== b.v ? b.v : 2, g = !(!b || !b.D);
+  (b = b && b.H || "") && V[b.toLowerCase()] || (b = c >= V.pb ? "PB" : c >= V.tb ? "TB" : c >= V.gb ? "GB" : c >= V.mb ? "MB" : c >= V.kb ? "KB" : "B");
   a = (a / V[b.toLowerCase()]).toFixed(f);
   g || (a = a.replace(Ta, "$1"));
   d && (a = a.replace(Sa, d));
@@ -553,14 +553,14 @@ function Xa(a) {
       f = b.curr = k;
       g[0] = Ya(g[0]);
       "string" != typeof g[0] && g.unshift("%O");
-      var p = 0;
+      var n = 0;
       g[0] = g[0].replace(/%([a-zA-Z%]+)/g, (h, m) => {
         if ("%%" == h) {
           return h;
         }
-        p++;
+        n++;
         if (m = c[m]) {
-          h = m.call(b, g[p]), g.splice(p, 1), p--;
+          h = m.call(b, g[n]), g.splice(n, 1), n--;
         }
         return h;
       });
@@ -715,7 +715,17 @@ pb = function() {
     return c;
   };
 }()("competent");
-const qb = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`), (c, d, e) => "|" == d && "|" == e ? "|" : ")" == e ? e : "(" == d ? d : ""), a.flags);
+const qb = (a, b) => {
+  let c;
+  "string" == typeof a ? c = a : Array.isArray(a) ? c = a.map(d => "string" == typeof d ? d : ka(d, b)).join("\n") : c = ka(a, b);
+  return c;
+}, sb = async({getReplacements:a, key:b, s:c, re:d, replacement:e, getContext:f, m:g, body:k}) => {
+  let n;
+  a ? n = a(b, c) : c ? n = {re:rb(d, b), replacement:e} : n = {re:d, replacement:e};
+  a = new La(n);
+  f && (f = f(g), Object.assign(a, f));
+  return await Ja(a, k);
+}, rb = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`), (c, d, e) => "|" == d && "|" == e ? "|" : ")" == e ? e : "(" == d ? d : ""), a.flags);
 /*
 
  Competent: Render tags HTML as JSX components.
@@ -736,76 +746,75 @@ const qb = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`),
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 module.exports = {_competent:(a, b = {}) => {
-  async function c(t, D, X, E, l, P, x) {
+  async function c(t, D, X, E, l, Q, x) {
     pb("render %s", l);
-    const Q = Error("Skip render");
+    const R = Error("Skip render");
     try {
-      const y = a[l], q = x.slice(0, P), J = x.slice(P + t.length);
-      if (/\x3c!--\s*$/.test(q) && /^\s*--\x3e/.test(J)) {
+      const p = a[l];
+      var y = x.slice(0, Q);
+      const H = x.slice(Q + t.length);
+      if (/\x3c!--\s*$/.test(y) && /^\s*--\x3e/.test(H)) {
         return t;
       }
-      const [{content:H = "", props:A}] = ra(l, E);
-      E = [H];
-      let G = !1, r = !0, v = !1, z, u, B, M, N;
-      const R = e.call(this, {...A, children:E}, {export(n = !0) {
-        G = n;
-      }, setPretty(n, C) {
-        z = n;
+      const [{content:G = "", props:B}] = sa(l, E);
+      E = [G];
+      let F = !1, q = !0, v = !1, z, u, A, I, M;
+      const J = e.call(this, {...B, children:E}, {export(r = !0) {
+        F = r;
+      }, setPretty(r, C) {
+        z = r;
         C && (u = C);
-      }, renderAgain(n = !0, C = !1) {
-        r = n;
+      }, renderAgain(r = !0, C = !1) {
+        q = r;
         v = C;
-      }, setChildContext(n) {
-        M = n;
-      }, removeLine(n = !0) {
-        N = n;
+      }, setChildContext(r) {
+        I = r;
+      }, removeLine(r = !0) {
+        M = r;
       }, skipRender() {
-        throw Q;
+        throw R;
       }}, l);
-      let F;
+      y = {pretty:z, lineLength:u};
+      let O;
       try {
-        const n = y.call(this, R);
-        F = n instanceof Promise ? await n : n;
-      } catch (n) {
-        if (!n.message.startsWith("Class constructor")) {
-          throw n;
+        const r = p.call(this, J);
+        O = r instanceof Promise ? await r : r;
+      } catch (r) {
+        if (!r.message.startsWith("Class constructor")) {
+          throw r;
         }
-        const C = new y, T = C.serverRender ? C.serverRender(R) : C.render(R);
-        F = T instanceof Promise ? await T : T;
-      }
-      if (G) {
-        const n = Array.isArray(F) ? F[0] : F;
-        n.attributes.id ? B = n.attributes.id : (B = d.call(this), n.attributes.id = B);
-      }
-      const wa = {pretty:z, lineLength:u};
-      let I;
-      "string" == typeof F ? I = F : Array.isArray(F) ? I = F.map(n => "string" == typeof n ? n : ja(n, wa)).join("\n") : I = ja(F, wa);
-      if (!I && N) {
-        return g && g.call(this, l, A), "";
-      }
-      I = (D || "") + I.replace(/^/gm, X);
-      if (r) {
-        let n;
-        m ? n = m.call(this, l, v) : v ? n = {re:qb(w, l), replacement:c} : n = {re:w, replacement:c};
-        const C = new La(n);
-        if (h) {
-          const T = h.call(this, M);
-          Object.assign(C, T);
+        const C = new p, da = C.serverRender ? C.serverRender(J) : C.render(J);
+        O = da instanceof Promise ? await da : da;
+        if (C.fileRender) {
+          let T = await C.render(J);
+          T = qb(T, y);
+          q && (T = await sb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:v, re:w, replacement:c, m:I, body:T}));
+          await C.fileRender(T, J);
         }
-        I = await Ja(C, I);
       }
-      G && f.call(this, l, B, A, E);
-      g && g.call(this, l, A);
-      return I;
-    } catch (y) {
-      if (y === Q) {
+      if (F) {
+        const r = Array.isArray(O) ? O[0] : O;
+        A = r.attributes.id;
+        A || (A = d.call(this), r.attributes.id = A);
+      }
+      let P = qb(O, y);
+      if (!P && M) {
+        return g && g.call(this, l, B), "";
+      }
+      P = (D || "") + P.replace(/^/gm, X);
+      q && (P = await sb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:l, s:v, re:w, replacement:c, m:I, body:P}));
+      F && f.call(this, l, A, B, E);
+      g && g.call(this, l, B);
+      return P;
+    } catch (p) {
+      if (p === R) {
         return t;
       }
-      k && k.call(this, l, y, P, x);
-      return p ? "" : t;
+      k && k.call(this, l, p, Q, x);
+      return n ? "" : t;
     }
   }
-  const {getId:d, getProps:e = (t, D) => ({...t, ...D}), markExported:f, onSuccess:g, onFail:k, removeOnError:p = !1, getContext:h, getReplacements:m} = b, w = Ma(Object.keys(a));
+  const {getId:d, getProps:e = (t, D) => ({...t, ...D}), markExported:f, onSuccess:g, onFail:k, removeOnError:n = !1, getContext:h, getReplacements:m} = b, w = Ma(Object.keys(a));
   return {re:w, replacement:c};
 }, _makeComponentsScript:function(a, b) {
   if ("object" != typeof b) {
@@ -815,9 +824,9 @@ module.exports = {_competent:(a, b = {}) => {
   if (!c) {
     throw Error("The map of where to import components from is required.");
   }
-  var k = [nb([null, "render", ...f ? ["h"] : []], "preact", !1), ...d ? [nb([null, ...e ? ["makeIo"] : [], "init"], "./__competent-lib", !1)] : [], ...ob(a, c)].join("\n");
+  var k = [nb([null, "Component", "render", ...f ? ["h"] : []], "preact", !1), ...d ? [nb([null, ...e ? ["makeIo"] : [], "init"], "./__competent-lib", !1)] : [], ...ob(a, c)].join("\n");
   b = Object.keys(g).map(m => `props.${m} = ${g[m]}`).join("\n");
-  const p = e ? "el.render = () => {\n    if (Comp.load) {\n      Comp.load((err, data) => {\n        if (data) Object.assign(props, data)\n        if (!err) render(h(Comp, props, children), parent, el)\n      }, el, props)\n    } else render(h(Comp, props, children), parent, el)\n  }\n  el.render.meta = { key, id }\n  io.observe(el)" : "if (Comp.load) {\n      Comp.load((err, data) => {\n        if (data) Object.assign(props, data)\n        if (!err) render(h(Comp, props, children), parent, el)\n      }, el, props)\n    } else render(h(Comp, props, children), parent, el)";
+  const n = e ? "el.render = () => {\n    const r = () => {\n      if (!Component.isPrototypeOf(Comp)) {\n        const comp = new Comp(el, parent)\n        comp.render({ ...props, children })\n      } else render(h(Comp, props, children), parent, el)\n    }\n    if (Comp.load) {\n      Comp.load((err, data) => {\n        if (data) Object.assign(props, data)\n        if (!err) r()\n      }, el, props)\n    } else r()\n  }\n  el.render.meta = { key, id }\n  io.observe(el)" : "const r = () => {\n      if (!Component.isPrototypeOf(Comp)) {\n        const comp = new Comp(el, parent)\n        comp.render({ ...props, children })\n      } else render(h(Comp, props, children), parent, el)\n    }\n    if (Comp.load) {\n      Comp.load((err, data) => {\n        if (data) Object.assign(props, data)\n        if (!err) r()\n      }, el, props)\n    } else r()";
   k += "\n\n";
   const h = mb(a);
   k += h + "\n\n";
@@ -829,7 +838,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 ${b ? `  ${b}` : ""}
-  ${p}
+  ${n}
 })
 `;
 }, _writeAssets:async a => {

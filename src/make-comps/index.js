@@ -148,7 +148,7 @@ export default function makeComponentsScript(components, opts) {
   if (!map) throw new Error('The map of where to import components from is required.')
 
   const imports = [
-    makeImport([null, 'render', ...(includeH ? ['h'] : [])], 'preact', false),
+    makeImport([null, 'Component', 'render', ...(includeH ? ['h'] : [])], 'preact', false),
     ...(externalAssets ? [
       makeImport([null, ...(io ? ['makeIo'] : []), 'init'], './__competent-lib', false),
       // ...(io ? [makeImport(['makeIo'], './make-io', false)] : []),
@@ -163,12 +163,18 @@ export default function makeComponentsScript(components, opts) {
     return s
   }).join('\n')
 
-  const r = `if (Comp.load) {
+  const r = `const r = () => {
+      if (!Component.isPrototypeOf(Comp)) {
+        const comp = new Comp(el, parent)
+        comp.render({ ...props, children })
+      } else render(h(Comp, props, children), parent, el)
+    }
+    if (Comp.load) {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
-        if (!err) render(h(Comp, props, children), parent, el)
+        if (!err) r()
       }, el, props)
-    } else render(h(Comp, props, children), parent, el)`
+    } else r()`
   const ifIo = io ? `el.render = () => {
     ${r}
   }

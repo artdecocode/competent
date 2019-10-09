@@ -14,6 +14,15 @@
       </arg>
       The same as render, but for the server only. Called by _Component_ using _NodeJS_ runtime and not by _Preact_ in browser, therefore _NodeJS_ API could be used here.
     </fn>
+    <fn async name="fileRender" return="void">
+      <arg string name="data">
+        The rendered component.
+      </arg>
+      <arg type="!preact.PreactProps" name="props" opt>
+        Component properties.
+      </arg>
+      When `serverRender` was specified, this method will also render the component using the standard `render` method, and return the output. The output could then be written by the implementation to the filesystem, e.g., saved as `component.html` file which is then loaded in browser by `load` method.
+    </fn>
     <static name="load" void>
       <arg name="callback" type="function(Error, !Object=): void">
         A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.

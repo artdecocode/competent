@@ -9,7 +9,7 @@
 ../comps
 
 /* expected */
-import { render } from 'preact'
+import { Component, render } from 'preact'
 import Test from '../comps'
 
 const __components = {
@@ -39,12 +39,18 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
-  if (Comp.load) {
+  const r = () => {
+      if (!Component.isPrototypeOf(Comp)) {
+        const comp = new Comp(el, parent)
+        comp.render({ ...props, children })
+      } else render(h(Comp, props, children), parent, el)
+    }
+    if (Comp.load) {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
-        if (!err) render(h(Comp, props, children), parent, el)
+        if (!err) r()
       }, el, props)
-    } else render(h(Comp, props, children), parent, el)
+    } else r()
 })
 
 /**/
@@ -57,7 +63,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
 /**/
 
 /* expected */
-import { render } from 'preact'
+import { Component, render } from 'preact'
 import Test from '../comps'
 
 const __components = {
@@ -87,12 +93,18 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
   props.splendid = { export() {} }
-  if (Comp.load) {
+  const r = () => {
+      if (!Component.isPrototypeOf(Comp)) {
+        const comp = new Comp(el, parent)
+        comp.render({ ...props, children })
+      } else render(h(Comp, props, children), parent, el)
+    }
+    if (Comp.load) {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
-        if (!err) render(h(Comp, props, children), parent, el)
+        if (!err) r()
       }, el, props)
-    } else render(h(Comp, props, children), parent, el)
+    } else r()
 })
 
 /**/

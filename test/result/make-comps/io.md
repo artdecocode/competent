@@ -13,7 +13,7 @@ true
 /**/
 
 /* expected */
-import { render } from 'preact'
+import { Component, render } from 'preact'
 import Test from '../comps'
 
 const __components = {
@@ -61,12 +61,18 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
+    const r = () => {
+      if (!Component.isPrototypeOf(Comp)) {
+        const comp = new Comp(el, parent)
+        comp.render({ ...props, children })
+      } else render(h(Comp, props, children), parent, el)
+    }
     if (Comp.load) {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
-        if (!err) render(h(Comp, props, children), parent, el)
+        if (!err) r()
       }, el, props)
-    } else render(h(Comp, props, children), parent, el)
+    } else r()
   }
   el.render.meta = { key, id }
   io.observe(el)
@@ -85,7 +91,7 @@ true
 /**/
 
 /* expected */
-import { render } from 'preact'
+import { Component, render } from 'preact'
 import { makeIo, init } from './__competent-lib'
 import Test from '../comps'
 
@@ -105,12 +111,18 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
+    const r = () => {
+      if (!Component.isPrototypeOf(Comp)) {
+        const comp = new Comp(el, parent)
+        comp.render({ ...props, children })
+      } else render(h(Comp, props, children), parent, el)
+    }
     if (Comp.load) {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
-        if (!err) render(h(Comp, props, children), parent, el)
+        if (!err) r()
       }, el, props)
-    } else render(h(Comp, props, children), parent, el)
+    } else r()
   }
   el.render.meta = { key, id }
   io.observe(el)

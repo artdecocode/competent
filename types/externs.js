@@ -4,6 +4,8 @@
  */
 
 /* typal types/exported.xml */
+/** @const */
+var _competent = {}
 /**
  * An exported component.
  * @record
@@ -138,8 +140,6 @@ _competent.IOOptions = function() {}
 _competent.IOOptions.prototype.log
 
 /* typal types/CompetentComponent.xml */
-/** @const */
-var _competent = {}
 /**
  * A component could have an additional API understood by _Competent_.
  * @extends {preact.Component}
@@ -158,3 +158,10 @@ _competent.CompetentComponent.load = function(callback, element, props) {}
  * @return {(preact.AcceptedChild|!Array<preact.AcceptedChild>)}
  */
 _competent.CompetentComponent.prototype.serverRender = function(props) {}
+/**
+ * When `serverRender` was specified, this method will also render the component using the standard `render` method, and return the output. The output could then be written by the implementation to the filesystem, e.g., saved as `component.html` file which is then loaded in browser by `load` method.
+ * @param {string} data The rendered component.
+ * @param {!preact.PreactProps=} [props] Component properties.
+ * @return {!Promise}
+ */
+_competent.CompetentComponent.prototype.fileRender = function(data, props) {}

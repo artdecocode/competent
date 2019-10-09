@@ -55,6 +55,10 @@ const competent = (components, conf = {}) => {
         removeLine(r = true) { removeLine = r },
         skipRender() { throw SKIP_ERROR },
       }), key)
+      const renderOptions = {
+        pretty,
+        lineLength,
+      }
       /** @type {preact.VNode} */
       let hyperResult
       try {
@@ -65,56 +69,41 @@ const competent = (components, conf = {}) => {
           throw err
         const Instance = /** @type {function(new:_competent.CompetentComponent)} */ (instance)
         const i = new Instance()
-        const hr = i.serverRender ? i.serverRender(props) : i.render(props)
-        hyperResult = hr instanceof Promise ? await hr : hr
+        const promise = i.serverRender ? i.serverRender(props) : i.render(props)
+        hyperResult = promise instanceof Promise ? await promise : promise
+        if (i.fileRender) {
+          let iframe = await i.render(props)
+          iframe = hyperToString(iframe, renderOptions)
+          if (renderAgain) iframe = await secondRender({
+            getContext: getContext.bind(this),
+            getReplacements: getReplacements.bind(this),
+            key, recursiveRenderAgain, re, replacement,
+            childContext, body: iframe })
+          await i.fileRender(iframe, props)
+        }
       }
-      if (exported) {
+      if (exported) { // generate id if needed
         const hr = Array.isArray(hyperResult) ? hyperResult[0] : hyperResult
-        if (!hr.attributes.id) {
+        id = hr.attributes.id
+        if (!id) {
           id = getId.call(this)
           hr.attributes.id = id
-        } else id = hr.attributes.id
+        }
       }
-      const renderOptions = {
-        pretty,
-        lineLength,
-      }
-      let r
-      if (typeof hyperResult == 'string') {
-        r = hyperResult
-      } else if (Array.isArray(hyperResult)) {
-        r = hyperResult.map((hr) => {
-          if (typeof hr == 'string') return hr
-          const res = render(hr, renderOptions)
-          return res
-        }).join('\n')
-      } else {
-        r = render(hyperResult, renderOptions)
-      }
+      let r = hyperToString(hyperResult, renderOptions)
       if (!r && removeLine) {
         if (onSuccess) onSuccess.call(this, key, htmlProps)
         return ''
       }
       r = (ws || '') + r.replace(/^/gm, pad)
-      if (renderAgain) { // new v render again by default
-        let childRules
-        if (getReplacements) {
-          childRules = getReplacements.call(this, key, recursiveRenderAgain)
-        } else {
-          if (recursiveRenderAgain)
-          // exclude the actual element 🤷‍
-            childRules = {
-              re: upgradeRe(re, key),
-              replacement,
-            }
-          else childRules = { re, replacement }
-        }
-        const childRepl = new Replaceable(childRules)
-        if (getContext) {
-          const ctx = getContext.call(this, childContext)
-          Object.assign(childRepl, ctx)
-        }
-        r = await Replaceable.replace(childRepl, r)
+      if (renderAgain) {
+        r = await secondRender({
+          getContext: getContext ? getContext.bind(this) : undefined,
+          getReplacements: getReplacements ? getReplacements.bind(this) : undefined,
+          key, recursiveRenderAgain, re, replacement,
+          childContext,
+          body: r,
+        })
       }
       if (exported)
         markExported.call(this, key, id, htmlProps, children)
@@ -132,6 +121,46 @@ const competent = (components, conf = {}) => {
     re, replacement,
   }
   return rule
+}
+
+const hyperToString = (hyperResult, renderOptions) => {
+  let r
+  if (typeof hyperResult == 'string') {
+    r = hyperResult
+  } else if (Array.isArray(hyperResult)) {
+    r = hyperResult.map((hr) => {
+      if (typeof hr == 'string') return hr
+      const res = render(hr, renderOptions)
+      return res
+    }).join('\n')
+  } else {
+    r = render(hyperResult, renderOptions)
+  }
+  return r
+}
+
+const secondRender = async ({
+  getReplacements, key, recursiveRenderAgain, re, replacement, getContext, childContext,
+  body,
+}) => {
+  let childRules
+  if (getReplacements) {
+    childRules = getReplacements(key, recursiveRenderAgain)
+  } else {
+    if (recursiveRenderAgain)
+    // exclude the actual element 🤷‍
+      childRules = {
+        re: upgradeRe(re, key),
+        replacement,
+      }
+    else childRules = { re, replacement }
+  }
+  const childRepl = new Replaceable(childRules)
+  if (getContext) {
+    const ctx = getContext(childContext)
+    Object.assign(childRepl, ctx)
+  }
+  return await Replaceable.replace(childRepl, body)
 }
 
 const upgradeRe = (re, key) => {

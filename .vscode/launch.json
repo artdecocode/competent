@@ -36,7 +36,7 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "example"
+        "example/example"
       ],
       "skipFiles": [
         "<node_internals>/**/*.js"

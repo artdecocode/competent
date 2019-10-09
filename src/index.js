@@ -41,7 +41,10 @@ const competent = (components, conf = {}) => {
       let exported = false
       let renderAgain = true
       let recursiveRenderAgain = false
-      let pretty, lineLength
+      const renderOptions = {
+        pretty: undefined,
+        lineLength: undefined,
+      }
       let id
       let childContext, removeLine
       const props = getProps.call(this, {
@@ -49,16 +52,15 @@ const competent = (components, conf = {}) => {
         children,
       }, /** @type {!_competent.Meta} */ ({
         export(value = true) { exported = value },
-        setPretty(p, l) { pretty = p; if (l) lineLength = l },
+        setPretty(p, l) {
+          renderOptions.pretty = p
+          if (l) renderOptions.lineLength = l
+        },
         renderAgain(doRender = true, v = false) { renderAgain = doRender, recursiveRenderAgain = v },
         setChildContext(context) { childContext = context },
         removeLine(r = true) { removeLine = r },
         skipRender() { throw SKIP_ERROR },
       }), key)
-      const renderOptions = {
-        pretty,
-        lineLength,
-      }
       /** @type {preact.VNode} */
       let hyperResult
       try {

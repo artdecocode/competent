@@ -156,12 +156,12 @@ The output will contain rendered <strong>JSX</strong>.
 ```html
 <html lang="en">
 
-<div style="background:red;" id="c2">
+<div style="background:red;" id="c1">
   <span class="name">splendid</span>
   <span class="ver">1.9.5</span>
   <p>Static Web Site Generator With JSX As HTML.</p>
 </div>
-<div style="background:green;" id="c1">
+<div style="background:green;" id="c2">
   <span class="name">@a-la/jsx</span>
   <span class="ver">1.6.0</span>
   <p>The JSX Transform For ÀLaMode And Other Packages.</p>
@@ -186,12 +186,12 @@ Package unknown-package not found.
 Exported packages:
 [ { key: 'npm-package',
     id: 'c1',
-    props: { style: 'background:green;' },
-    children: [ '@a-la/jsx' ] },
+    props: { style: 'background:red;' },
+    children: [ 'splendid' ] },
   { key: 'npm-package',
     id: 'c2',
-    props: { style: 'background:red;' },
-    children: [ 'splendid' ] } ]
+    props: { style: 'background:green;' },
+    children: [ '@a-la/jsx' ] } ]
 ```
 </td></tr>
 </table>
@@ -419,6 +419,18 @@ __<a name="type-competentcomponent">`CompetentComponent`</a> extends <a title="A
    <kbd>props</kbd> <em><code><a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
   </td>
  </tr>
+ <tr>
+  <td rowSpan="3" align="center"><ins>fileRender</ins></td>
+  <td><em>(data: string, props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => !Promise&lt;void&gt;</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   When <code>serverRender</code> was specified, this method will also render the component using the standard <code>render</code> method, and return the output. The output could then be written by the implementation to the filesystem, e.g., saved as <code>component.html</code> file which is then loaded in browser by <code>load</code> method.<br/>
+   <kbd><strong>data*</strong></kbd> <em><code>string</code></em>: The rendered component.<br/>
+   <kbd>props</kbd> <em><code><a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
+  </td>
+ </tr>
 </table>
 
 For example, we could implement a component that loads additional libraries and JSON data, and only renders when they are ready in the following way:
@@ -485,11 +497,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-09-18T04:25:17.974Z competent render npm-package
-2019-09-18T04:25:18.037Z competent render npm-package
-2019-09-18T04:25:18.040Z competent render npm-package
-2019-09-18T04:25:18.042Z competent render hello-world
-2019-09-18T04:25:18.046Z competent render friends
+2019-10-09T16:55:09.331Z competent render npm-package
+2019-10-09T16:55:09.368Z competent render npm-package
+2019-10-09T16:55:09.373Z competent render npm-package
+2019-10-09T16:55:09.375Z competent render hello-world
+2019-10-09T16:55:09.381Z competent render friends
 ```
 
 
@@ -614,7 +626,7 @@ import { makeComponentsScript } from 'competent'
 })()
 ```
 ```js
-import { render } from 'preact'
+import { Component, render } from 'preact'
 import NpmPackage from '../components/npm'
 
 const __components = {
@@ -656,12 +668,18 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
-  if (Comp.load) {
+  const r = () => {
+      if (!Component.isPrototypeOf(Comp)) {
+        const comp = new Comp(el, parent)
+        comp.render({ ...props, children })
+      } else render(h(Comp, props, children), parent, el)
+    }
+    if (Comp.load) {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
-        if (!err) render(h(Comp, props, children), parent, el)
+        if (!err) r()
       }, el, props)
-    } else render(h(Comp, props, children), parent, el)
+    } else r()
 })
 ```
 
@@ -700,7 +718,7 @@ import { makeComponentsScript } from 'competent'
 })()
 ```
 ```js
-import { render } from 'preact'
+import { Component, render } from 'preact'
 import { makeIo, init } from './__competent-lib'
 import NpmPackage from '../components/npm'
 
@@ -732,12 +750,18 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
+    const r = () => {
+      if (!Component.isPrototypeOf(Comp)) {
+        const comp = new Comp(el, parent)
+        comp.render({ ...props, children })
+      } else render(h(Comp, props, children), parent, el)
+    }
     if (Comp.load) {
       Comp.load((err, data) => {
         if (data) Object.assign(props, data)
-        if (!err) render(h(Comp, props, children), parent, el)
+        if (!err) r()
       }, el, props)
-    } else render(h(Comp, props, children), parent, el)
+    } else r()
   }
   el.render.meta = { key, id }
   io.observe(el)

@@ -1,3 +1,10 @@
+## 9 October 2019
+
+### [3.2.4](https://github.com/artdecocode/competent/compare/v3.2.3...v3.2.4)
+
+- [feature] Implement the `fileRender` option in addition to `serverRender`.
+- [feature] Check `preact.Component.isPrototypeOf` to render only _Preact_ components with `render` while invoking and rendering plain components manually.
+
 ## 18 September 2019
 
 ### [3.2.3](https://github.com/artdecocode/competent/compare/v3.2.2...v3.2.3)

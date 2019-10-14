@@ -643,7 +643,9 @@ function Xa(a) {
 async function cb(a) {
   var b = `export ${db.toString()}
 
-export ${eb.toString()}`;
+export ${eb.toString()}
+
+export ${fb.toString()}`;
   if (!a) {
     throw Error("No path is given.");
   }
@@ -655,23 +657,23 @@ export ${eb.toString()}`;
     }).on("close", e).end(b);
   });
 }
-;const {join:fb} = path;
-const gb = a => {
+;const {join:gb} = path;
+const hb = a => {
   const b = Object.keys(a);
   return `{
   ${b.map(c => `${/-/.test(c) ? `'${c}'` : c}: '${`${a[c]}`.replace(/'/g, "\\'")}'`).join(",\n  ")}${b.length ? "," : ""}
 }`;
-}, hb = a => {
+}, ib = a => {
   const b = [];
   b.push(`key: '${a.key}'`);
   b.push(`id: '${a.id}'`);
-  Object.keys(a.props).length && b.push(`props: ${gb(a.props)}`);
+  Object.keys(a.props).length && b.push(`props: ${hb(a.props)}`);
   a.children.filter(Boolean).length && b.push(`children: ${JSON.stringify(a.children)}`);
   return `{
 ${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
 }`;
-}, ib = a => `/** @type {!Array<!preact.PreactProps>} */
-const meta = [${a.map(b => hb(b)).join(",\n")}]`, jb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", kb = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), lb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${kb(b)}`).filter((b, c, d) => d.indexOf(b) == c).join(",\n  ")},\n}`, nb = (a, b) => {
+}, jb = a => `/** @type {!Array<!preact.PreactProps>} */
+const meta = [${a.map(b => ib(b)).join(",\n")}]`, kb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", lb = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), mb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${lb(b)}`).filter((b, c, d) => d.indexOf(b) == c).join(",\n  ")},\n}`, ob = (a, b) => {
   const c = {};
   a.reduce((d, {key:e}) => {
     if (d.includes(e)) {
@@ -685,17 +687,17 @@ const meta = [${a.map(b => hb(b)).join(",\n")}]`, jb = (a = !0) => a ? `const io
       0 > f || (c[e] || (c[e] = []), c[e][f] = d);
     });
   });
-  return Object.entries(c).map(([d, e]) => mb(e, d));
-}, mb = (a, b, c = !0) => {
+  return Object.entries(c).map(([d, e]) => nb(e, d));
+}, nb = (a, b, c = !0) => {
   let [d, ...e] = a;
   e = e.filter(Boolean);
   a = "import ";
-  d && (a += c ? kb(d) : d);
-  e.length && (a = a + (d ? ", " : "") + `{ ${(c ? e.map(kb) : e).join(", ")} }`);
+  d && (a += c ? lb(d) : d);
+  e.length && (a = a + (d ? ", " : "") + `{ ${(c ? e.map(lb) : e).join(", ")} }`);
   return a + ` from '${b}'`;
-}, db = require("./init"), eb = require("./make-io");
-var ob;
-ob = function() {
+}, db = require("./init"), eb = require("./make-io"), fb = require("./start");
+var pb;
+pb = function() {
   const a = new ab(Z);
   return function(b) {
     const c = Ya(a);
@@ -715,17 +717,17 @@ ob = function() {
     return c;
   };
 }()("competent");
-const pb = (a, b) => {
+const qb = (a, b) => {
   let c;
   "string" == typeof a ? c = a : Array.isArray(a) ? c = a.map(d => "string" == typeof d ? d : ka(d, b)).join("\n") : c = ka(a, b);
   return c;
-}, rb = async({getReplacements:a, key:b, s:c, re:d, replacement:e, getContext:f, m:g, body:k}) => {
+}, sb = async({getReplacements:a, key:b, s:c, re:d, replacement:e, getContext:f, m:g, body:k}) => {
   let n;
-  a ? n = a(b, c) : c ? n = {re:qb(d, b), replacement:e} : n = {re:d, replacement:e};
+  a ? n = a(b, c) : c ? n = {re:rb(d, b), replacement:e} : n = {re:d, replacement:e};
   a = new La(n);
   f && (f = f(g), Object.assign(a, f));
   return await Ja(a, k);
-}, qb = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`), (c, d, e) => "|" == d && "|" == e ? "|" : ")" == e ? e : "(" == d ? d : ""), a.flags);
+}, rb = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`), (c, d, e) => "|" == d && "|" == e ? "|" : ")" == e ? e : "(" == d ? d : ""), a.flags);
 /*
 
  Competent: Render tags HTML as JSX components.
@@ -747,7 +749,7 @@ const pb = (a, b) => {
 */
 module.exports = {_competent:(a, b = {}) => {
   async function c(u, C, W, D, l, P, y) {
-    ob("render %s", l);
+    pb("render %s", l);
     const Q = Error("Skip render");
     try {
       const z = a[l], p = y.slice(0, P), I = y.slice(P + u.length);
@@ -786,8 +788,8 @@ module.exports = {_competent:(a, b = {}) => {
         J = ca instanceof Promise ? await ca : ca;
         if (B.fileRender) {
           let S = await B.render(H);
-          S = pb(S, w);
-          q && (S = await rb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:v, re:x, replacement:c, m:E, body:S}));
+          S = qb(S, w);
+          q && (S = await sb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:v, re:x, replacement:c, m:E, body:S}));
           await B.fileRender(S, H);
         }
       }
@@ -796,12 +798,12 @@ module.exports = {_competent:(a, b = {}) => {
         r = t.attributes.id;
         r || (r = d.call(this), t.attributes.id = r);
       }
-      let O = pb(J, w);
+      let O = qb(J, w);
       if (!O && M) {
         return g && g.call(this, l, A), "";
       }
       O = (C || "") + O.replace(/^/gm, W);
-      q && (O = await rb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:l, s:v, re:x, replacement:c, m:E, body:O}));
+      q && (O = await sb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:l, s:v, re:x, replacement:c, m:E, body:O}));
       F && f.call(this, l, r, A, D);
       g && g.call(this, l, A);
       return O;
@@ -823,16 +825,15 @@ module.exports = {_competent:(a, b = {}) => {
   if (!c) {
     throw Error("The map of where to import components from is required.");
   }
-  var k = [mb([null, "Component", "render", ...f ? ["h"] : []], "preact", !1), ...d ? [mb([null, ...e ? ["makeIo"] : [], "init"], "./__competent-lib", !1)] : [], ...nb(a, c)].join("\n");
+  var k = [nb([null, "Component", "render", ...f ? ["h"] : []], "preact", !1), ...d ? [nb([null, ...e ? ["makeIo"] : [], "init", "start"], "./__competent-lib", !1)] : [], ...ob(a, c)].join("\n");
   b = Object.keys(g).map(m => `props.${m} = ${g[m]}`).join("\n");
-  const n = e ? "el.render = () => {\n    const r = () => {\n      if (/^\\s*class\\s+/.test(Comp.toString())\n        && !Component.isPrototypeOf(Comp)) {\n        const comp = new Comp(el, parent)\n        comp.render({ ...props, children })\n      } else render(h(Comp, props, children), parent, el)\n    }\n    if (Comp.load) {\n      Comp.load((err, data) => {\n        if (data) Object.assign(props, data)\n        if (!err) r()\n      }, el, props)\n    } else r()\n  }\n  el.render.meta = { key, id }\n  io.observe(el)" : 
-  "const r = () => {\n      if (/^\\s*class\\s+/.test(Comp.toString())\n        && !Component.isPrototypeOf(Comp)) {\n        const comp = new Comp(el, parent)\n        comp.render({ ...props, children })\n      } else render(h(Comp, props, children), parent, el)\n    }\n    if (Comp.load) {\n      Comp.load((err, data) => {\n        if (data) Object.assign(props, data)\n        if (!err) r()\n      }, el, props)\n    } else r()";
+  const n = e ? "el.render = () => {\n    start(Comp, el, parent, props, children, { render, Component, h })\n  }\n  el.render.meta = { key, id }\n  io.observe(el)" : "start(Comp, el, parent, props, children, { render, Component, h })";
   k += "\n\n";
-  const h = lb(a);
+  const h = mb(a);
   k += h + "\n\n";
-  d || (k += db.toString() + "\n\n", e && (k += eb.toString() + "\n\n"));
-  e && (k += jb(e) + "\n\n");
-  k += ib(a);
+  d || (k += db.toString() + "\n\n", k += fb.toString() + "\n\n", e && (k += eb.toString() + "\n\n"));
+  e && (k += kb(e) + "\n\n");
+  k += jb(a);
   return k + `
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
@@ -842,7 +843,7 @@ ${b ? `  ${b}` : ""}
 })
 `;
 }, _writeAssets:async a => {
-  await cb(fb(a, "./__competent-lib.js"));
+  await cb(gb(a, "./__competent-lib.js"));
 }};
 
 

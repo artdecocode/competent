@@ -153,6 +153,11 @@ _competent.CompetentComponent = function() {}
  */
 _competent.CompetentComponent.load = function(callback, element, props) {}
 /**
+ * Whether this is a non-Preact component. This is required since Closure Compiler will compile classes into functions and the `.isPrototypeOf` won't wort to detect components that shouldn't be rendered with _Preact_.
+ * @type {boolean}
+ */
+_competent.CompetentComponent.prototype.plain
+/**
  * The same as render, but for the server only. Called by _Component_ using _NodeJS_ runtime and not by _Preact_ in browser, therefore _NodeJS_ API could be used here.
  * @param {!preact.PreactProps=} [props] Component properties.
  * @return {(preact.AcceptedChild|!Array<preact.AcceptedChild>)}

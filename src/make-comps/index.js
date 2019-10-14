@@ -127,11 +127,14 @@ const makeImport = (values, location, components = true) => {
 // ensured during the build step without compilation
 const init = require(/*depack*/'./init')
 const makeIo = require(/*depack*/'./make-io')
+const start = require(/*depack*/'./start')
 
 export const writeAssets = async (path) => {
   await write(join(path, './__competent-lib.js'), `export ${init.toString()}
 
-export ${makeIo.toString()}`)
+export ${makeIo.toString()}
+
+export ${start.toString()}`)
 }
 
 /**
@@ -150,7 +153,9 @@ export default function makeComponentsScript(components, opts) {
   const imports = [
     makeImport([null, 'Component', 'render', ...(includeH ? ['h'] : [])], 'preact', false),
     ...(externalAssets ? [
-      makeImport([null, ...(io ? ['makeIo'] : []), 'init'], './__competent-lib', false),
+      makeImport([null,
+        ...(io ? ['makeIo'] : []),
+        'init', 'start'], './__competent-lib', false),
       // ...(io ? [makeImport(['makeIo'], './make-io', false)] : []),
       // makeImport(['init'], './init', false),
     ] : []),
@@ -163,19 +168,7 @@ export default function makeComponentsScript(components, opts) {
     return s
   }).join('\n')
 
-  const r = `const r = () => {
-      if (/^\\s*class\\s+/.test(Comp.toString())
-        && !Component.isPrototypeOf(Comp)) {
-        const comp = new Comp(el, parent)
-        comp.render({ ...props, children })
-      } else render(h(Comp, props, children), parent, el)
-    }
-    if (Comp.load) {
-      Comp.load((err, data) => {
-        if (data) Object.assign(props, data)
-        if (!err) r()
-      }, el, props)
-    } else r()`
+  const r = `start(Comp, el, parent, props, children, { render, Component, h })`
   const ifIo = io ? `el.render = () => {
     ${r}
   }
@@ -187,6 +180,7 @@ export default function makeComponentsScript(components, opts) {
   s += Components + '\n\n'
   if (!externalAssets) {
     s += init.toString() + '\n\n'
+    s += start.toString() + '\n\n'
     if (io) s += makeIo.toString() + '\n\n'
   }
   if (io) s += defineIo(io) + '\n\n'

@@ -34,6 +34,23 @@ function init(id, key) {
   return { parent, el  }
 }
 
+function start(Comp, el, parent, props, children, preact) {
+  const { render, h, Component } = preact
+  const r = () => {
+    if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())
+      && !Component.isPrototypeOf(Comp))) {
+      const comp = new Comp(el, parent)
+      comp.render({ ...props, children })
+    } else render(h(Comp, props, children), parent, el)
+  }
+  if (Comp.load) {
+    Comp.load((err, data) => {
+      if (data) Object.assign(props, data)
+      if (!err) r()
+    }, el, props)
+  } else r()
+}
+
 function makeIo(options = {}) {
   const { rootMargin = '76px', log = true, ...rest } = options
   const io = new IntersectionObserver((entries) => {
@@ -61,19 +78,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
-    const r = () => {
-      if (/^\s*class\s+/.test(Comp.toString())
-        && !Component.isPrototypeOf(Comp)) {
-        const comp = new Comp(el, parent)
-        comp.render({ ...props, children })
-      } else render(h(Comp, props, children), parent, el)
-    }
-    if (Comp.load) {
-      Comp.load((err, data) => {
-        if (data) Object.assign(props, data)
-        if (!err) r()
-      }, el, props)
-    } else r()
+    start(Comp, el, parent, props, children, { render, Component, h })
   }
   el.render.meta = { key, id }
   io.observe(el)
@@ -93,7 +98,7 @@ true
 
 /* expected */
 import { Component, render } from 'preact'
-import { makeIo, init } from './__competent-lib'
+import { makeIo, init, start } from './__competent-lib'
 import Test from '../comps'
 
 const __components = {
@@ -112,19 +117,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
-    const r = () => {
-      if (/^\s*class\s+/.test(Comp.toString())
-        && !Component.isPrototypeOf(Comp)) {
-        const comp = new Comp(el, parent)
-        comp.render({ ...props, children })
-      } else render(h(Comp, props, children), parent, el)
-    }
-    if (Comp.load) {
-      Comp.load((err, data) => {
-        if (data) Object.assign(props, data)
-        if (!err) r()
-      }, el, props)
-    } else r()
+    start(Comp, el, parent, props, children, { render, Component, h })
   }
   el.render.meta = { key, id }
   io.observe(el)

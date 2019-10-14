@@ -34,5 +34,6 @@
         The properties that the component will receive.
       </arg>
     </static>
+    <prop name="plain" boolean>Whether this is a non-Preact component. This is required since Closure Compiler will compile classes into functions and the `.isPrototypeOf` won't wort to detect components that shouldn't be rendered with _Preact_.</prop>
   </constructor>
 </types>

@@ -409,6 +409,16 @@ __<a name="type-competentcomponent">`CompetentComponent`</a> extends <a title="A
   </td>
  </tr>
  <tr>
+  <td rowSpan="3" align="center"><ins>plain</ins></td>
+  <td><em>boolean</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Whether this is a non-Preact component. This is required since Closure Compiler will compile classes into functions and the <code>.isPrototypeOf</code> won't wort to detect components that shouldn't be rendered with <em>Preact</em>.
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center"><ins>serverRender</ins></td>
   <td><em>(props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => (<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a> | !Array&lt;<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a>&gt;)</em></td>
  </tr>
@@ -497,11 +507,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-10-09T22:06:45.854Z competent render npm-package
-2019-10-09T22:06:45.890Z competent render npm-package
-2019-10-09T22:06:45.896Z competent render npm-package
-2019-10-09T22:06:45.897Z competent render hello-world
-2019-10-09T22:06:45.902Z competent render friends
+2019-10-14T04:01:53.980Z competent render npm-package
+2019-10-14T04:01:54.019Z competent render npm-package
+2019-10-14T04:01:54.024Z competent render npm-package
+2019-10-14T04:01:54.027Z competent render hello-world
+2019-10-14T04:01:54.031Z competent render friends
 ```
 
 
@@ -647,6 +657,23 @@ function init(id, key) {
   return { parent, el  }
 }
 
+function start(Comp, el, parent, props, children, preact) {
+  const { render, h, Component } = preact
+  const r = () => {
+    if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())
+      && !Component.isPrototypeOf(Comp))) {
+      const comp = new Comp(el, parent)
+      comp.render({ ...props, children })
+    } else render(h(Comp, props, children), parent, el)
+  }
+  if (Comp.load) {
+    Comp.load((err, data) => {
+      if (data) Object.assign(props, data)
+      if (!err) r()
+    }, el, props)
+  } else r()
+}
+
 /** @type {!Array<!preact.PreactProps>} */
 const meta = [{
   key: 'npm-package',
@@ -668,19 +695,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
 
-  const r = () => {
-      if (/^\s*class\s+/.test(Comp.toString())
-        && !Component.isPrototypeOf(Comp)) {
-        const comp = new Comp(el, parent)
-        comp.render({ ...props, children })
-      } else render(h(Comp, props, children), parent, el)
-    }
-    if (Comp.load) {
-      Comp.load((err, data) => {
-        if (data) Object.assign(props, data)
-        if (!err) r()
-      }, el, props)
-    } else r()
+  start(Comp, el, parent, props, children, { render, Component, h })
 })
 ```
 
@@ -720,7 +735,7 @@ import { makeComponentsScript } from 'competent'
 ```
 ```js
 import { Component, render } from 'preact'
-import { makeIo, init } from './__competent-lib'
+import { makeIo, init, start } from './__competent-lib'
 import NpmPackage from '../components/npm'
 
 const __components = {
@@ -751,19 +766,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
 
   el.render = () => {
-    const r = () => {
-      if (/^\s*class\s+/.test(Comp.toString())
-        && !Component.isPrototypeOf(Comp)) {
-        const comp = new Comp(el, parent)
-        comp.render({ ...props, children })
-      } else render(h(Comp, props, children), parent, el)
-    }
-    if (Comp.load) {
-      Comp.load((err, data) => {
-        if (data) Object.assign(props, data)
-        if (!err) r()
-      }, el, props)
-    } else r()
+    start(Comp, el, parent, props, children, { render, Component, h })
   }
   el.render.meta = { key, id }
   io.observe(el)
@@ -815,6 +818,23 @@ export function makeIo(options = {}) {
     })
   }, { rootMargin, ...rest })
   return io
+}
+
+export function start(Comp, el, props, children, preact) {
+  const { render, h, Component } = preact
+  const r = () => {
+    if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())
+      && !Component.isPrototypeOf(Comp))) {
+      const comp = new Comp(el, parent)
+      comp.render({ ...props, children })
+    } else render(h(Comp, props, children), parent, el)
+  }
+  if (Comp.load) {
+    Comp.load((err, data) => {
+      if (data) Object.assign(props, data)
+      if (!err) r()
+    }, el, props)
+  } else r()
 }
 ```
 

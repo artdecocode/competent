@@ -1,3 +1,10 @@
+## 14 October 2019
+
+### [3.2.6](https://github.com/artdecocode/competent/compare/v3.2.5...v3.2.6)
+
+- [fix] Decouple `start` method into a function asset.
+- [feature] Support for the `plain` property instead of just using *preact.Component.isPrototypeOf* because _Closure Compiler_ will transform classes into functions.
+
 ## 10 October 2019
 
 ### [3.2.5](https://github.com/artdecocode/competent/compare/v3.2.4...v3.2.5)

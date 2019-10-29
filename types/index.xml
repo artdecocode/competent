@@ -8,6 +8,7 @@
       <arg name="props" type="!_competent.Props">Properties.</arg>
       <arg name="meta" type="!_competent.Meta">Meta properties.</arg>
       <arg string name="componentName">The name of the component.</arg>
+      <arg number name="position">The position where match happened.</arg>
       The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
     </fn>
     <fn opt name="markExported">
@@ -38,6 +39,7 @@
       <arg opt name="childContext" type="!Object">
         The child context set by `meta.setChildContext` with `undefined` if not set.
       </arg>
+      <arg type="{ position: number, key: string }" name="parent">The info about the parent component.</arg>
       The function to be called to get the properties to set on the child _Replaceable_ started to recursively replace inner HTML. This is needed if the root _Replaceable_ was assigned some properties that are referenced in components.
     </fn>
     <fn opt name="getReplacements" return="!Array<!_restream.Rule>">

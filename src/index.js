@@ -60,7 +60,7 @@ const competent = (components, conf = {}) => {
         setChildContext(context) { childContext = context },
         removeLine(r = true) { removeLine = r },
         skipRender() { throw SKIP_ERROR },
-      }), key)
+      }), key, position, str)
       /** @type {preact.VNode} */
       let hyperResult
       try {
@@ -99,12 +99,14 @@ const competent = (components, conf = {}) => {
       }
       r = (ws || '') + r.replace(/^/gm, pad)
       if (renderAgain) {
+        // console.log('============\n',r,'\n============')
         r = await secondRender({
           getContext: getContext ? getContext.bind(this) : undefined,
           getReplacements: getReplacements ? getReplacements.bind(this) : undefined,
           key, recursiveRenderAgain, re, replacement,
           childContext,
           body: r,
+          position,
         })
       }
       if (exported)
@@ -142,7 +144,7 @@ const hyperToString = (hyperResult, renderOptions) => {
 }
 
 const secondRender = async ({
-  getReplacements, key, recursiveRenderAgain, re, replacement, getContext, childContext,
+  getReplacements, key, recursiveRenderAgain, re, replacement, getContext, childContext, position,
   body,
 }) => {
   let childRules
@@ -159,7 +161,7 @@ const secondRender = async ({
   }
   const childRepl = new Replaceable(childRules)
   if (getContext) {
-    const ctx = getContext(childContext)
+    const ctx = getContext(childContext, { position, key } )
     Object.assign(childRepl, ctx)
   }
   return await Replaceable.replace(childRepl, body)

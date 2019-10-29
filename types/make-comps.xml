@@ -19,8 +19,8 @@
     <prop boolean name="includeH" opt>
       Include `import { h } from 'preact'` on top of the file.
     </prop>
-    <prop boolean name="externalAssets" opt>
-      Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script.
+    <prop type="boolean|string" name="externalAssets" opt>
+      Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`.
     </prop>
   </type>
   <constructor name="IOOptions" extends="IntersectionObserverInit" desc="Options for the observer.">

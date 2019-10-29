@@ -1,3 +1,9 @@
+## 30 October 2019
+
+### [3.3.1](https://github.com/artdecocode/competent/compare/v3.3.0...v3.3.1)
+
+- [feature] Allow to override exported properties with `props` arg to the *export* method.
+
 ## 29 October 2019
 
 ### [3.3.0](https://github.com/artdecocode/competent/compare/v3.2.6...v3.3.0)

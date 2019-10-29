@@ -46,12 +46,19 @@ const competent = (components, conf = {}) => {
         lineLength: undefined,
       }
       let id
-      let childContext, removeLine
+      let childContext, removeLine, overridenProps
       const props = getProps.call(this, {
         ...htmlProps,
         children,
       }, /** @type {!_competent.Meta} */ ({
-        export(value = true) { exported = value },
+        export(value = true, newProps) {
+          exported = value
+          if (newProps) overridenProps = Object.entries(newProps).reduce((ac, [k, val]) => {
+            if (val === undefined) return ac
+            ac[k] = val
+            return ac
+          }, {})
+        },
         setPretty(p, l) {
           renderOptions.pretty = p
           if (l) renderOptions.lineLength = l
@@ -110,7 +117,7 @@ const competent = (components, conf = {}) => {
         })
       }
       if (exported)
-        markExported.call(this, key, id, htmlProps, children)
+        markExported.call(this, key, id, overridenProps || htmlProps, children)
       if (onSuccess) onSuccess.call(this, key, htmlProps)
       return r
     } catch (err) {

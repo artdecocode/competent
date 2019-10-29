@@ -158,8 +158,10 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.9.5</span>
-  <p>Static Web Site Generator With JSX As HTML.</p>
+  <span class="ver">1.10.3</span>
+  <p>
+    Static Web Site Compiler That Uses Closure Compiler For JS Bundling And Closure Stylesheets For CSS optimisations. Supports JSX Syntax To Write Static Elements And Dynamic Preact Components.
+  </p>
 </div>
 <div style="background:green;" id="c2">
   <span class="name">@a-la/jsx</span>
@@ -226,7 +228,7 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">getProps</td>
-  <td colSpan="2"><em>(props: !Props, meta: <a href="#type-meta" title="Service methods for `competent`.">!Meta</a>, componentName: string) => Object</em></td>
+  <td colSpan="2"><em>(props: !Props, meta: <a href="#type-meta" title="Service methods for `competent`.">!Meta</a>, componentName: string, position: number) => Object</em></td>
  </tr>
  <tr></tr>
  <tr>
@@ -234,7 +236,8 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
    The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with <em>meta</em>.<br/>
    <kbd><strong>props*</strong></kbd> <em><code>!Props</code></em>: Properties.<br/>
    <kbd><strong>meta*</strong></kbd> <em><code><a href="#type-meta" title="Service methods for `competent`.">!Meta</a></code></em>: Meta properties.<br/>
-   <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The name of the component.
+   <kbd><strong>componentName*</strong></kbd> <em><code>string</code></em>: The name of the component.<br/>
+   <kbd><strong>position*</strong></kbd> <em><code>number</code></em>: The position where match happened.
   </td>
  </tr>
  <tr>
@@ -279,13 +282,14 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">getContext</td>
-  <td colSpan="2"><em>(childContext?: !Object) => !Object</em></td>
+  <td colSpan="2"><em>(childContext?: !Object, parent: { position: number, key: string }) => !Object</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td colSpan="2">
    The function to be called to get the properties to set on the child <em>Replaceable</em> started to recursively replace inner HTML. This is needed if the root <em>Replaceable</em> was assigned some properties that are referenced in components.<br/>
-   <kbd>childContext</kbd> <em><code>!Object</code></em> (optional): The child context set by <code>meta.setChildContext</code> with <code>undefined</code> if not set.
+   <kbd>childContext</kbd> <em><code>!Object</code></em> (optional): The child context set by <code>meta.setChildContext</code> with <code>undefined</code> if not set.<br/>
+   <kbd><strong>parent*</strong></kbd> <em><code>{ position: number, key: string }</code></em>: The info about the parent component.
   </td>
  </tr>
  <tr>
@@ -312,13 +316,14 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center"><strong>export*</strong></td>
-  <td><em>(shouldExport?: boolean) => void</em></td>
+  <td><em>(shouldExport?: boolean, props?: !Object) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
    When called, marks the component for export and adds an <code>id</code> if the root element of the hyper result did not have it. Individual instances can pass the <code>false</code> value if they don't want to get exported.<br/>
-   <kbd>shouldExport</kbd> <em><code>boolean</code></em> (optional): Whether to export the component.
+   <kbd>shouldExport</kbd> <em><code>boolean</code></em> (optional): Whether to export the component.<br/>
+   <kbd>props</kbd> <em><code>!Object</code></em> (optional): Properties with which to export. If not passed, the same HTML props are used, otherwise overrides them. Undefined values will be removed.
   </td>
  </tr>
  <tr>
@@ -507,11 +512,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-10-14T04:01:53.980Z competent render npm-package
-2019-10-14T04:01:54.019Z competent render npm-package
-2019-10-14T04:01:54.024Z competent render npm-package
-2019-10-14T04:01:54.027Z competent render hello-world
-2019-10-14T04:01:54.031Z competent render friends
+2019-10-29T21:43:21.734Z competent render npm-package
+2019-10-29T21:43:21.869Z competent render npm-package
+2019-10-29T21:43:21.900Z competent render npm-package
+2019-10-29T21:43:21.939Z competent render hello-world
+2019-10-29T21:43:21.956Z competent render friends
 ```
 
 
@@ -581,12 +586,12 @@ The default export must come first in the array.
  </tr>
  <tr>
   <td rowSpan="3" align="center">externalAssets</td>
-  <td><em>boolean</em></td>
+  <td><em>(boolean | string)</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
-   Whether the library functions should be required from a separate file, <code>./__competent-lib</code>. Works together with <code>writeAssets</code> and is useful when generating more than one script.
+   Whether the library functions should be required from a separate file, <code>./__competent-lib</code>. Works together with <code>writeAssets</code> and is useful when generating more than one script. The relative path can be passed as a string, e.g., <code>..</code> will make <code>../__competent-lib</code>.
   </td>
  </tr>
 </table>
@@ -820,7 +825,7 @@ export function makeIo(options = {}) {
   return io
 }
 
-export function start(Comp, el, props, children, preact) {
+export function start(Comp, el, parent, props, children, preact) {
   const { render, h, Component } = preact
   const r = () => {
     if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())

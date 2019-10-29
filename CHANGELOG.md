@@ -1,3 +1,10 @@
+## 29 October 2019
+
+### [3.3.0](https://github.com/artdecocode/competent/compare/v3.2.6...v3.3.0)
+
+- [feature] Pass relative dir as `externalAssets` value to correctly import assets.
+- [feature] Pass match position to `getProps`, and `key` and `position` to `getChildContext` to remember where matches were made.
+
 ## 14 October 2019
 
 ### [3.2.6](https://github.com/artdecocode/competent/compare/v3.2.5...v3.2.6)

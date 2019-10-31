@@ -1,3 +1,9 @@
+## 31 October 2019
+
+### [3.4.0](https://github.com/artdecocode/competent/compare/v3.3.1...v3.4.0)
+
+- [feature] Pass *preact=false* to disable _Preact_ altogether (when all components are plain).
+
 ## 30 October 2019
 
 ### [3.3.1](https://github.com/artdecocode/competent/compare/v3.3.0...v3.3.1)

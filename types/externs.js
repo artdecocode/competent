@@ -4,8 +4,6 @@
  */
 
 /* typal types/exported.xml */
-/** @const */
-var _competent = {}
 /**
  * An exported component.
  * @record
@@ -90,6 +88,8 @@ _competent.Props
 _competent.Meta
 
 /* typal types/make-comps.xml */
+/** @const */
+var _competent = {}
 /**
  * The options for make components script.
  * @record
@@ -112,6 +112,12 @@ _competent.MakeCompsConfig.prototype.map
  * @type {(boolean|!_competent.IOOptions)|undefined}
  */
 _competent.MakeCompsConfig.prototype.io
+/**
+ * Whether any of the components are _Preact_ components.
+ * Only pass `false` when you know for sure that all components implement `plain` getter. Default `true`.
+ * @type {boolean|undefined}
+ */
+_competent.MakeCompsConfig.prototype.preact
 /**
  * Shared properties made available for each component in addition to its own properties.
  * @type {(!Object<string, *>)|undefined}

@@ -38,3 +38,17 @@ export const named = makeTestSuite('test/result/make-comps/named', {
   },
   jsProps: ['preamble', 'map', 'io'],
 })
+
+export const $plain = makeTestSuite('test/result/make-comps/plain', {
+  context: TempContext,
+  /**
+   * @param {TempContext} t
+   */
+  getResults() {
+    return makeComponentsScript(this.preamble, {
+      map: this.map,
+      preact: false,
+    })
+  },
+  jsProps: ['preamble', 'map'],
+})

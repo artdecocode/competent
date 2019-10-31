@@ -31,6 +31,8 @@ function competent(components, config) {
  * ```
  * The default export must come first in the array.
  * @param {boolean|!_competent.IOOptions} [options.io] Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
+ * @param {boolean} [options.preact=true] Whether any of the components are _Preact_ components.
+ * Only pass `false` when you know for sure that all components implement `plain` getter. Default `true`.
  * @param {!Object<string, *>} [options.props] Shared properties made available for each component in addition to its own properties.
  * @param {boolean} [options.includeH] Include `import { h } from 'preact'` on top of the file.
  * @param {boolean|string} [options.externalAssets] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`.
@@ -119,6 +121,8 @@ module.exports.writeAssets = writeAssets
  * ```
  * The default export must come first in the array.
  * @prop {boolean|!_competent.IOOptions} [io] Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
+ * @prop {boolean} [preact=true] Whether any of the components are _Preact_ components.
+ * Only pass `false` when you know for sure that all components implement `plain` getter. Default `true`.
  * @prop {!Object<string, *>} [props] Shared properties made available for each component in addition to its own properties.
  * @prop {boolean} [includeH] Include `import { h } from 'preact'` on top of the file.
  * @prop {boolean|string} [externalAssets] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`.

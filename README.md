@@ -158,7 +158,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.10.3</span>
+  <span class="ver">1.11.5</span>
   <p>
     Static Web Site Compiler That Uses Closure Compiler For JS Bundling And Closure Stylesheets For CSS optimisations. Supports JSX Syntax To Write Static Elements And Dynamic Preact Components.
   </p>
@@ -512,11 +512,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-10-29T21:43:21.734Z competent render npm-package
-2019-10-29T21:43:21.869Z competent render npm-package
-2019-10-29T21:43:21.900Z competent render npm-package
-2019-10-29T21:43:21.939Z competent render hello-world
-2019-10-29T21:43:21.956Z competent render friends
+2019-10-31T02:47:59.589Z competent render npm-package
+2019-10-31T02:47:59.613Z competent render npm-package
+2019-10-31T02:47:59.614Z competent render npm-package
+2019-10-31T02:47:59.615Z competent render hello-world
+2019-10-31T02:47:59.617Z competent render friends
 ```
 
 
@@ -535,10 +535,12 @@ __<a name="type-makecompsconfig">`MakeCompsConfig`</a>__: The options for make c
  <thead><tr>
   <th>Name</th>
   <th>Type &amp; Description</th>
+  <th>Default</th>
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center">map</td>
   <td><em>!Object&lt;string, !Array&lt;?string&gt;&gt;</em></td>
+  <td rowSpan="3">-</td>
  </tr>
  <tr></tr>
  <tr>
@@ -557,6 +559,7 @@ The default export must come first in the array.
  <tr>
   <td rowSpan="3" align="center">io</td>
   <td><em>(boolean | <a href="#type-iooptions" title="Options for the observer.">!IOOptions</a>)</em></td>
+  <td rowSpan="3">-</td>
  </tr>
  <tr></tr>
  <tr>
@@ -565,8 +568,21 @@ The default export must come first in the array.
   </td>
  </tr>
  <tr>
+  <td rowSpan="3" align="center">preact</td>
+  <td><em>boolean</em></td>
+  <td rowSpan="3"><code>true</code></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Whether any of the components are <em>Preact</em> components.
+   Only pass <code>false</code> when you know for sure that all components implement <code>plain</code> getter.
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center">props</td>
   <td><em>!Object&lt;string, *&gt;</em></td>
+  <td rowSpan="3">-</td>
  </tr>
  <tr></tr>
  <tr>
@@ -577,6 +593,7 @@ The default export must come first in the array.
  <tr>
   <td rowSpan="3" align="center">includeH</td>
   <td><em>boolean</em></td>
+  <td rowSpan="3">-</td>
  </tr>
  <tr></tr>
  <tr>
@@ -587,6 +604,7 @@ The default export must come first in the array.
  <tr>
   <td rowSpan="3" align="center">externalAssets</td>
   <td><em>(boolean | string)</em></td>
+  <td rowSpan="3">-</td>
  </tr>
  <tr></tr>
  <tr>

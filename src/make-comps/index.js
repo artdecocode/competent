@@ -128,11 +128,14 @@ const makeImport = (values, location, components = true) => {
 const init = require(/*depack*/'./init')
 const makeIo = require(/*depack*/'./make-io')
 const start = require(/*depack*/'./start')
+const startPlain = require(/*depack*/'./start-plain')
 
 export const writeAssets = async (path) => {
   await write(join(path, './__competent-lib.js'), `export ${init.toString()}
 
 export ${makeIo.toString()}
+
+export ${startPlain.toString()}
 
 export ${start.toString()}`)
 }
@@ -145,7 +148,7 @@ export ${start.toString()}`)
 export default function makeComponentsScript(components, opts) {
   if (typeof opts != 'object') throw new Error('Options are required with at least a map.')
   const { map, io = false,
-    includeH = false, props = {} } = opts
+    includeH = false, props = {}, preact = true } = opts
   let { externalAssets = false } = opts
 
   // if (!assetsPath) throw new Error('Please specify the path where to write lib files.')
@@ -153,13 +156,14 @@ export default function makeComponentsScript(components, opts) {
   if (externalAssets === true) externalAssets = '.'
 
   const imports = [
-    makeImport([null, 'Component', 'render', ...(includeH ? ['h'] : [])], 'preact', false),
+    ...(preact ? [
+      makeImport([null, 'Component', 'render', ...(includeH ? ['h'] : []),
+      ], 'preact', false)] : []
+    ),
     ...(externalAssets ? [
       makeImport([null,
         ...(io ? ['makeIo'] : []),
-        'init', 'start'], `${externalAssets}/__competent-lib`, false),
-      // ...(io ? [makeImport(['makeIo'], './make-io', false)] : []),
-      // makeImport(['init'], './init', false),
+        'init', preact ? 'start' : 'startPlain'], `${externalAssets}/__competent-lib`, false),
     ] : []),
     ...makeImports(components, map),
   ].join('\n')
@@ -170,7 +174,7 @@ export default function makeComponentsScript(components, opts) {
     return s
   }).join('\n')
 
-  const r = `start(Comp, el, parent, props, children, { render, Component, h })`
+  const r = `start${preact ? '' : 'Plain'}(Comp, el, parent, props, children${preact ? ', { render, Component, h }' : ''})`
   const ifIo = io ? `el.render = () => {
     ${r}
   }
@@ -182,7 +186,7 @@ export default function makeComponentsScript(components, opts) {
   s += Components + '\n\n'
   if (!externalAssets) {
     s += init.toString() + '\n\n'
-    s += start.toString() + '\n\n'
+    s += (preact ? start : startPlain).toString() + '\n\n'
     if (io) s += makeIo.toString() + '\n\n'
   }
   if (io) s += defineIo(io) + '\n\n'

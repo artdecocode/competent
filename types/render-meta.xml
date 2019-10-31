@@ -1,0 +1,28 @@
+<types namespace="_competent">
+  <type record name="RenderMeta" desc="Options assigned to the render method. Private.">
+    <prop string name="key">The component key.</prop>
+    <prop string name="id">The ID into which to render.</prop>
+    <prop type="_competent.PlainComponent" name="instance">
+      The instance assigned after first render.
+    </prop>
+  </type>
+  <interface name="PlainComponent">
+    <arg type="Element" name="el">The element.</arg>
+    <arg type="Element" name="parent">The parent element.</arg>
+    <fn name="unrender">
+      A function which will be called when component leaves the intersection observer.
+    </fn>
+    <static name="load" void>
+      <arg name="callback" type="function(Error, !Object=): void">
+        A method called by browser-side bundle prior to rendering of a component with a callback, e.g., to load necessary assets. The callback should be called by the component when the loading is done, after which the component will render. The second argument to the callback can be a map of properties that should also be passed to the component.
+      </arg>
+      <arg name="element" type="Element">
+        The element into which the component will be rendered.
+      </arg>
+      <arg name="props" type="!Object">
+        The properties that the component will receive.
+      </arg>
+    </static>
+    <prop name="plain" boolean>Whether this is a non-Preact component. This is required since Closure Compiler will compile classes into functions and the `.isPrototypeOf` won't wort to detect components that shouldn't be rendered with _Preact_.</prop>
+  </interface>
+</types>

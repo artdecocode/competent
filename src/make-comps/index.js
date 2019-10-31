@@ -135,8 +135,15 @@ export const writeAssets = async (path) => {
 
 export ${makeIo.toString()}
 
+/**
+ * @param {_competent.RenderMeta} meta
+ * @param {function(new:_competent.PlainComponent, Element, Element)} Comp
+ */
 export ${startPlain.toString()}
 
+/**
+ * @param {_competent.RenderMeta} meta
+ */
 export ${start.toString()}`)
 }
 
@@ -174,12 +181,13 @@ export default function makeComponentsScript(components, opts) {
     return s
   }).join('\n')
 
-  const r = `start${preact ? '' : 'Plain'}(Comp, el, parent, props, children${preact ? ', { render, Component, h }' : ''})`
+  const r = `start${preact ? '' : 'Plain'}(renderMeta, Comp, comp, el, parent, props, children${preact ? ', { render, Component, h }' : ''})`
   const ifIo = io ? `el.render = () => {
-    ${r}
+    comp = ${r}
+    return comp
   }
-  el.render.meta = { key, id }
-  io.observe(el)` : r
+  el.render.meta = renderMeta
+  io.observe(el)` : `comp = ${r}`
 
   let s = imports + '\n\n'
   const Components = makeNamedMap(components)
@@ -195,6 +203,8 @@ export default function makeComponentsScript(components, opts) {
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  let comp
 ${extendProps ? `  ${extendProps}` : ''}
   ${ifIo}
 })

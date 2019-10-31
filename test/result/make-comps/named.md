@@ -39,8 +39,10 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  let comp
 
-  start(Comp, el, parent, props, children, { render, Component, h })
+  comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
 })
 
 /**/

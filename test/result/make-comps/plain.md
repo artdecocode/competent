@@ -39,17 +39,20 @@ function init(id, key) {
   return { parent, el  }
 }
 
-function startPlain(Comp, el, parent, props, children) {
+function startPlain(meta, Comp, comp, el, parent, props, children) {
+  if (!comp) comp = new Comp(el, parent)
   const r = () => {
-    const comp = new Comp(el, parent)
     comp.render({ ...props, children })
+    meta.instance = comp
   }
-  if (Comp.load) {
+  if (Comp.load) { // &!comp
     Comp.load((err, data) => {
       if (data) Object.assign(props, data)
       if (!err) r()
+      else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }
 
 /** @type {!Array<!preact.PreactProps>} */
@@ -64,8 +67,10 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  let comp
 
-  startPlain(Comp, el, parent, props, children)
+  comp = startPlain(renderMeta, Comp, comp, el, parent, props, children)
 })
 
 /**/

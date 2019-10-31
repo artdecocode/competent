@@ -19,7 +19,7 @@
     "d": "yarn-s externs template d1",
     "d1": "typal compile/index.js -u",
     "template": "typal compile/template.js -T compile/index.js -t types",
-    "externs": "typal types/externs.js -e",
+    "externs": "typal types/*.js -e",
     "build": "yarn-s compile b",
     "e": "alanode"
   },
@@ -27,10 +27,11 @@
     "compile",
     "src",
     "types/externs.js",
+    "types/competent.js",
     "COPYING",
     "build.js"
   ],
-  "externs": "types/externs.js",
+  "externs": ["types/externs.js", "types/competent.js"],
   "repository": {
     "type": "git",
     "url": "git://github.com/artdecocode/competent.git"

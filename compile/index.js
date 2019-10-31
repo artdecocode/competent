@@ -35,7 +35,7 @@ function competent(components, config) {
  * Only pass `false` when you know for sure that all components implement `plain` getter. Default `true`.
  * @param {!Object<string, *>} [options.props] Shared properties made available for each component in addition to its own properties.
  * @param {boolean} [options.includeH=false] Include `import { h } from 'preact'` on top of the file. Default `false`.
- * @param {boolean|string} [options.externalAssets] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`.
+ * @param {boolean|string} [options.externalAssets=false] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`. Default `false`.
  * @return {string}
  */
 function makeComponentsScript(components, options) {
@@ -125,11 +125,38 @@ module.exports.writeAssets = writeAssets
  * Only pass `false` when you know for sure that all components implement `plain` getter. Default `true`.
  * @prop {!Object<string, *>} [props] Shared properties made available for each component in addition to its own properties.
  * @prop {boolean} [includeH=false] Include `import { h } from 'preact'` on top of the file. Default `false`.
- * @prop {boolean|string} [externalAssets] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`.
+ * @prop {boolean|string} [externalAssets=false] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`. Default `false`.
  * @typedef {_competent.IOOptions} IOOptions `＠constructor` Options for the observer.
  * @typedef {IntersectionObserverInit & _competent.$IOOptions} _competent.IOOptions `＠constructor` Options for the observer.
  * @typedef {Object} _competent.$IOOptions `＠constructor` Options for the observer.
  * @prop {boolean} log Whether to print a message to console when a component is rendered.
+ */
+
+/* typal types/render-meta.xml namespace */
+/**
+ * @typedef {_competent.RenderMeta} RenderMeta `＠record` Options assigned to the render method. Private.
+ * @typedef {Object} _competent.RenderMeta `＠record` Options assigned to the render method. Private.
+ * @prop {string} key The component key.
+ * @prop {string} id The ID into which to render.
+ * @prop {_competent.PlainComponent} instance The instance assigned after first render.
+ * @typedef {_competent.PlainComponent} PlainComponent `＠interface`
+ * @typedef {Object} _competent.PlainComponent `＠interface`
+ * @prop {(el: Element, parent: Element) => _competent.PlainComponent} constructor Constructor method.
+ * @prop {boolean} plain Whether this is a non-Preact component. This is required since Closure Compiler will compile classes into functions and the `.isPrototypeOf` won't wort to detect components that shouldn't be rendered with _Preact_.
+ * @prop {() => ?} unrender A function which will be called when component leaves the intersection observer.
+ */
+
+/* typal types/CompetentComponent.xml namespace */
+/**
+ * @typedef {import('@externs/preact').Component} preact.Component
+ * @typedef {import('@externs/preact').AcceptedChild} preact.AcceptedChild
+ * @typedef {import('@externs/preact').PreactProps} preact.PreactProps
+ * @typedef {_competent.CompetentComponent} CompetentComponent `＠constructor` A component could have an additional API understood by _Competent_.
+ * @typedef {preact.Component & _competent.$CompetentComponent} _competent.CompetentComponent `＠constructor` A component could have an additional API understood by _Competent_.
+ * @typedef {Object} _competent.$CompetentComponent `＠constructor` A component could have an additional API understood by _Competent_.
+ * @prop {boolean} plain Whether this is a non-Preact component. This is required since Closure Compiler will compile classes into functions and the `.isPrototypeOf` won't wort to detect components that shouldn't be rendered with _Preact_.
+ * @prop {(props?: !preact.PreactProps) => (preact.AcceptedChild|!Array<preact.AcceptedChild>)} serverRender The same as render, but for the server only. Called by _Component_ using _NodeJS_ runtime and not by _Preact_ in browser, therefore _NodeJS_ API could be used here.
+ * @prop {(data: string, props?: !preact.PreactProps) => !Promise} fileRender When `serverRender` was specified, this method will also render the component using the standard `render` method, and return the output. The output could then be written by the implementation to the filesystem, e.g., saved as `component.html` file which is then loaded in browser by `load` method.
  */
 
 /**

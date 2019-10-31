@@ -33,6 +33,10 @@ module.exports.writeAssets = writeAssets
 
 /* typal types/make-comps.xml namespace */
 
+/* typal types/render-meta.xml namespace */
+
+/* typal types/CompetentComponent.xml namespace */
+
 /**
  * @typedef {import('@externs/preact').VNode} VNode
  */

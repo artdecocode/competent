@@ -30,21 +30,26 @@ function init(id, key) {
   return { parent, el  }
 }
 
-function start(Comp, el, parent, props, children, preact) {
+function start(meta, Comp, comp, el, parent, props, children, preact) {
   const { render, h, Component } = preact
+  const isPlain = Comp.plain || (/^\\s*class\\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  if (!comp && isPlain) {
+    comp = new Comp(el, parent)
+  }
   const r = () => {
-    if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())
-      && !Component.isPrototypeOf(Comp))) {
-      const comp = new Comp(el, parent)
+    if (isPlain) {
       comp.render({ ...props, children })
+      meta.instance = comp
     } else render(h(Comp, props, children), parent, el)
   }
   if (Comp.load) {
     Comp.load((err, data) => {
       if (data) Object.assign(props, data)
       if (!err) r()
+      else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }
 
 /** @type {!Array<!preact.PreactProps>} */
@@ -55,8 +60,10 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  let comp
 
-  start(Comp, el, parent, props, children, { render, Component, h })
+  comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
 })
 
 /**/
@@ -90,21 +97,26 @@ function init(id, key) {
   return { parent, el  }
 }
 
-function start(Comp, el, parent, props, children, preact) {
+function start(meta, Comp, comp, el, parent, props, children, preact) {
   const { render, h, Component } = preact
+  const isPlain = Comp.plain || (/^\\s*class\\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  if (!comp && isPlain) {
+    comp = new Comp(el, parent)
+  }
   const r = () => {
-    if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())
-      && !Component.isPrototypeOf(Comp))) {
-      const comp = new Comp(el, parent)
+    if (isPlain) {
       comp.render({ ...props, children })
+      meta.instance = comp
     } else render(h(Comp, props, children), parent, el)
   }
   if (Comp.load) {
     Comp.load((err, data) => {
       if (data) Object.assign(props, data)
       if (!err) r()
+      else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }
 
 /** @type {!Array<!preact.PreactProps>} */
@@ -115,8 +127,10 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  let comp
   props.splendid = { export() {} }
-  start(Comp, el, parent, props, children, { render, Component, h })
+  comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
 })
 
 /**/

@@ -9,10 +9,11 @@ module.exports = function makeIo(options = {}) {
        * @type {_competent.RenderMeta}
        */
       const meta = target.render.meta
-      const { key, id } = meta
+      const { key, id, plain } = meta
       if (isIntersecting) {
         if (log)
-          console.warn('🏗 Rendering component %s into the element %s', key, id, target)
+          console.warn('🏗 Rendering%s component %s into the element %s',
+            !plain ? ' Preact' : '', key, id, target)
         try {
           const instance = target.render()
           if (instance && !instance.unrender) io.unobserve(target) // plain
@@ -21,7 +22,8 @@ module.exports = function makeIo(options = {}) {
         }
       } else if (meta.instance) {
         if (log)
-          console.warn('💨 Unrendering component %s from the element %s', key, id, target)
+          console.warn('💨 Unrendering%s component %s from the element %s',
+            !plain ? ' Preact' : '', key, id, target)
         meta.instance.unrender()
       }
     })

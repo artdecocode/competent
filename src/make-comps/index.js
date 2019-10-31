@@ -203,7 +203,8 @@ export default function makeComponentsScript(components, opts) {
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  const plain = ${preact ? 'Comp.plain || (/^\\s*class\\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))' : true}
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
   let comp
 ${extendProps ? `  ${extendProps}` : ''}
   ${ifIo}

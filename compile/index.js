@@ -138,6 +138,7 @@ module.exports.writeAssets = writeAssets
  * @typedef {Object} _competent.RenderMeta `＠record` Options assigned to the render method. Private.
  * @prop {string} key The component key.
  * @prop {string} id The ID into which to render.
+ * @prop {boolean} plain If the component is plain.
  * @prop {_competent.PlainComponent} instance The instance assigned after first render.
  * @typedef {_competent.PlainComponent} PlainComponent `＠interface`
  * @typedef {Object} _competent.PlainComponent `＠interface`

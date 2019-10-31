@@ -4,8 +4,8 @@
  * @param {_competent.PlainComponent} comp Already rendered plain component.
  */
 module.exports = function start(meta, Comp, comp, el, parent, props, children, preact) {
-  const { render, h, Component } = preact
-  const isPlain = Comp.plain || (/^\\s*class\\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  const { render, h } = preact
+  const isPlain = meta.plain
   if (!comp && isPlain) {
     comp = new Comp(el, parent)
   }

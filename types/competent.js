@@ -1,7 +1,5 @@
 
 /* typal types/render-meta.xml */
-/** @const */
-var _competent = {}
 /**
  * Options assigned to the render method. Private.
  * @record
@@ -17,6 +15,11 @@ _competent.RenderMeta.prototype.key
  * @type {string}
  */
 _competent.RenderMeta.prototype.id
+/**
+ * If the component is plain.
+ * @type {boolean}
+ */
+_competent.RenderMeta.prototype.plain
 /**
  * The instance assigned after first render.
  * @type {_competent.PlainComponent}
@@ -45,6 +48,8 @@ _competent.PlainComponent.prototype.plain
 _competent.PlainComponent.prototype.unrender = function() {}
 
 /* typal types/CompetentComponent.xml */
+/** @const */
+var _competent = {}
 /**
  * A component could have an additional API understood by _Competent_.
  * @extends {preact.Component}

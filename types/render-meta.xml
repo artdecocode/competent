@@ -2,6 +2,7 @@
   <type record name="RenderMeta" desc="Options assigned to the render method. Private.">
     <prop string name="key">The component key.</prop>
     <prop string name="id">The ID into which to render.</prop>
+    <prop boolean name="plain">If the component is plain.</prop>
     <prop type="_competent.PlainComponent" name="instance">
       The instance assigned after first render.
     </prop>

@@ -512,11 +512,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-10-31T02:47:59.589Z competent render npm-package
-2019-10-31T02:47:59.613Z competent render npm-package
-2019-10-31T02:47:59.614Z competent render npm-package
-2019-10-31T02:47:59.615Z competent render hello-world
-2019-10-31T02:47:59.617Z competent render friends
+2019-10-31T03:13:18.654Z competent render npm-package
+2019-10-31T03:13:18.679Z competent render npm-package
+2019-10-31T03:13:18.680Z competent render npm-package
+2019-10-31T03:13:18.680Z competent render hello-world
+2019-10-31T03:13:18.683Z competent render friends
 ```
 
 
@@ -559,7 +559,7 @@ The default export must come first in the array.
  <tr>
   <td rowSpan="3" align="center">io</td>
   <td><em>(boolean | <a href="#type-iooptions" title="Options for the observer.">!IOOptions</a>)</em></td>
-  <td rowSpan="3">-</td>
+  <td rowSpan="3"><code>false</code></td>
  </tr>
  <tr></tr>
  <tr>
@@ -593,7 +593,7 @@ The default export must come first in the array.
  <tr>
   <td rowSpan="3" align="center">includeH</td>
   <td><em>boolean</em></td>
-  <td rowSpan="3">-</td>
+  <td rowSpan="3"><code>false</code></td>
  </tr>
  <tr></tr>
  <tr>
@@ -841,6 +841,19 @@ export function makeIo(options = {}) {
     })
   }, { rootMargin, ...rest })
   return io
+}
+
+export function startPlain(Comp, el, parent, props, children) {
+  const r = () => {
+    const comp = new Comp(el, parent)
+    comp.render({ ...props, children })
+  }
+  if (Comp.load) {
+    Comp.load((err, data) => {
+      if (data) Object.assign(props, data)
+      if (!err) r()
+    }, el, props)
+  } else r()
 }
 
 export function start(Comp, el, parent, props, children, preact) {

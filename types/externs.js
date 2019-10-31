@@ -4,6 +4,8 @@
  */
 
 /* typal types/exported.xml */
+/** @const */
+var _competent = {}
 /**
  * An exported component.
  * @record
@@ -88,8 +90,6 @@ _competent.Props
 _competent.Meta
 
 /* typal types/make-comps.xml */
-/** @const */
-var _competent = {}
 /**
  * The options for make components script.
  * @record
@@ -108,7 +108,7 @@ _competent.MakeCompsConfig
  */
 _competent.MakeCompsConfig.prototype.map
 /**
- * Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
+ * Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`). Default `false`.
  * @type {(boolean|!_competent.IOOptions)|undefined}
  */
 _competent.MakeCompsConfig.prototype.io
@@ -124,7 +124,7 @@ _competent.MakeCompsConfig.prototype.preact
  */
 _competent.MakeCompsConfig.prototype.props
 /**
- * Include `import { h } from 'preact'` on top of the file.
+ * Include `import { h } from 'preact'` on top of the file. Default `false`.
  * @type {boolean|undefined}
  */
 _competent.MakeCompsConfig.prototype.includeH

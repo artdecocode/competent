@@ -10,7 +10,7 @@
       ```
       The default export must come first in the array.
     </prop>
-    <prop name="io" type="boolean|!_competent.IOOptions" opt>
+    <prop name="io" type="boolean|!_competent.IOOptions" default="false">
       Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
     </prop>
     <prop boolean name="preact" default="true">
@@ -20,7 +20,7 @@
     <prop type="!Object<string, *>" name="props" opt>
       Shared properties made available for each component in addition to its own properties.
     </prop>
-    <prop boolean name="includeH" opt>
+    <prop boolean name="includeH" default="false">
       Include `import { h } from 'preact'` on top of the file.
     </prop>
     <prop type="boolean|string" name="externalAssets" opt>

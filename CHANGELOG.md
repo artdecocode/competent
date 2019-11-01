@@ -1,3 +1,9 @@
+## 1 November 2019
+
+### [3.5.0](https://github.com/artdecocode/competent/compare/v3.4.0...v3.5.0)
+
+- [feature] Support unrendering of plain components.
+
 ## 31 October 2019
 
 ### [3.4.0](https://github.com/artdecocode/competent/compare/v3.3.1...v3.4.0)

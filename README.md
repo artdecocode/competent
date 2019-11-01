@@ -24,6 +24,7 @@ yarn add competent
   * [`ExportedComponent`](#type-exportedcomponent)
   * [Assets](#assets)
   * [Intersection Observer](#intersection-observer)
+    * [Unrender](#unrender)
 - [`async writeAssets(path): void`](#async-writeassetspath-string-void)
 - [Known Limitations](#known-limitations)
 - [Who Uses _Competent_](#who-uses-competent)
@@ -158,7 +159,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.11.5</span>
+  <span class="ver">1.11.6</span>
   <p>
     Static Web Site Compiler That Uses Closure Compiler For JS Bundling And Closure Stylesheets For CSS optimisations. Supports JSX Syntax To Write Static Elements And Dynamic Preact Components.
   </p>
@@ -512,11 +513,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-10-31T03:13:18.654Z competent render npm-package
-2019-10-31T03:13:18.679Z competent render npm-package
-2019-10-31T03:13:18.680Z competent render npm-package
-2019-10-31T03:13:18.680Z competent render hello-world
-2019-10-31T03:13:18.683Z competent render friends
+2019-11-01T00:25:48.238Z competent render npm-package
+2019-11-01T00:25:48.266Z competent render npm-package
+2019-11-01T00:25:48.269Z competent render npm-package
+2019-11-01T00:25:48.270Z competent render hello-world
+2019-11-01T00:25:48.272Z competent render friends
 ```
 
 
@@ -604,7 +605,7 @@ The default export must come first in the array.
  <tr>
   <td rowSpan="3" align="center">externalAssets</td>
   <td><em>(boolean | string)</em></td>
-  <td rowSpan="3">-</td>
+  <td rowSpan="3"><code>false</code></td>
  </tr>
  <tr></tr>
  <tr>
@@ -680,21 +681,26 @@ function init(id, key) {
   return { parent, el  }
 }
 
-function start(Comp, el, parent, props, children, preact) {
-  const { render, h, Component } = preact
+function start(meta, Comp, comp, el, parent, props, children, preact) {
+  const { render, h } = preact
+  const isPlain = meta.plain
+  if (!comp && isPlain) {
+    comp = new Comp(el, parent)
+  }
   const r = () => {
-    if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())
-      && !Component.isPrototypeOf(Comp))) {
-      const comp = new Comp(el, parent)
+    if (isPlain) {
       comp.render({ ...props, children })
+      meta.instance = comp
     } else render(h(Comp, props, children), parent, el)
   }
   if (Comp.load) {
     Comp.load((err, data) => {
       if (data) Object.assign(props, data)
       if (!err) r()
+      else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }
 
 /** @type {!Array<!preact.PreactProps>} */
@@ -717,10 +723,15 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
+  const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
+  let comp
 
-  start(Comp, el, parent, props, children, { render, Component, h })
+  comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
 })
 ```
+
+There are _Plain_ and _Preact_ components. By default, the assumption is that there are _Preact_ components in the map passed in options. When `preact` option is set to false, only plain logic is enabled, skipping the _Preact_ imports and externs.
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/5.svg?sanitize=true" width="25">
@@ -787,14 +798,24 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
+  const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
+  let comp
 
   el.render = () => {
-    start(Comp, el, parent, props, children, { render, Component, h })
+    comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
+    return comp
   }
-  el.render.meta = { key, id }
+  el.render.meta = renderMeta
   io.observe(el)
 })
 ```
+
+#### Unrender
+
+When a plain component implements an `unrender` method, _Competent_ will call it when the component is no longer intersecting. This currently does not work for Preact components, or for components that don't provide the `unrender` method.
+
+<img src="docs/appshot.gif" alt="unrender method implementation">
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/7.svg?sanitize=true">
@@ -832,45 +853,75 @@ export function makeIo(options = {}) {
   const { rootMargin = '76px', log = true, ...rest } = options
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
+      /**
+       * @type {_competent.RenderMeta}
+       */
+      const meta = target.render.meta
+      const { key, id, plain } = meta
       if (isIntersecting) {
-        if (log) console.warn('Rendering component %s into the element %s ',
-          target.render.meta.key, target.render.meta.id)
-        io.unobserve(target)
-        target.render()
+        if (log)
+          console.warn('🏗 Rendering%s component %s into the element %s',
+            !plain ? ' Preact' : '', key, id, target)
+        try {
+          const instance = target.render()
+          if (instance && !instance.unrender) io.unobserve(target) // plain
+        } catch (err) {
+          if (log) console.warn(err)
+        }
+      } else if (meta.instance) {
+        if (log)
+          console.warn('💨 Unrendering%s component %s from the element %s',
+            !plain ? ' Preact' : '', key, id, target)
+        meta.instance.unrender()
       }
     })
   }, { rootMargin, ...rest })
   return io
 }
 
-export function startPlain(Comp, el, parent, props, children) {
+/**
+ * @param {_competent.RenderMeta} meta
+ * @param {function(new:_competent.PlainComponent, Element, Element)} Comp
+ */
+export function startPlain(meta, Comp, comp, el, parent, props, children) {
+  if (!comp) comp = new Comp(el, parent)
   const r = () => {
-    const comp = new Comp(el, parent)
     comp.render({ ...props, children })
+    meta.instance = comp
   }
-  if (Comp.load) {
+  if (Comp.load) { // &!comp
     Comp.load((err, data) => {
       if (data) Object.assign(props, data)
       if (!err) r()
+      else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }
 
-export function start(Comp, el, parent, props, children, preact) {
-  const { render, h, Component } = preact
+/**
+ * @param {_competent.RenderMeta} meta
+ */
+export function start(meta, Comp, comp, el, parent, props, children, preact) {
+  const { render, h } = preact
+  const isPlain = meta.plain
+  if (!comp && isPlain) {
+    comp = new Comp(el, parent)
+  }
   const r = () => {
-    if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())
-      && !Component.isPrototypeOf(Comp))) {
-      const comp = new Comp(el, parent)
+    if (isPlain) {
       comp.render({ ...props, children })
+      meta.instance = comp
     } else render(h(Comp, props, children), parent, el)
   }
   if (Comp.load) {
     Comp.load((err, data) => {
       if (data) Object.assign(props, data)
       if (!err) r()
+      else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }
 ```
 

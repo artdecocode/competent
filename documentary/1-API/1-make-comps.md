@@ -9,6 +9,7 @@
 
 <!-- Additional options are accepted. When a map of imports is passed, it allows to import components from the specified locations. -->
 
+There are _Plain_ and _Preact_ components. By default, the assumption is that there are _Preact_ components in the map passed in options. When `preact` option is set to false, only plain logic is enabled, skipping the _Preact_ imports and externs.
 
 %~ width="25"%
 
@@ -24,5 +25,11 @@ Competent can generate code that will utilise the _IntesectionObserver_ browser 
 
 %EXAMPLE: example/make-comps-io, ../src => competent%
 %FORK-js example/make-comps-io%
+
+#### Unrender
+
+When a plain component implements an `unrender` method, _Competent_ will call it when the component is no longer intersecting. This currently does not work for Preact components, or for components that don't provide the `unrender` method.
+
+<img src="docs/appshot.gif" alt="unrender method implementation">
 
 %~%

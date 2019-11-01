@@ -16,43 +16,73 @@ export function makeIo(options = {}) {
   const { rootMargin = '76px', log = true, ...rest } = options
   const io = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
+      /**
+       * @type {_competent.RenderMeta}
+       */
+      const meta = target.render.meta
+      const { key, id, plain } = meta
       if (isIntersecting) {
-        if (log) console.warn('Rendering component %s into the element %s ',
-          target.render.meta.key, target.render.meta.id)
-        io.unobserve(target)
-        target.render()
+        if (log)
+          console.warn('🏗 Rendering%s component %s into the element %s',
+            !plain ? ' Preact' : '', key, id, target)
+        try {
+          const instance = target.render()
+          if (instance && !instance.unrender) io.unobserve(target) // plain
+        } catch (err) {
+          if (log) console.warn(err)
+        }
+      } else if (meta.instance) {
+        if (log)
+          console.warn('💨 Unrendering%s component %s from the element %s',
+            !plain ? ' Preact' : '', key, id, target)
+        meta.instance.unrender()
       }
     })
   }, { rootMargin, ...rest })
   return io
 }
 
-export function startPlain(Comp, el, parent, props, children) {
+/**
+ * @param {_competent.RenderMeta} meta
+ * @param {function(new:_competent.PlainComponent, Element, Element)} Comp
+ */
+export function startPlain(meta, Comp, comp, el, parent, props, children) {
+  if (!comp) comp = new Comp(el, parent)
   const r = () => {
-    const comp = new Comp(el, parent)
     comp.render({ ...props, children })
+    meta.instance = comp
   }
-  if (Comp.load) {
+  if (Comp.load) { // &!comp
     Comp.load((err, data) => {
       if (data) Object.assign(props, data)
       if (!err) r()
+      else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }
 
-export function start(Comp, el, parent, props, children, preact) {
-  const { render, h, Component } = preact
+/**
+ * @param {_competent.RenderMeta} meta
+ */
+export function start(meta, Comp, comp, el, parent, props, children, preact) {
+  const { render, h } = preact
+  const isPlain = meta.plain
+  if (!comp && isPlain) {
+    comp = new Comp(el, parent)
+  }
   const r = () => {
-    if (Comp['plain'] || (/^\\s*class\\s+/.test(Comp.toString())
-      && !Component.isPrototypeOf(Comp))) {
-      const comp = new Comp(el, parent)
+    if (isPlain) {
       comp.render({ ...props, children })
+      meta.instance = comp
     } else render(h(Comp, props, children), parent, el)
   }
   if (Comp.load) {
     Comp.load((err, data) => {
       if (data) Object.assign(props, data)
       if (!err) r()
+      else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }

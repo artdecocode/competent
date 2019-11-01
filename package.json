@@ -1,6 +1,6 @@
 {
   "name": "competent",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.",
   "main": "compile/index.js",
   "module": "src/index.js",
@@ -32,7 +32,11 @@
     "COPYING",
     "build.js"
   ],
-  "externs": ["types/externs.js", "types/competent.js", "types/component.js"],
+  "externs": [
+    "types/externs.js",
+    "types/competent.js",
+    "types/component.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/artdecocode/competent.git"

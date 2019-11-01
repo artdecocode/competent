@@ -1,14 +1,14 @@
 /**
+ * This is assigned to IO target via `[Element].render`.
  * @param {_competent.RenderMeta} meta
+ * @param {function(new:_competent.PlainComponent)} Comp
+ * @param {_competent.PlainComponent} comp Already rendered component.
  */
-module.exports = function startPlain(meta, Comp, el, parent, props, children) {
-  let comp
+module.exports = function startPlain(meta, Comp, comp, el, parent, props, children) {
+  if (!comp) comp = new Comp(el, parent)
   const r = () => {
-    if (!comp) {
-      comp = new Comp(el, parent)
-      meta.instance = comp
-    }
     comp.render({ ...props, children })
+    meta.instance = comp
   }
   if (Comp.load) { // &!comp
     Comp.load((err, data) => {
@@ -17,9 +17,10 @@ module.exports = function startPlain(meta, Comp, el, parent, props, children) {
       else console.warn(err)
     }, el, props)
   } else r()
+  return comp
 }
 
 /**
- * @suppress {nonStandardJsDocs}
  * @typedef {import('../..').RenderMeta} _competent.RenderMeta
+ * @typedef {import('../..').PlainComponent} _competent.PlainComponent
  */

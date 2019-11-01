@@ -35,8 +35,8 @@ function init(id, key) {
 }
 
 function start(meta, Comp, comp, el, parent, props, children, preact) {
-  const { render, h, Component } = preact
-  const isPlain = Comp.plain || (/^\\s*class\\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  const { render, h } = preact
+  const isPlain = meta.plain
   if (!comp && isPlain) {
     comp = new Comp(el, parent)
   }
@@ -64,10 +64,11 @@ function makeIo(options = {}) {
        * @type {_competent.RenderMeta}
        */
       const meta = target.render.meta
-      const { key, id } = meta
+      const { key, id, plain } = meta
       if (isIntersecting) {
         if (log)
-          console.warn('🏗 Rendering component %s into the element %s', key, id, target)
+          console.warn('🏗 Rendering%s component %s into the element %s',
+            !plain ? ' Preact' : '', key, id, target)
         try {
           const instance = target.render()
           if (instance && !instance.unrender) io.unobserve(target) // plain
@@ -76,7 +77,8 @@ function makeIo(options = {}) {
         }
       } else if (meta.instance) {
         if (log)
-          console.warn('💨 Unrendering component %s from the element %s', key, id, target)
+          console.warn('💨 Unrendering%s component %s from the element %s',
+            !plain ? ' Preact' : '', key, id, target)
         meta.instance.unrender()
       }
     })
@@ -94,7 +96,8 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
   let comp
 
   el.render = () => {
@@ -136,7 +139,8 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
   let comp
 
   el.render = () => {

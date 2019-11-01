@@ -55,7 +55,6 @@ function startPlain(meta, Comp, comp, el, parent, props, children) {
   return comp
 }
 
-/** @type {!Array<!preact.PreactProps>} */
 const meta = [{
   key: 'test',
   id: 'id1',
@@ -67,7 +66,8 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  const plain = true
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
   let comp
 
   comp = startPlain(renderMeta, Comp, comp, el, parent, props, children)

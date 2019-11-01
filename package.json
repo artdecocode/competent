@@ -28,10 +28,11 @@
     "src",
     "types/externs.js",
     "types/competent.js",
+    "types/component.js",
     "COPYING",
     "build.js"
   ],
-  "externs": ["types/externs.js", "types/competent.js"],
+  "externs": ["types/externs.js", "types/competent.js", "types/component.js"],
   "repository": {
     "type": "git",
     "url": "git://github.com/artdecocode/competent.git"

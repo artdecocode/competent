@@ -20,6 +20,8 @@
 
 import '@externs/preact' // can't set that in @depack/render's package.json yet
 import '../types/externs'
+import '../types/competent'
+import '../types/component'
 import competent, { makeComponentsScript, writeAssets } from './'
 
 module.exports = {

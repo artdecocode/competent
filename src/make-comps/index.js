@@ -34,10 +34,10 @@ ${j}
  * Page-specific meta object of how to invoke components.
  * @param {!Array<!_competent.ExportedComponent>} components
  */
-const makeJs = (components) => {
+const makeJs = (components, preact) => {
   const s = components.map((c) => makeComponent(c))
-  return `/** @type {!Array<!preact.PreactProps>} */
-const meta = [${s.join(',\n')}]`
+  return `${preact ? '/** @type {!Array<!preact.PreactProps>} */\n' : ''
+  }const meta = [${s.join(',\n')}]`
 }
 
 // todo: test escaped \"prop\": value
@@ -198,7 +198,7 @@ export default function makeComponentsScript(components, opts) {
     if (io) s += makeIo.toString() + '\n\n'
   }
   if (io) s += defineIo(io) + '\n\n'
-  s += makeJs(components)
+  s += makeJs(components, preact)
   s += `
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)

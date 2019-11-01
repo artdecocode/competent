@@ -39,7 +39,8 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const { parent, el } = init(id, key)
   const Comp = __components[key]
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id })
+  const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
+  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
   let comp
 
   comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })

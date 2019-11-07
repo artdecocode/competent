@@ -94,18 +94,22 @@ const meta = [{
   id: 'id1',
 }]
 meta.forEach(({ key, id, props = {}, children = [] }) => {
-  const { parent, el } = init(id, key)
   const Comp = __components[key]
   const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
-  let comp
+  
 
-  el.render = () => {
-    comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
-    return comp
-  }
-  el.render.meta = renderMeta
-  io.observe(el)
+  const ids = id.split(',')
+  ids.forEach((Id) => {
+    const { parent, el } = init(Id, key)
+    const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id: Id, plain })
+    let comp
+    el.render = () => {
+      comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
+      return comp
+    }
+    el.render.meta = renderMeta
+    io.observe(el)
+  })
 })
 
 /**/
@@ -137,18 +141,22 @@ const meta = [{
   id: 'id1',
 }]
 meta.forEach(({ key, id, props = {}, children = [] }) => {
-  const { parent, el } = init(id, key)
   const Comp = __components[key]
   const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
-  let comp
+  
 
-  el.render = () => {
-    comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
-    return comp
-  }
-  el.render.meta = renderMeta
-  io.observe(el)
+  const ids = id.split(',')
+  ids.forEach((Id) => {
+    const { parent, el } = init(Id, key)
+    const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id: Id, plain })
+    let comp
+    el.render = () => {
+      comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
+      return comp
+    }
+    el.render.meta = renderMeta
+    io.observe(el)
+  })
 })
 
 /**/

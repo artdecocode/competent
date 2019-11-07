@@ -56,21 +56,25 @@ function startPlain(meta, Comp, comp, el, parent, props, children) {
 }
 
 const meta = [{
-  key: 'test',
-  id: 'id1',
-},
-{
   key: 'test-component',
   id: 'id2',
+},
+{
+  key: 'test',
+  id: 'id1',
 }]
 meta.forEach(({ key, id, props = {}, children = [] }) => {
-  const { parent, el } = init(id, key)
   const Comp = __components[key]
   const plain = true
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
-  let comp
+  
 
-  comp = startPlain(renderMeta, Comp, comp, el, parent, props, children)
+  const ids = id.split(',')
+  ids.forEach((Id) => {
+    const { parent, el } = init(Id, key)
+    const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id: Id, plain })
+    let comp
+    comp = startPlain(renderMeta, Comp, comp, el, parent, props, children)
+  })
 })
 
 /**/

@@ -1,5 +1,6 @@
 import write from '@wrote/write'
 import { join } from 'path'
+import { createHash } from 'crypto'
 
 const makeProps = (props) => {
   const keys = Object.keys(props)
@@ -30,25 +31,48 @@ ${j}
 }`
 }
 
-/**
- * Page-specific meta object of how to invoke components.
- * @param {!Array<!_competent.ExportedComponent>} components
- */
-const makeJs = (components, preact) => {
+const checkIds = (components) => {
   const ids = components.reduce((acc, { id }) => {
     if (!acc[id]) acc[id] = 0
     acc[id]++
     return acc
   }, {})
   Object.entries(ids).forEach(([key, value]) => {
-    if (value > 1) console.error('ID %s encountered %s times.', key, value)
+    if (value > 1) console.error('[components] ID %s encountered %s times.', key, value)
   })
-  const s = components
-    .sort(({ id: a }, { id: b }) => {
-      if (a > b) return 1
-      if (a < b) return -1
-      return 0
-    }).map((c) => makeComponent(c))
+}
+/**
+ * Page-specific meta object of how to invoke components.
+ * @param {!Array<!_competent.ExportedComponent>} components
+ */
+const makeJs = (components, preact) => {
+  const cs = components.map(({ id, ...comp }) => {
+    const j = JSON.stringify(comp)
+    const hash = createHash('md5').update(j).digest('hex').toString()
+    return { ...comp, id, hash }
+  })
+  checkIds(cs) // just printing...
+  let byHash = cs.reduce((acc, current) => {
+    const { hash } = current
+    if (!(hash in acc)) acc[hash] = []
+    acc[hash].push(current)
+    return acc
+  }, {})
+  byHash = Object.keys(byHash).sort().reduce((acc, key) => {
+    acc[key] = byHash[key]
+    return acc
+  }, {})
+
+  const sorted = Object.values(byHash).map((comps) => {
+    if (comps.length < 2) return comps[0]
+
+    const ids = comps.map(({ id }) => id).sort()
+    const comp = comps[0]
+    comp.id = ids
+    return comp
+  }, [])
+
+  const s = sorted.map((c) => makeComponent(c))
   return `${preact ? '/** @type {!Array<!preact.PreactProps>} */\n' : ''
   }const meta = [${s.join(',\n')}]`
 }
@@ -214,13 +238,17 @@ export default function makeComponentsScript(components, opts) {
   s += makeJs(components, preact)
   s += `
 meta.forEach(({ key, id, props = {}, children = [] }) => {
-  const { parent, el } = init(id, key)
   const Comp = __components[key]
   const plain = ${preact ? 'Comp.plain || (/^\\s*class\\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))' : true}
-  const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id, plain })
-  let comp
-${extendProps ? `  ${extendProps}` : ''}
-  ${ifIo}
+  ${extendProps || ''}
+
+  const ids = id.split(',')
+  ids.forEach((Id) => {
+    const { parent, el } = init(Id, key)
+    const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id: Id, plain })
+    let comp
+  ${ifIo.replace(/^/gm, '  ')}
+  })
 })
 `
   return s
@@ -231,4 +259,8 @@ ${extendProps ? `  ${extendProps}` : ''}
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {import('../..').MakeCompsConfig} _competent.MakeCompsConfig
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../..').ExportedComponent} _competent.ExportedComponent
  */

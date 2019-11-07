@@ -192,7 +192,7 @@ export ${start.toString()}`)
 export default function makeComponentsScript(components, opts) {
   if (typeof opts != 'object') throw new Error('Options are required with at least a map.')
   const { map, io = false,
-    includeH = false, props = {}, preact = true } = opts
+    includeH = false, props = {}, preact = 'preact' } = opts
   let { externalAssets = false } = opts
 
   // if (!assetsPath) throw new Error('Please specify the path where to write lib files.')
@@ -202,7 +202,7 @@ export default function makeComponentsScript(components, opts) {
   const imports = [
     ...(preact ? [
       makeImport([null, 'Component', 'render', ...(includeH ? ['h'] : []),
-      ], 'preact', false)] : []
+      ], preact, false)] : []
     ),
     ...(externalAssets ? [
       makeImport([null,

@@ -4,6 +4,8 @@
  */
 
 /* typal types/exported.xml */
+/** @const */
+var _competent = {}
 /**
  * An exported component.
  * @record
@@ -88,8 +90,6 @@ _competent.Props
 _competent.Meta
 
 /* typal types/make-comps.xml */
-/** @const */
-var _competent = {}
 /**
  * The options for make components script.
  * @record
@@ -114,8 +114,9 @@ _competent.MakeCompsConfig.prototype.map
 _competent.MakeCompsConfig.prototype.io
 /**
  * Whether any of the components are _Preact_ components.
- * Only pass `false` when you know for sure that all components implement `plain` getter. Default `true`.
- * @type {boolean|undefined}
+ * Only pass `false` when you know for sure that all components implement `plain` getter.
+ * A string can be passed to name the package from which to import the `h` pragma (e.g., `@externs/preact`). Default `preact`.
+ * @type {(string|boolean)|undefined}
  */
 _competent.MakeCompsConfig.prototype.preact
 /**

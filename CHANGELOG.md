@@ -1,5 +1,9 @@
 ## 7 November 2019
 
+### [3.6.1](https://github.com/artdecocode/competent/compare/v3.6.0...v3.6.1)
+
+- [feature] Allow to specify _Preact_ package, e.g., `@externs/preact`.
+
 ### [3.6.0](https://github.com/artdecocode/competent/compare/v3.5.0...v3.6.0)
 
 - [feature] Combine components by hash.

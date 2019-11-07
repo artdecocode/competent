@@ -31,8 +31,9 @@ function competent(components, config) {
  * ```
  * The default export must come first in the array.
  * @param {boolean|!_competent.IOOptions} [options.io=false] Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`). Default `false`.
- * @param {boolean} [options.preact=true] Whether any of the components are _Preact_ components.
- * Only pass `false` when you know for sure that all components implement `plain` getter. Default `true`.
+ * @param {string|boolean} [options.preact="preact"] Whether any of the components are _Preact_ components.
+ * Only pass `false` when you know for sure that all components implement `plain` getter.
+ * A string can be passed to name the package from which to import the `h` pragma (e.g., `@externs/preact`). Default `preact`.
  * @param {!Object<string, *>} [options.props] Shared properties made available for each component in addition to its own properties.
  * @param {boolean} [options.includeH=false] Include `import { h } from 'preact'` on top of the file. Default `false`.
  * @param {boolean|string} [options.externalAssets=false] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`. Default `false`.
@@ -121,8 +122,9 @@ module.exports.writeAssets = writeAssets
  * ```
  * The default export must come first in the array.
  * @prop {boolean|!_competent.IOOptions} [io=false] Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`). Default `false`.
- * @prop {boolean} [preact=true] Whether any of the components are _Preact_ components.
- * Only pass `false` when you know for sure that all components implement `plain` getter. Default `true`.
+ * @prop {string|boolean} [preact="preact"] Whether any of the components are _Preact_ components.
+ * Only pass `false` when you know for sure that all components implement `plain` getter.
+ * A string can be passed to name the package from which to import the `h` pragma (e.g., `@externs/preact`). Default `preact`.
  * @prop {!Object<string, *>} [props] Shared properties made available for each component in addition to its own properties.
  * @prop {boolean} [includeH=false] Include `import { h } from 'preact'` on top of the file. Default `false`.
  * @prop {boolean|string} [externalAssets=false] Whether the library functions should be required from a separate file, `./__competent-lib`. Works together with `writeAssets` and is useful when generating more than one script. The relative path can be passed as a string, e.g., `..` will make `../__competent-lib`. Default `false`.

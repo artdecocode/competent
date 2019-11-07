@@ -13,9 +13,10 @@
     <prop name="io" type="boolean|!_competent.IOOptions" default="false">
       Whether to use an _IntersectionObserver_ to render elements. If an object is given, it will be passed to the IO constructor, otherwise the default options are used (`rootMargin: '76px'`).
     </prop>
-    <prop boolean name="preact" default="true">
+    <prop type="string|boolean" name="preact" default="preact">
       Whether any of the components are _Preact_ components.
       Only pass `false` when you know for sure that all components implement `plain` getter.
+      A string can be passed to name the package from which to import the `h` pragma (e.g., `@externs/preact`).
     </prop>
     <prop type="!Object<string, *>" name="props" opt>
       Shared properties made available for each component in addition to its own properties.

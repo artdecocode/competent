@@ -159,7 +159,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.12.3</span>
+  <span class="ver">1.12.4</span>
   <p>
     Static Web Site Compiler That Uses Closure Compiler For JS Bundling And Closure Stylesheets For CSS optimisations. Supports JSX Syntax To Write Static Elements And Dynamic Preact Components.
   </p>
@@ -515,11 +515,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-11-07T04:23:09.919Z competent render npm-package
-2019-11-07T04:23:09.943Z competent render npm-package
-2019-11-07T04:23:09.944Z competent render npm-package
-2019-11-07T04:23:09.945Z competent render hello-world
-2019-11-07T04:23:09.947Z competent render friends
+2019-11-07T05:22:07.102Z competent render npm-package
+2019-11-07T05:22:07.125Z competent render npm-package
+2019-11-07T05:22:07.126Z competent render npm-package
+2019-11-07T05:22:07.127Z competent render hello-world
+2019-11-07T05:22:07.129Z competent render friends
 ```
 
 
@@ -572,14 +572,15 @@ The default export must come first in the array.
  </tr>
  <tr>
   <td rowSpan="3" align="center">preact</td>
-  <td><em>boolean</em></td>
-  <td rowSpan="3"><code>true</code></td>
+  <td><em>(string | boolean)</em></td>
+  <td rowSpan="3"><code>preact</code></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
    Whether any of the components are <em>Preact</em> components.
    Only pass <code>false</code> when you know for sure that all components implement <code>plain</code> getter.
+   A string can be passed to name the package from which to import the <code>h</code> pragma (e.g., <code>@externs/preact</code>).
   </td>
  </tr>
  <tr>

@@ -874,13 +874,13 @@ module.exports = {_competent:(a, b = {}) => {
   if ("object" != typeof b) {
     throw Error("Options are required with at least a map.");
   }
-  const {map:c, io:d = !1, includeH:e = !1, props:f = {}, preact:g = !0} = b;
+  const {map:c, io:d = !1, includeH:e = !1, props:f = {}, preact:g = "preact"} = b;
   ({externalAssets:b = !1} = b);
   if (!c) {
     throw Error("The map of where to import components from is required.");
   }
   !0 === b && (b = ".");
-  var k = [...g ? [sb([null, "Component", "render", ...e ? ["h"] : []], "preact", !1)] : [], ...b ? [sb([null, ...d ? ["makeIo"] : [], "init", g ? "start" : "startPlain"], `${b}/__competent-lib`, !1)] : [], ...tb(a, c)].join("\n");
+  var k = [...g ? [sb([null, "Component", "render", ...e ? ["h"] : []], g, !1)] : [], ...b ? [sb([null, ...d ? ["makeIo"] : [], "init", g ? "start" : "startPlain"], `${b}/__competent-lib`, !1)] : [], ...tb(a, c)].join("\n");
   const n = Object.keys(f).map(v => `props.${v} = ${f[v]}`).join("\n");
   var h = `start${g ? "" : "Plain"}(renderMeta, Comp, comp, el, parent, props, children${g ? ", { render, Component, h }" : ""})`;
   h = d ? `el.render = () => {

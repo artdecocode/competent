@@ -1,3 +1,10 @@
+## 7 November 2019
+
+### [3.6.0](https://github.com/artdecocode/competent/compare/v3.5.0...v3.6.0)
+
+- [feature] Combine components by hash.
+- [fix] Pass the component key and properties to the `getId` method.
+
 ## 1 November 2019
 
 ### [3.5.0](https://github.com/artdecocode/competent/compare/v3.4.0...v3.5.0)

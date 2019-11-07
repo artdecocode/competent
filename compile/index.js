@@ -5,7 +5,7 @@ const { _competent: __competent, _makeComponentsScript, _writeAssets } = require
  * @param {!Object<string, !Function|function(new: preact.Component)>} components Components to extract from HTML and render using _Preact's_ server-side rendering. Can be either a functional stateless component, or a _Preact_ component constructor.
  * @param {!_competent.Config} [config] Options for the program. All functions will be called with the Replaceable instance as their `this` context.
  * @param {boolean} [config.removeOnError=false] If there was an error when rendering the component, controls whether the HTML should be be left on the page. Default `false`.
- * @param {() => string} [config.getId] The function which returns an `id` for the html element.
+ * @param {(key: string, props: !_competent.Props) => string} [config.getId] The function which returns an `id` for the html element.
  * @param {(props: !_competent.Props, meta: !_competent.Meta, componentName: string, position: number) => Object} [config.getProps] The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
  * @param {(key: string, id: string, props: !_competent.Props, children: !Array<string>) => ?} [config.markExported] If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.
  * @param {(componentName: string, htmlProps: !Object<string, string>) => void} [config.onSuccess] The callback at the end of a successful replacement with the component's key.
@@ -59,7 +59,7 @@ module.exports.writeAssets = writeAssets
  * @typedef {_competent.Config} Config `＠record` Options for the program. All functions will be called with the Replaceable instance as their `this` context.
  * @typedef {Object} _competent.Config `＠record` Options for the program. All functions will be called with the Replaceable instance as their `this` context.
  * @prop {boolean} [removeOnError=false] If there was an error when rendering the component, controls whether the HTML should be be left on the page. Default `false`.
- * @prop {() => string} [getId] The function which returns an `id` for the html element.
+ * @prop {(key: string, props: !_competent.Props) => string} [getId] The function which returns an `id` for the html element.
  * @prop {(props: !_competent.Props, meta: !_competent.Meta, componentName: string, position: number) => Object} [getProps] The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
  * @prop {(key: string, id: string, props: !_competent.Props, children: !Array<string>) => ?} [markExported] If the component called the `export` meta method, this function will be called at the end of the replacement rule with its key, root id, properties and children as strings.
  * @prop {(componentName: string, htmlProps: !Object<string, string>) => void} [onSuccess] The callback at the end of a successful replacement with the component's key.

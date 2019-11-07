@@ -95,7 +95,7 @@ const competent = (components, conf = {}) => {
         const hr = Array.isArray(hyperResult) ? hyperResult[0] : hyperResult
         id = hr.attributes.id
         if (!id) {
-          id = getId.call(this)
+          id = getId.call(this, key, overridenProps || htmlProps)
           hr.attributes.id = id
         }
       }

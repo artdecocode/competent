@@ -4,8 +4,6 @@
  */
 
 /* typal types/exported.xml */
-/** @const */
-var _competent = {}
 /**
  * An exported component.
  * @record
@@ -45,9 +43,9 @@ _competent.Config
 _competent.Config.prototype.removeOnError
 /**
  * The function which returns an `id` for the html element.
- * @type {(function(): string)|undefined}
+ * @type {(function(string,!_competent.Props): string)|undefined}
  */
-_competent.Config.prototype.getId = function() {}
+_competent.Config.prototype.getId = function(key, props) {}
 /**
  * The function which takes the parsed properties from HTML and competent's meta methods, and returns the properties object to be passed to the component. By default, returns the properties simply merged with _meta_.
  * @type {(function(!_competent.Props,!_competent.Meta,string,number): Object)|undefined}
@@ -90,6 +88,8 @@ _competent.Props
 _competent.Meta
 
 /* typal types/make-comps.xml */
+/** @const */
+var _competent = {}
 /**
  * The options for make components script.
  * @record

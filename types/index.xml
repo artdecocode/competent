@@ -2,6 +2,8 @@
 
    <type record name="Config" desc="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">
     <fn opt return="string" name="getId">
+      <arg string name="key">Component key.</arg>
+      <arg name="props" type="!_competent.Props">Either HTML props, or properties overriden by `.export` call.</arg>
       The function which returns an `id` for the html element.
     </fn>
     <fn opt name="getProps" return="Object">

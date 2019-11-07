@@ -80,12 +80,12 @@ function ea(a) {
     }
   }).filter(Boolean), A:k, l:f};
 };
-const K = [], ha = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/, ia = /^(a|abbr|acronym|audio|b|bdi|bdo|big|br|button|canvas|cite|code|data|datalist|del|dfn|em|embed|i|iframe|img|input|ins|kbd|label|map|mark|meter|noscript|object|output|picture|progress|q|ruby|s|samp|slot|small|span|strong|sub|sup|svg|template|textarea|time|u|tt|var|video|wbr)$/, ja = (a, b = {}) => {
+const L = [], ha = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/, ia = /^(a|abbr|acronym|audio|b|bdi|bdo|big|br|button|canvas|cite|code|data|datalist|del|dfn|em|embed|i|iframe|img|input|ins|kbd|label|map|mark|meter|noscript|object|output|picture|progress|q|ruby|s|samp|slot|small|span|strong|sub|sup|svg|template|textarea|time|u|tt|var|video|wbr)$/, ja = (a, b = {}) => {
   const {addDoctype:c, pretty:d} = b;
-  a = L(a, b, {});
+  a = M(a, b, {});
   return c ? `<!doctype html>${d ? "\n" : ""}${a}` : a;
 };
-function L(a, b = {}, c = {}, d = !1, e = !1, g) {
+function M(a, b = {}, c = {}, d = !1, e = !1, g) {
   if (null == a || "boolean" == typeof a) {
     return "";
   }
@@ -100,7 +100,7 @@ function L(a, b = {}, c = {}, d = !1, e = !1, g) {
   }
   if ("function" == typeof l) {
     if (!k || !d && n) {
-      return x = ea(a), l.prototype && "function" == typeof l.prototype.render ? (a = new l(x, c), a._disable = a.__x = !0, a.props = x, a.context = c, l.getDerivedStateFromProps ? a.state = {...a.state, ...l.getDerivedStateFromProps(a.props, a.state)} : a.componentWillMount && a.componentWillMount(), x = a.render(a.props, a.state, a.context), a.getChildContext && (c = {...c, ...a.getChildContext()})) : x = l(x, c), L(x, b, c, h, e, g);
+      return x = ea(a), l.prototype && "function" == typeof l.prototype.render ? (a = new l(x, c), a._disable = a.__x = !0, a.props = x, a.context = c, l.getDerivedStateFromProps ? a.state = {...a.state, ...l.getDerivedStateFromProps(a.props, a.state)} : a.componentWillMount && a.componentWillMount(), x = a.render(a.props, a.state, a.context), a.getChildContext && (c = {...c, ...a.getChildContext()})) : x = l(x, c), M(x, b, c, h, e, g);
     }
     l = l.displayName || l !== Function && l.name || ka(l);
   }
@@ -134,7 +134,7 @@ function L(a, b = {}, c = {}, d = !1, e = !1, g) {
       const F = [];
       G = a.children.map((q, w) => {
         if (null != q && !1 !== q) {
-          var y = L(q, b, c, !0, "svg" == l ? !0 : "foreignObject" == l ? !1 : e, g);
+          var y = M(q, b, c, !0, "svg" == l ? !0 : "foreignObject" == l ? !1 : e, g);
           if (y) {
             f && y.length + la(p) > D && (B = !0);
             var r = y.replace(new RegExp(`</${q.nodeName}>$`), "");
@@ -149,13 +149,13 @@ function L(a, b = {}, c = {}, d = !1, e = !1, g) {
         if (y && !r) {
           r = /[^<]*?(\s)/y;
           var E;
-          let O = !0, P;
+          let P = !0, J;
           for (; null !== (E = r.exec(w));) {
-            const [J] = E;
-            [, P] = E;
-            r.lastIndex + J.length - 1 > D - (O ? y : 0) && (E = w.slice(0, r.lastIndex - 1), w = w.slice(r.lastIndex), O ? (q.push(E), O = !1) : q.push("\n" + z + `${E}`.replace(/(\n+)/g, "$1" + (z || "\t"))), r.lastIndex = 0);
+            const [K] = E;
+            [, J] = E;
+            r.lastIndex + K.length - 1 > D - (P ? y : 0) && (E = w.slice(0, r.lastIndex - 1), w = w.slice(r.lastIndex), P ? (q.push(E), P = !1) : q.push("\n" + z + `${E}`.replace(/(\n+)/g, "$1" + (z || "\t"))), r.lastIndex = 0);
           }
-          P && q.push(P);
+          J && q.push(J);
           q.push(w);
         } else {
           q.push("\n" + z + `${w}`.replace(/(\n+)/g, "$1" + (z || "\t")));
@@ -179,13 +179,13 @@ function ka(a) {
   var b = (Function.prototype.toString.call(a).match(/^\s*function\s+([^( ]+)/) || "")[1];
   if (!b) {
     b = -1;
-    for (let c = K.length; c--;) {
-      if (K[c] === a) {
+    for (let c = L.length; c--;) {
+      if (L[c] === a) {
         b = c;
         break;
       }
     }
-    0 > b && (b = K.push(a) - 1);
+    0 > b && (b = L.push(a) - 1);
     b = `UnnamedComponent${b}`;
   }
   return b;
@@ -771,15 +771,15 @@ module.exports = {_competent:(a, b = {}) => {
       D = [G];
       let F = !1, q = !0, w = !1;
       const y = {pretty:void 0, lineLength:void 0};
-      let r, E, O, P;
-      const J = e.call(this, {...B, children:D}, {export(t = !0, A) {
+      let r, E, P, J;
+      const K = e.call(this, {...B, children:D}, {export(t = !0, A) {
         F = t;
-        A && (P = Object.entries(A).reduce((M, [N, Ba]) => {
+        A && (J = Object.entries(A).reduce((N, [O, Ba]) => {
           if (void 0 === Ba) {
-            return M;
+            return N;
           }
-          M[N] = Ba;
-          return M;
+          N[O] = Ba;
+          return N;
         }, {}));
       }, setPretty(t, A) {
         y.pretty = t;
@@ -790,39 +790,39 @@ module.exports = {_competent:(a, b = {}) => {
       }, setChildContext(t) {
         E = t;
       }, removeLine(t = !0) {
-        O = t;
+        P = t;
       }, skipRender() {
         throw T;
       }}, l, I, x);
       let R;
       try {
-        const t = z.call(this, J);
+        const t = z.call(this, K);
         R = t instanceof Promise ? await t : t;
       } catch (t) {
         if (!t.message.startsWith("Class constructor")) {
           throw t;
         }
-        const A = new z, M = A.serverRender ? A.serverRender(J) : A.render(J);
-        R = M instanceof Promise ? await M : M;
+        const A = new z, N = A.serverRender ? A.serverRender(K) : A.render(K);
+        R = N instanceof Promise ? await N : N;
         if (A.fileRender) {
-          let N = await A.render(J);
-          N = tb(N, y);
-          q && (N = await vb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:w, re:v, replacement:c, m:E, body:N}));
-          await A.fileRender(N, J);
+          let O = await A.render(K);
+          O = tb(O, y);
+          q && (O = await vb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:w, re:v, replacement:c, m:E, body:O}));
+          await A.fileRender(O, K);
         }
       }
       if (F) {
         const t = Array.isArray(R) ? R[0] : R;
         r = t.attributes.id;
-        r || (r = d.call(this), t.attributes.id = r);
+        r || (r = d.call(this, l, J || B), t.attributes.id = r);
       }
       let S = tb(R, y);
-      if (!S && O) {
+      if (!S && P) {
         return f && f.call(this, l, B), "";
       }
       S = (C || "") + S.replace(/^/gm, Y);
       q && (S = await vb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:l, s:w, re:v, replacement:c, m:E, body:S, position:I}));
-      F && g.call(this, l, r, P || B, D);
+      F && g.call(this, l, r, J || B, D);
       f && f.call(this, l, B);
       return S;
     } catch (z) {

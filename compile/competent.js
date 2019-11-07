@@ -682,7 +682,15 @@ const kb = a => {
 ${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
 }`;
 }, mb = (a, b) => {
-  a = a.map(c => lb(c));
+  const c = a.reduce((d, {id:e}) => {
+    d[e] || (d[e] = 0);
+    d[e]++;
+    return d;
+  }, {});
+  Object.entries(c).forEach(([d, e]) => {
+    1 < e && console.error("ID %s encountered %s times.", d, e);
+  });
+  a = a.sort(({id:d, id:e}) => d > e ? 1 : d < e ? -1 : 0).map(d => lb(d));
   return `${b ? "/** @type {!Array<!preact.PreactProps>} */\n" : ""}const meta = [${a.join(",\n")}]`;
 }, nb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", ob = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), pb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${ob(b)}`).filter((b, c, d) => d.indexOf(b) == c).join(",\n  ")},\n}`, rb = (a, b) => {
   const c = {};

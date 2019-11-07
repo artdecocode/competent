@@ -159,7 +159,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.11.6</span>
+  <span class="ver">1.12.3</span>
   <p>
     Static Web Site Compiler That Uses Closure Compiler For JS Bundling And Closure Stylesheets For CSS optimisations. Supports JSX Syntax To Write Static Elements And Dynamic Preact Components.
   </p>
@@ -219,12 +219,14 @@ __<a name="type-config">`Config`</a>__: Options for the program. All functions w
  </tr>
  <tr>
   <td rowSpan="3" align="center">getId</td>
-  <td colSpan="2"><em>() => string</em></td>
+  <td colSpan="2"><em>(key: string, props: !Props) => string</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td colSpan="2">
-   The function which returns an <code>id</code> for the html element.
+   The function which returns an <code>id</code> for the html element.<br/>
+   <kbd><strong>key*</strong></kbd> <em><code>string</code></em>: Component key.<br/>
+   <kbd><strong>props*</strong></kbd> <em><code>!Props</code></em>: Either HTML props, or properties overriden by <code>.export</code> call.
   </td>
  </tr>
  <tr>
@@ -513,11 +515,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-11-01T00:25:48.238Z competent render npm-package
-2019-11-01T00:25:48.266Z competent render npm-package
-2019-11-01T00:25:48.269Z competent render npm-package
-2019-11-01T00:25:48.270Z competent render hello-world
-2019-11-01T00:25:48.272Z competent render friends
+2019-11-07T03:45:10.335Z competent render npm-package
+2019-11-07T03:45:10.360Z competent render npm-package
+2019-11-07T03:45:10.362Z competent render npm-package
+2019-11-07T03:45:10.362Z competent render hello-world
+2019-11-07T03:45:10.365Z competent render friends
 ```
 
 

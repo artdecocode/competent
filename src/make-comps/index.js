@@ -35,7 +35,20 @@ ${j}
  * @param {!Array<!_competent.ExportedComponent>} components
  */
 const makeJs = (components, preact) => {
-  const s = components.map((c) => makeComponent(c))
+  const ids = components.reduce((acc, { id }) => {
+    if (!acc[id]) acc[id] = 0
+    acc[id]++
+    return acc
+  }, {})
+  Object.entries(ids).forEach(([key, value]) => {
+    if (value > 1) console.error('ID %s encountered %s times.', key, value)
+  })
+  const s = components
+    .sort(({ id: a }, { id: b }) => {
+      if (a > b) return 1
+      if (a < b) return -1
+      return 0
+    }).map((c) => makeComponent(c))
   return `${preact ? '/** @type {!Array<!preact.PreactProps>} */\n' : ''
   }const meta = [${s.join(',\n')}]`
 }

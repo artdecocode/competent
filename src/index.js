@@ -46,14 +46,14 @@ const competent = (components, conf = {}) => {
         lineLength: undefined,
       }
       let id
-      let childContext, removeLine, overridenProps
+      let childContext, removeLine, overriddenProps
       const props = getProps.call(this, {
         ...htmlProps,
         children,
       }, /** @type {!_competent.Meta} */ ({
-        export(value = true, newProps) {
+        export(value = true, newProps = null) {
           exported = value
-          if (newProps) overridenProps = Object.entries(newProps).reduce((ac, [k, val]) => {
+          if (newProps) overriddenProps = Object.entries(newProps).reduce((ac, [k, val]) => {
             if (val === undefined) return ac
             ac[k] = val
             return ac
@@ -95,7 +95,7 @@ const competent = (components, conf = {}) => {
         const hr = Array.isArray(hyperResult) ? hyperResult[0] : hyperResult
         id = hr.attributes.id
         if (!id) {
-          id = getId.call(this, key, overridenProps || htmlProps)
+          id = getId.call(this, key, overriddenProps || htmlProps)
           hr.attributes.id = id
         }
       }
@@ -117,7 +117,7 @@ const competent = (components, conf = {}) => {
         })
       }
       if (exported)
-        markExported.call(this, key, id, overridenProps || htmlProps, children)
+        markExported.call(this, key, id, overriddenProps || htmlProps, children)
       if (onSuccess) onSuccess.call(this, key, htmlProps)
       return r
     } catch (err) {

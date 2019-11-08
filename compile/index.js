@@ -71,7 +71,7 @@ module.exports.writeAssets = writeAssets
  * @typedef {Object<string, *>} _competent.Props The properties extracted from HTML and to be passed to the component for rendering.
  * @typedef {_competent.Meta} Meta Service methods for `competent`.
  * @typedef {Object} _competent.Meta Service methods for `competent`.
- * @prop {(shouldExport?: boolean, props?: !Object) => void} export When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.
+ * @prop {(shouldExport?: boolean, props?: Object) => void} export When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.
  * @prop {() => void} skipRender If this method is called, _Competent_ will return the original match without rendering the component into static HTML. This should be used together with `export` to provide run-time dynamic browser rendering, without static HTML code generation.
  * @prop {(isPretty: boolean, lineLength?: number) => void} setPretty The function which controls whether to enable pretty printing, and the line width.
  * @prop {(shouldRemove?: boolean) => void} removeLine If the component rendered a falsy value (e.g., `null`, `''`), and the `removeLine` was called, _Competent_ will remove `\n___＜component＞`. By default, this is switched off.

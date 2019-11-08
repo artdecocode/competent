@@ -114,6 +114,7 @@ const makeNamedMap = (components) => {
   const c = components
     .map(({ key }) => `'${key}': ${cc(key)}`)
     .filter((e, i, a) => a.indexOf(e) == i)
+    .sort()
     .join(',\n  ')
   const map = `const __components = {\n  ${c},\n}`
   return map
@@ -140,7 +141,7 @@ const makeImports = (components, map) => {
   })
   const res = Object.entries(locs).map(([key, val]) => {
     return makeImport(val, key)
-  })
+  }).sort()
   return res
 }
 

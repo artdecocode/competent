@@ -56,8 +56,8 @@
 
   <type name="Meta" desc="Service methods for `competent`.">
     <fn name="export" void>
-      <arg boolean name="shouldExport" opt>Whether to export the component.</arg>
-      <arg type="!Object" name="props" opt>Properties with which to export. If not passed, the same HTML props are used, otherwise overrides them. Undefined values will be removed.</arg>
+      <arg boolean name="shouldExport" opt>Whether to export the component. Default `true`.</arg>
+      <arg type="Object" name="props" opt>Properties with which to export. If not passed, the same HTML props are used, otherwise overrides them. Undefined values will be removed.</arg>
       When called, marks the component for export and adds an `id` if the root element of the hyper result did not have it. Individual instances can pass the `false` value if they don't want to get exported.
     </fn>
     <fn name="skipRender" void>

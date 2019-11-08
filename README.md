@@ -159,7 +159,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.12.4</span>
+  <span class="ver">1.12.6</span>
   <p>
     Static Web Site Compiler That Uses Closure Compiler For JS Bundling And Closure Stylesheets For CSS optimisations. Supports JSX Syntax To Write Static Elements And Dynamic Preact Components.
   </p>
@@ -319,14 +319,14 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center"><strong>export*</strong></td>
-  <td><em>(shouldExport?: boolean, props?: !Object) => void</em></td>
+  <td><em>(shouldExport?: boolean, props?: Object) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
    When called, marks the component for export and adds an <code>id</code> if the root element of the hyper result did not have it. Individual instances can pass the <code>false</code> value if they don't want to get exported.<br/>
-   <kbd>shouldExport</kbd> <em><code>boolean</code></em> (optional): Whether to export the component.<br/>
-   <kbd>props</kbd> <em><code>!Object</code></em> (optional): Properties with which to export. If not passed, the same HTML props are used, otherwise overrides them. Undefined values will be removed.
+   <kbd>shouldExport</kbd> <em><code>boolean</code></em> (optional): Whether to export the component. Default <code>true</code>.<br/>
+   <kbd>props</kbd> <em><code>Object</code></em> (optional): Properties with which to export. If not passed, the same HTML props are used, otherwise overrides them. Undefined values will be removed.
   </td>
  </tr>
  <tr>
@@ -515,11 +515,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-11-07T05:22:07.102Z competent render npm-package
-2019-11-07T05:22:07.125Z competent render npm-package
-2019-11-07T05:22:07.126Z competent render npm-package
-2019-11-07T05:22:07.127Z competent render hello-world
-2019-11-07T05:22:07.129Z competent render friends
+2019-11-08T03:16:16.078Z competent render npm-package
+2019-11-08T03:16:16.103Z competent render npm-package
+2019-11-08T03:16:16.105Z competent render npm-package
+2019-11-08T03:16:16.105Z competent render hello-world
+2019-11-08T03:16:16.107Z competent render friends
 ```
 
 

@@ -719,7 +719,7 @@ ${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
     return d;
   }, []).map(d => mb(d));
   return `${b ? "/** @type {!Array<!preact.PreactProps>} */\n" : ""}const meta = [${a.join(",\n")}]`;
-}, pb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", qb = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), rb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${qb(b)}`).filter((b, c, d) => d.indexOf(b) == c).join(",\n  ")},\n}`, tb = (a, b) => {
+}, pb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", qb = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), rb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${qb(b)}`).filter((b, c, d) => d.indexOf(b) == c).sort().join(",\n  ")},\n}`, tb = (a, b) => {
   const c = {};
   a.reduce((d, {key:e}) => {
     if (d.includes(e)) {
@@ -733,7 +733,7 @@ ${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
       0 > f || (c[e] || (c[e] = []), c[e][f] = d);
     });
   });
-  return Object.entries(c).map(([d, e]) => sb(e, d));
+  return Object.entries(c).map(([d, e]) => sb(e, d)).sort();
 }, sb = (a, b, c = !0) => {
   let [d, ...e] = a;
   e = e.filter(Boolean);
@@ -807,7 +807,7 @@ module.exports = {_competent:(a, b = {}) => {
       let F = !1, q = !0, w = !1;
       const y = {pretty:void 0, lineLength:void 0};
       let r, E, P, J;
-      const K = e.call(this, {...B, children:D}, {export(t = !0, A) {
+      const K = e.call(this, {...B, children:D}, {export(t = !0, A = null) {
         F = t;
         A && (J = Object.entries(A).reduce((N, [O, Ba]) => {
           if (void 0 === Ba) {

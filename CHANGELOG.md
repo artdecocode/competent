@@ -1,3 +1,9 @@
+## 8 November 2019
+
+### [3.6.2](https://github.com/artdecocode/competent/compare/v3.6.1...v3.6.2)
+
+- [fix] Sort the order of imports for consistency.
+
 ## 7 November 2019
 
 ### [3.6.1](https://github.com/artdecocode/competent/compare/v3.6.0...v3.6.1)

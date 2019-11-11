@@ -262,20 +262,20 @@ const ya = /\s+at.*(?:\(|\s)(.*)\)?/, za = /^(?:(?:(?:node|(?:internal\/[\w/]*|.
     return f.includes(".app/Contents/Resources/electron.asar") || f.includes(".app/Contents/Resources/default_app.asar") ? !1 : !e.test(f);
   }).filter(f => f.trim()).map(f => b ? f.replace(ya, (g, k) => g.replace(k, k.replace(Aa, "~"))) : f).join("\n");
 };
-const Ca = (a, b = 0, c = !1) => {
+const Ba = (a, b = 0, c = !1) => {
   if (0 === b && !c) {
     return a;
   }
   a = a.split("\n", c ? b + 1 : void 0);
   return c ? a[a.length - 1] : a.slice(b).join("\n");
-}, Da = (a, b = !1) => Ca(a, 2 + (b ? 1 : 0)), Ea = a => {
+}, Da = (a, b = !1) => Ba(a, 2 + (b ? 1 : 0)), Ea = a => {
   ({callee:{caller:a}} = a);
   return a;
 };
 function Fa(a, b, c = !1) {
   return function(d) {
     var e = Ea(arguments), {stack:f} = Error();
-    const g = Ca(f, 2, !0), k = (f = d instanceof Error) ? d.message : d;
+    const g = Ba(f, 2, !0), k = (f = d instanceof Error) ? d.message : d;
     e = [`Error: ${k}`, ...null !== e && a === e || c ? [b] : [g, b]].join("\n");
     e = Q(e);
     return Object.assign(f ? d : Error(), {message:k, stack:e});
@@ -653,9 +653,15 @@ export ${gb.toString()}
 export ${hb.toString()}
 
 /**
+ * This is the class to provide render and unrender methods via standard API
+ * common for Preact and Plain components.
+ */
+${ib.toString()}
+
+/**
  * @param {_competent.RenderMeta} meta
  */
-export ${ib.toString()}`;
+export ${jb.toString()}`;
   if (!a) {
     throw Error("No path is given.");
   }
@@ -667,23 +673,23 @@ export ${ib.toString()}`;
     }).on("close", e).end(b);
   });
 }
-;const {join:jb} = path;
-const {createHash:kb} = _crypto;
-const lb = a => {
+;const {join:kb} = path;
+const {createHash:lb} = _crypto;
+const mb = a => {
   const b = Object.keys(a);
   return `{
   ${b.map(c => `${/-/.test(c) ? `'${c}'` : c}: '${`${a[c]}`.replace(/'/g, "\\'")}'`).join(",\n  ")}${b.length ? "," : ""}
 }`;
-}, mb = a => {
+}, nb = a => {
   const b = [];
   b.push(`key: '${a.key}'`);
   b.push(`id: '${a.id}'`);
-  Object.keys(a.props).length && b.push(`props: ${lb(a.props)}`);
+  Object.keys(a.props).length && b.push(`props: ${mb(a.props)}`);
   a.children.filter(Boolean).length && b.push(`children: ${JSON.stringify(a.children)}`);
   return `{
 ${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
 }`;
-}, nb = a => {
+}, ob = a => {
   a = a.reduce((b, {id:c}) => {
     b[c] || (b[c] = 0);
     b[c]++;
@@ -692,13 +698,13 @@ ${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
   Object.entries(a).forEach(([b, c]) => {
     1 < c && console.error("[components] ID %s encountered %s times.", b, c);
   });
-}, ob = (a, b) => {
+}, pb = (a, b) => {
   a = a.map(({id:d, ...e}) => {
     var f = JSON.stringify(e);
-    f = kb("md5").update(f).digest("hex").toString();
+    f = lb("md5").update(f).digest("hex").toString();
     return {...e, id:d, hash:f};
   });
-  nb(a);
+  ob(a);
   let c = a.reduce((d, e) => {
     const {hash:f} = e;
     f in d || (d[f] = []);
@@ -717,9 +723,9 @@ ${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
     d = d[0];
     d.id = e;
     return d;
-  }, []).map(d => mb(d));
+  }, []).map(d => nb(d));
   return `${b ? "/** @type {!Array<!preact.PreactProps>} */\n" : ""}const meta = [${a.join(",\n")}]`;
-}, pb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", qb = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), rb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${qb(b)}`).filter((b, c, d) => d.indexOf(b) == c).sort().join(",\n  ")},\n}`, tb = (a, b) => {
+}, qb = (a = !0) => a ? `const io = makeIo(${"boolean" != typeof a ? JSON.stringify(a).replace(/([^\\])"([^"]+?)":/g, (b, c, d) => `${"," == c ? ", " : c}${d}: `).replace(/^{/, "{ ").replace(/}$/, " }") : ""})` : "", rb = a => a.replace(/(?:^|-)(.)/g, (b, c) => c.toUpperCase()), sb = a => `const __components = {\n  ${a.map(({key:b}) => `'${b}': ${rb(b)}`).filter((b, c, d) => d.indexOf(b) == c).sort().join(",\n  ")},\n}`, ub = (a, b) => {
   const c = {};
   a.reduce((d, {key:e}) => {
     if (d.includes(e)) {
@@ -733,17 +739,17 @@ ${b.map(c => c.replace(/^/mg, "  ")).join(",\n") + ","}
       0 > f || (c[e] || (c[e] = []), c[e][f] = d);
     });
   });
-  return Object.entries(c).map(([d, e]) => sb(e, d)).sort();
-}, sb = (a, b, c = !0) => {
+  return Object.entries(c).map(([d, e]) => tb(e, d)).sort();
+}, tb = (a, b, c = !0) => {
   let [d, ...e] = a;
   e = e.filter(Boolean);
   a = "import ";
-  d && (a += c ? qb(d) : d);
-  e.length && (a = a + (d ? ", " : "") + `{ ${(c ? e.map(qb) : e).join(", ")} }`);
+  d && (a += c ? rb(d) : d);
+  e.length && (a = a + (d ? ", " : "") + `{ ${(c ? e.map(rb) : e).join(", ")} }`);
   return a + ` from '${b}'`;
-}, fb = require("./init"), gb = require("./make-io"), ib = require("./start"), hb = require("./start-plain");
-var ub;
-ub = function() {
+}, fb = require("./init"), gb = require("./make-io"), jb = require("./start"), ib = require("./preact-proxy"), hb = require("./start-plain");
+var vb;
+vb = function() {
   const a = new cb(Xa);
   return function(b) {
     const c = $a(a);
@@ -763,17 +769,17 @@ ub = function() {
     return c;
   };
 }()("competent");
-const vb = (a, b) => {
+const wb = (a, b) => {
   let c;
   "string" == typeof a ? c = a : Array.isArray(a) ? c = a.map(d => "string" == typeof d ? d : ja(d, b)).join("\n") : c = ja(a, b);
   return c;
-}, xb = async({getReplacements:a, key:b, s:c, re:d, replacement:e, getContext:f, m:g, position:k, body:n}) => {
+}, yb = async({getReplacements:a, key:b, s:c, re:d, replacement:e, getContext:f, m:g, position:k, body:n}) => {
   let h;
-  a ? h = a(b, c) : c ? h = {re:wb(d, b), replacement:e} : h = {re:d, replacement:e};
+  a ? h = a(b, c) : c ? h = {re:xb(d, b), replacement:e} : h = {re:d, replacement:e};
   a = new Ma(h);
   f && (b = f(g, {position:k, key:b}), Object.assign(a, b));
   return await Ka(a, n);
-}, wb = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`), (c, d, e) => "|" == d && "|" == e ? "|" : ")" == e ? e : "(" == d ? d : ""), a.flags);
+}, xb = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`), (c, d, e) => "|" == d && "|" == e ? "|" : ")" == e ? e : "(" == d ? d : ""), a.flags);
 /*
 
  Competent: Render tags HTML as JSX components.
@@ -795,7 +801,7 @@ const vb = (a, b) => {
 */
 module.exports = {_competent:(a, b = {}) => {
   async function c(u, C, Y, D, l, I, x) {
-    ub("render %s", l);
+    vb("render %s", l);
     const T = Error("Skip render");
     try {
       const z = a[l], p = x.slice(0, I), H = x.slice(I + u.length);
@@ -809,11 +815,11 @@ module.exports = {_competent:(a, b = {}) => {
       let r, E, P, J;
       const K = e.call(this, {...B, children:D}, {export(t = !0, A = null) {
         F = t;
-        A && (J = Object.entries(A).reduce((N, [O, Ba]) => {
-          if (void 0 === Ba) {
+        A && (J = Object.entries(A).reduce((N, [O, Ca]) => {
+          if (void 0 === Ca) {
             return N;
           }
-          N[O] = Ba;
+          N[O] = Ca;
           return N;
         }, {}));
       }, setPretty(t, A) {
@@ -841,8 +847,8 @@ module.exports = {_competent:(a, b = {}) => {
         R = N instanceof Promise ? await N : N;
         if (A.fileRender) {
           let O = await A.render(K);
-          O = vb(O, y);
-          q && (O = await xb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:w, re:v, replacement:c, m:E, body:O}));
+          O = wb(O, y);
+          q && (O = await yb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:w, re:v, replacement:c, m:E, body:O}));
           await A.fileRender(O, K);
         }
       }
@@ -851,12 +857,12 @@ module.exports = {_competent:(a, b = {}) => {
         r = t.attributes.id;
         r || (r = d.call(this, l, J || B), t.attributes.id = r);
       }
-      let S = vb(R, y);
+      let S = wb(R, y);
       if (!S && P) {
         return g && g.call(this, l, B), "";
       }
       S = (C || "") + S.replace(/^/gm, Y);
-      q && (S = await xb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:l, s:w, re:v, replacement:c, m:E, body:S, position:I}));
+      q && (S = await yb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:l, s:w, re:v, replacement:c, m:E, body:S, position:I}));
       F && f.call(this, l, r, J || B, D);
       g && g.call(this, l, B);
       return S;
@@ -880,7 +886,7 @@ module.exports = {_competent:(a, b = {}) => {
     throw Error("The map of where to import components from is required.");
   }
   !0 === b && (b = ".");
-  var k = [...g ? [sb([null, "Component", "render", ...e ? ["h"] : []], g, !1)] : [], ...b ? [sb([null, ...d ? ["makeIo"] : [], "init", g ? "start" : "startPlain"], `${b}/__competent-lib`, !1)] : [], ...tb(a, c)].join("\n");
+  var k = [...g ? [tb([null, "Component", "render", ...e ? ["h"] : []], g, !1)] : [], ...b ? [tb([null, ...d ? ["makeIo"] : [], "init", g ? "start" : "startPlain"], `${b}/__competent-lib`, !1)] : [], ...ub(a, c)].join("\n");
   const n = Object.keys(f).map(v => `props.${v} = ${f[v]}`).join("\n");
   var h = `start${g ? "" : "Plain"}(renderMeta, Comp, comp, el, parent, props, children${g ? ", { render, Component, h }" : ""})`;
   h = d ? `el.render = () => {
@@ -890,11 +896,11 @@ module.exports = {_competent:(a, b = {}) => {
   el.render.meta = renderMeta
   io.observe(el)` : `comp = ${h}`;
   k += "\n\n";
-  const m = rb(a);
+  const m = sb(a);
   k += m + "\n\n";
-  b || (k += fb.toString() + "\n\n", k += (g ? ib : hb).toString() + "\n\n", d && (k += gb.toString() + "\n\n"));
-  d && (k += pb(d) + "\n\n");
-  k += ob(a, g);
+  b || (k += fb.toString() + "\n\n", g && (k += ib.toString() + "\n\n"), k += (g ? jb : hb).toString() + "\n\n", d && (k += gb.toString() + "\n\n"));
+  d && (k += qb(d) + "\n\n");
+  k += pb(a, g);
   return k += `
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
@@ -911,7 +917,7 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
 })
 `;
 }, _writeAssets:async a => {
-  await eb(jb(a, "./__competent-lib.js"));
+  await eb(kb(a, "./__competent-lib.js"));
 }};
 
 

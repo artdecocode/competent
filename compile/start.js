@@ -1,19 +1,22 @@
+const PreactProxy = require('./preact-proxy')
+
 /**
  * @param {_competent.RenderMeta} meta
  * @param {function(new:_competent.PlainComponent)|function(new:_competent.CompetentComponent)} Comp
  * @param {_competent.PlainComponent} comp Already rendered plain component.
+ * @param {Element} el The element in which to render.
+ * @param {Element} parent The parent element for rendering.
  */
 module.exports = function start(meta, Comp, comp, el, parent, props, children, preact) {
-  const { render, h } = preact
   const isPlain = meta.plain
   if (!comp && isPlain) {
     comp = new Comp(el, parent)
+  } else if (!comp) {
+    comp = new PreactProxy(el, parent, Comp, preact)
   }
   const r = () => {
-    if (isPlain) {
-      comp.render({ ...props, children })
-      meta.instance = comp
-    } else render(h(Comp, props, children), parent, el)
+    comp.render({ ...props, children })
+    meta.instance = comp
   }
   if (Comp.load) {
     Comp.load((err, data) => {

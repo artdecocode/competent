@@ -166,6 +166,7 @@ const makeImport = (values, location, components = true) => {
 const init = require(/*depack*/'./init')
 const makeIo = require(/*depack*/'./make-io')
 const start = require(/*depack*/'./start')
+const preactProxy = require(/*depack*/'./preact-proxy')
 const startPlain = require(/*depack*/'./start-plain')
 
 export const writeAssets = async (path) => {
@@ -178,6 +179,12 @@ export ${makeIo.toString()}
  * @param {function(new:_competent.PlainComponent, Element, Element)} Comp
  */
 export ${startPlain.toString()}
+
+/**
+ * This is the class to provide render and unrender methods via standard API
+ * common for Preact and Plain components.
+ */
+${preactProxy.toString()}
 
 /**
  * @param {_competent.RenderMeta} meta
@@ -232,6 +239,7 @@ export default function makeComponentsScript(components, opts) {
   s += Components + '\n\n'
   if (!externalAssets) {
     s += init.toString() + '\n\n'
+    if (preact) s += preactProxy.toString() + '\n\n'
     s += (preact ? start : startPlain).toString() + '\n\n'
     if (io) s += makeIo.toString() + '\n\n'
   }

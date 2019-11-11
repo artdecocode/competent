@@ -1,5 +1,9 @@
 ## 11 November 2019
 
+### [3.7.1](https://github.com/artdecocode/competent/compare/v3.7.0...v3.7.1)
+
+- [fix] Correct compiler warnings for unrender.
+
 ### [3.7.0](https://github.com/artdecocode/competent/compare/v3.6.2...v3.7.0)
 
 - [feature] Unmount _Preact_ components.

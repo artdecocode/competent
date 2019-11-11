@@ -51,6 +51,7 @@ class PreactProxy {
      * A Preact instance.
      */
     this.comp = null
+    this.unrender = null
   }
   render({ children, ...props }) {
     if (!this.comp) {

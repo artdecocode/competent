@@ -63,19 +63,57 @@ export function startPlain(meta, Comp, comp, el, parent, props, children) {
 }
 
 /**
+ * This is the class to provide render and unrender methods via standard API
+ * common for Preact and Plain components.
+ */
+class PreactProxy {
+  /**
+   * Create a new proxy.
+   * @param {Element} el
+   * @param {Element} parent
+   * @param {*} Comp
+   * @param {*} preact
+   */
+  constructor(el, parent, Comp, preact) {
+    this.preact = preact
+    this.Comp = Comp
+    this.el = el
+    this.parent = parent
+    /**
+     * A Preact instance.
+     */
+    this.comp = null
+  }
+  render({ children, ...props }) {
+    if (!this.comp) {
+      this.preact.render(this.preact.h(this.Comp, props, children), this.parent, this.el)
+      const comp = this.el['_component']
+      if (comp.componentWillUnmount) {
+        this.unrender = () => {
+          comp.componentWillUnmount()
+        }
+      }
+      this.comp = comp
+    } else {
+      if (this.comp.componentDidMount) this.comp.componentDidMount()
+      this.comp.forceUpdate()
+    }
+  }
+}
+
+/**
  * @param {_competent.RenderMeta} meta
  */
 export function start(meta, Comp, comp, el, parent, props, children, preact) {
-  const { render, h } = preact
   const isPlain = meta.plain
   if (!comp && isPlain) {
     comp = new Comp(el, parent)
+  } else if (!comp) {
+    comp = new PreactProxy(el, parent, Comp, preact)
   }
   const r = () => {
-    if (isPlain) {
-      comp.render({ ...props, children })
-      meta.instance = comp
-    } else render(h(Comp, props, children), parent, el)
+    comp.render({ ...props, children })
+    meta.instance = comp
   }
   if (Comp.load) {
     Comp.load((err, data) => {

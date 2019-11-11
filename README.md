@@ -159,7 +159,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.12.6</span>
+  <span class="ver">1.12.9</span>
   <p>
     Static Web Site Compiler That Uses Closure Compiler For JS Bundling And Closure Stylesheets For CSS optimisations. Supports JSX Syntax To Write Static Elements And Dynamic Preact Components.
   </p>
@@ -515,11 +515,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-11-08T03:16:16.078Z competent render npm-package
-2019-11-08T03:16:16.103Z competent render npm-package
-2019-11-08T03:16:16.105Z competent render npm-package
-2019-11-08T03:16:16.105Z competent render hello-world
-2019-11-08T03:16:16.107Z competent render friends
+2019-11-11T08:23:42.357Z competent render npm-package
+2019-11-11T08:23:42.380Z competent render npm-package
+2019-11-11T08:23:42.382Z competent render npm-package
+2019-11-11T08:23:42.382Z competent render hello-world
+2019-11-11T08:23:42.385Z competent render friends
 ```
 
 
@@ -684,17 +684,51 @@ function init(id, key) {
   return { parent, el  }
 }
 
+class PreactProxy {
+  /**
+   * Create a new proxy.
+   * @param {Element} el
+   * @param {Element} parent
+   * @param {*} Comp
+   * @param {*} preact
+   */
+  constructor(el, parent, Comp, preact) {
+    this.preact = preact
+    this.Comp = Comp
+    this.el = el
+    this.parent = parent
+    /**
+     * A Preact instance.
+     */
+    this.comp = null
+  }
+  render({ children, ...props }) {
+    if (!this.comp) {
+      this.preact.render(this.preact.h(this.Comp, props, children), this.parent, this.el)
+      const comp = this.el['_component']
+      if (comp.componentWillUnmount) {
+        this.unrender = () => {
+          comp.componentWillUnmount()
+        }
+      }
+      this.comp = comp
+    } else {
+      if (this.comp.componentDidMount) this.comp.componentDidMount()
+      this.comp.forceUpdate()
+    }
+  }
+}
+
 function start(meta, Comp, comp, el, parent, props, children, preact) {
-  const { render, h } = preact
   const isPlain = meta.plain
   if (!comp && isPlain) {
     comp = new Comp(el, parent)
+  } else if (!comp) {
+    comp = new PreactProxy(el, parent, Comp, preact)
   }
   const r = () => {
-    if (isPlain) {
-      comp.render({ ...props, children })
-      meta.instance = comp
-    } else render(h(Comp, props, children), parent, el)
+    comp.render({ ...props, children })
+    meta.instance = comp
   }
   if (Comp.load) {
     Comp.load((err, data) => {

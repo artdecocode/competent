@@ -1,3 +1,9 @@
+## 11 November 2019
+
+### [3.7.0](https://github.com/artdecocode/competent/compare/v3.6.2...v3.7.0)
+
+- [feature] Unmount _Preact_ components.
+
 ## 8 November 2019
 
 ### [3.6.2](https://github.com/artdecocode/competent/compare/v3.6.1...v3.6.2)

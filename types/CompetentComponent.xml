@@ -1,10 +1,10 @@
 <types namespace="_competent">
   <import name="Component" from="@externs/preact" ns="preact"
-  link="https://github.com/dpck/preact/wiki/Component#type-component" />
+  link="https://github.com/externs/preact/wiki/Component#type-component" />
   <import name="AcceptedChild" from="@externs/preact" ns="preact"
-  link="https://github.com/dpck/preact/wiki/API#type-acceptedchild" />
+  link="https://github.com/externs/preact/wiki/API#type-acceptedchild" />
   <import name="PreactProps" from="@externs/preact" ns="preact"
-  link="https://github.com/dpck/preact/wiki/API#type-preactprops" />
+  link="https://github.com/externs/preact/wiki/API#type-preactprops" />
 
   <constructor name="CompetentComponent" extends="preact.Component" desc="A component could have an additional API understood by _Competent_.">
     <fn name="serverRender"

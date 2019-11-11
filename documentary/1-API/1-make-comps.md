@@ -28,8 +28,32 @@ Competent can generate code that will utilise the _IntesectionObserver_ browser 
 
 #### Unrender
 
-When a plain component implements an `unrender` method, _Competent_ will call it when the component is no longer intersecting. This currently does not work for Preact components, or for components that don't provide the `unrender` method.
+When a plain component implements an `unrender` method, _Competent_ will call it when the component is no longer intersecting. Components that don't provide the `unrender` method won't be destroyed.
+
+When it comes to _Preact_ component, the same applies, but the `unrender` method is called `componentWillUnmount`. Here, an instance will get a chance to remove event listeners and tidy up so that the page keeps performant. The component won't actually be unmounted, because that requires removing the element into which it is rendered from DOM, which can be inefficient and would result in page jumps. Instead, the `componentWillUnmount` will be called and the component should change its state so that it becomes invisible or a similar measure. Whenever the component comes back into view, its `componentDidMount` will be called again, and an update scheduled.
 
 <img src="docs/appshot.gif" alt="unrender method implementation">
+
+
+```js
+/**
+ * Example implementation of Preact unrender.
+ */
+export default class Test extends Component {
+  constructor() {
+    super()
+    this.state.ellipsis = false
+  }
+  componentDidMount() {
+    this.setState({ ellipsis: true })
+  }
+  componentWillUnmount() {
+    this.setState({ ellipsis: false })
+  }
+  render() {
+    return (<span>Hello World{this.state.ellipsis && <Ellipsis />}</span>)
+  }
+}
+```
 
 %~%

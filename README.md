@@ -49,7 +49,7 @@ import competent, { makeComponentsScript, writeAssets } from 'competent'
 ## <code><ins>competent</ins>(</code><sub><br/>&nbsp;&nbsp;`components: !Object<string, !Function|function(new: preact.Component)>,`<br/>&nbsp;&nbsp;`config=: !Config,`<br/></sub><code>): <i>!_restream.Rule</i></code>
 Creates a rule for _Replaceable_ from the `restream` package that replaces HTML with rendered JSX components. The configuration object will be needed to export components, so that they can then be rendered on the page using JavaScript.
 
- - <kbd><strong>components*</strong></kbd> <em><code>!Object&lt;string, (!Function \| function(new: <a href="https://github.com/dpck/preact/wiki/Component" title="A base class that is usually subclassed to create stateful Preact components.">preact.Component</a>))&gt;</code></em>: Components to extract from HTML and render using _Preact's_ server-side rendering. Can be either a functional stateless component, or a _Preact_ component constructor.
+ - <kbd><strong>components*</strong></kbd> <em><code>!Object&lt;string, (!Function \| function(new: <a href="https://github.com/externs/preact/wiki/Component" title="A base class that is usually subclassed to create stateful Preact components.">preact.Component</a>))&gt;</code></em>: Components to extract from HTML and render using _Preact's_ server-side rendering. Can be either a functional stateless component, or a _Preact_ component constructor.
  - <kbd>config</kbd> <em><code><a href="#type-config" title="Options for the program. All functions will be called with the Replaceable instance as their `this` context.">!Config</a></code></em> (optional): Options for the program. All functions will be called with the _Replaceable_ instance as their `this` context.
 
 <table>
@@ -398,7 +398,7 @@ __<a name="type-meta">`Meta`</a>__: Service methods for `competent`.
 
 _Competent_ can work with additional API of components, in which case they must extend the _Preact_ class and implement these additional methods.
 
-__<a name="type-competentcomponent">`CompetentComponent`</a> extends <a title="A base class that is usually subclassed to create stateful Preact components." href="https://github.com/dpck/preact/wiki/Component">`preact.Component`</a>__: A component could have an additional API understood by _Competent_.
+__<a name="type-competentcomponent">`CompetentComponent`</a> extends <a title="A base class that is usually subclassed to create stateful Preact components." href="https://github.com/externs/preact/wiki/Component">`preact.Component`</a>__: A component could have an additional API understood by _Competent_.
 <table>
  <thead><tr>
   <th>Name</th>
@@ -428,25 +428,25 @@ __<a name="type-competentcomponent">`CompetentComponent`</a> extends <a title="A
  </tr>
  <tr>
   <td rowSpan="3" align="center"><ins>serverRender</ins></td>
-  <td><em>(props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => (<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a> | !Array&lt;<a href="https://github.com/dpck/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a>&gt;)</em></td>
+  <td><em>(props?: <a href="https://github.com/externs/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => (<a href="https://github.com/externs/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a> | !Array&lt;<a href="https://github.com/externs/preact/wiki/API#type-acceptedchild">preact.AcceptedChild</a>&gt;)</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
    The same as render, but for the server only. Called by <em>Component</em> using <em>NodeJS</em> runtime and not by <em>Preact</em> in browser, therefore <em>NodeJS</em> API could be used here.<br/>
-   <kbd>props</kbd> <em><code><a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
+   <kbd>props</kbd> <em><code><a href="https://github.com/externs/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
   </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center"><ins>fileRender</ins></td>
-  <td><em>(data: string, props?: <a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => !Promise&lt;void&gt;</em></td>
+  <td><em>(data: string, props?: <a href="https://github.com/externs/preact/wiki/API#type-preactprops">!preact.PreactProps</a>) => !Promise&lt;void&gt;</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td>
    When <code>serverRender</code> was specified, this method will also render the component using the standard <code>render</code> method, and return the output. The output could then be written by the implementation to the filesystem, e.g., saved as <code>component.html</code> file which is then loaded in browser by <code>load</code> method.<br/>
    <kbd><strong>data*</strong></kbd> <em><code>string</code></em>: The rendered component.<br/>
-   <kbd>props</kbd> <em><code><a href="https://github.com/dpck/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
+   <kbd>props</kbd> <em><code><a href="https://github.com/externs/preact/wiki/API#type-preactprops">!preact.PreactProps</a></code></em> (optional): Component properties.
   </td>
  </tr>
 </table>
@@ -515,11 +515,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-11-11T08:23:42.357Z competent render npm-package
-2019-11-11T08:23:42.380Z competent render npm-package
-2019-11-11T08:23:42.382Z competent render npm-package
-2019-11-11T08:23:42.382Z competent render hello-world
-2019-11-11T08:23:42.385Z competent render friends
+2019-11-11T09:03:12.128Z competent render npm-package
+2019-11-11T09:03:12.151Z competent render npm-package
+2019-11-11T09:03:12.153Z competent render npm-package
+2019-11-11T09:03:12.154Z competent render hello-world
+2019-11-11T09:03:12.156Z competent render friends
 ```
 
 
@@ -858,9 +858,33 @@ meta.forEach(({ key, id, props = {}, children = [] }) => {
 
 #### Unrender
 
-When a plain component implements an `unrender` method, _Competent_ will call it when the component is no longer intersecting. This currently does not work for Preact components, or for components that don't provide the `unrender` method.
+When a plain component implements an `unrender` method, _Competent_ will call it when the component is no longer intersecting. Components that don't provide the `unrender` method won't be destroyed.
+
+When it comes to _Preact_ component, the same applies, but the `unrender` method is called `componentWillUnmount`. Here, an instance will get a chance to remove event listeners and tidy up so that the page keeps performant. The component won't actually be unmounted, because that requires removing the element into which it is rendered from DOM, which can be inefficient and would result in page jumps. Instead, the `componentWillUnmount` will be called and the component should change its state so that it becomes invisible or a similar measure. Whenever the component comes back into view, its `componentDidMount` will be called again, and an update scheduled.
 
 <img src="docs/appshot.gif" alt="unrender method implementation">
+
+
+```js
+/**
+ * Example implementation of Preact unrender.
+ */
+export default class Test extends Component {
+  constructor() {
+    super()
+    this.state.ellipsis = false
+  }
+  componentDidMount() {
+    this.setState({ ellipsis: true })
+  }
+  componentWillUnmount() {
+    this.setState({ ellipsis: false })
+  }
+  render() {
+    return (<span>Hello World{this.state.ellipsis && <Ellipsis />}</span>)
+  }
+}
+```
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/7.svg?sanitize=true">
@@ -945,19 +969,57 @@ export function startPlain(meta, Comp, comp, el, parent, props, children) {
 }
 
 /**
+ * This is the class to provide render and unrender methods via standard API
+ * common for Preact and Plain components.
+ */
+class PreactProxy {
+  /**
+   * Create a new proxy.
+   * @param {Element} el
+   * @param {Element} parent
+   * @param {*} Comp
+   * @param {*} preact
+   */
+  constructor(el, parent, Comp, preact) {
+    this.preact = preact
+    this.Comp = Comp
+    this.el = el
+    this.parent = parent
+    /**
+     * A Preact instance.
+     */
+    this.comp = null
+  }
+  render({ children, ...props }) {
+    if (!this.comp) {
+      this.preact.render(this.preact.h(this.Comp, props, children), this.parent, this.el)
+      const comp = this.el['_component']
+      if (comp.componentWillUnmount) {
+        this.unrender = () => {
+          comp.componentWillUnmount()
+        }
+      }
+      this.comp = comp
+    } else {
+      if (this.comp.componentDidMount) this.comp.componentDidMount()
+      this.comp.forceUpdate()
+    }
+  }
+}
+
+/**
  * @param {_competent.RenderMeta} meta
  */
 export function start(meta, Comp, comp, el, parent, props, children, preact) {
-  const { render, h } = preact
   const isPlain = meta.plain
   if (!comp && isPlain) {
     comp = new Comp(el, parent)
+  } else if (!comp) {
+    comp = new PreactProxy(el, parent, Comp, preact)
   }
   const r = () => {
-    if (isPlain) {
-      comp.render({ ...props, children })
-      meta.instance = comp
-    } else render(h(Comp, props, children), parent, el)
+    comp.render({ ...props, children })
+    meta.instance = comp
   }
   if (Comp.load) {
     Comp.load((err, data) => {

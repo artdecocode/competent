@@ -1,6 +1,6 @@
 {
   "name": "competent",
-  "version": "3.6.2",
+  "version": "3.7.0",
   "description": "Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.",
   "main": "compile/index.js",
   "module": "src/index.js",

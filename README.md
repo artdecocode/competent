@@ -159,7 +159,7 @@ The output will contain rendered <strong>JSX</strong>.
 
 <div style="background:red;" id="c1">
   <span class="name">splendid</span>
-  <span class="ver">1.12.9</span>
+  <span class="ver">1.16.2</span>
   <p>
     Static Web Site Compiler That Uses Closure Compiler For JS Bundling And Closure Stylesheets For CSS optimisations. Supports JSX Syntax To Write Static Elements And Dynamic Preact Components.
   </p>
@@ -515,11 +515,11 @@ When compiling with _Closure Compiler_ (or _Depack_), the static methods need to
 When the `DEBUG` env variable is set to _competent_, the program will print some debug information, e.g.,
 
 ```
-2019-11-11T15:20:40.893Z competent render npm-package
-2019-11-11T15:20:40.917Z competent render npm-package
-2019-11-11T15:20:40.918Z competent render npm-package
-2019-11-11T15:20:40.919Z competent render hello-world
-2019-11-11T15:20:40.921Z competent render friends
+2019-12-01T05:14:49.257Z competent render npm-package
+2019-12-01T05:14:49.303Z competent render npm-package
+2019-12-01T05:14:49.311Z competent render npm-package
+2019-12-01T05:14:49.313Z competent render hello-world
+2019-12-01T05:14:49.319Z competent render friends
 ```
 
 
@@ -701,6 +701,7 @@ class PreactProxy {
      * A Preact instance.
      */
     this.comp = null
+    this.unrender = null
   }
   render({ children, ...props }) {
     if (!this.comp) {
@@ -743,7 +744,7 @@ function start(meta, Comp, comp, el, parent, props, children, preact) {
 /** @type {!Array<!preact.PreactProps>} */
 const meta = [{
   key: 'npm-package',
-  id: 'c2',
+  id: 'c1',
   props: {
     style: 'background:green;',
   },
@@ -751,7 +752,7 @@ const meta = [{
 },
 {
   key: 'npm-package',
-  id: 'c1',
+  id: 'c2',
   props: {
     style: 'background:red;',
   },
@@ -760,11 +761,11 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
   const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
-  
 
   const ids = id.split(',')
   ids.forEach((Id) => {
     const { parent, el } = init(Id, key)
+    if (!el) return
     const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id: Id, plain })
     let comp
     comp = start(renderMeta, Comp, comp, el, parent, props, children, { render, Component, h })
@@ -822,7 +823,7 @@ const io = makeIo({ threshold: 10, rootMargin: "50px" })
 /** @type {!Array<!preact.PreactProps>} */
 const meta = [{
   key: 'npm-package',
-  id: 'c2',
+  id: 'c1',
   props: {
     style: 'background:green;',
   },
@@ -830,7 +831,7 @@ const meta = [{
 },
 {
   key: 'npm-package',
-  id: 'c1',
+  id: 'c2',
   props: {
     style: 'background:red;',
   },
@@ -839,11 +840,11 @@ const meta = [{
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
   const plain = Comp.plain || (/^\s*class\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))
-  
 
   const ids = id.split(',')
   ids.forEach((Id) => {
     const { parent, el } = init(Id, key)
+    if (!el) return
     const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id: Id, plain })
     let comp
     el.render = () => {

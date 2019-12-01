@@ -2,12 +2,18 @@ import write from '@wrote/write'
 import { join } from 'path'
 import { createHash } from 'crypto'
 
+const surround = (s) => {
+  return `'${s}'`
+}
 const makeProps = (props) => {
   const keys = Object.keys(props)
   return `{
   ${keys.map((key) => {
     const k = /-/.test(key) ? `'${key}'` : key
-    return `${k}: '${`${props[key]}`.replace(/'/g, '\\\'')}'`
+    const value = props[key]
+    const val = typeof value == 'string' ?
+      surround(value.replace(/'/g, '\\\'')) : value
+    return `${k}: ${val}`
   }).join(',\n  ')}${keys.length ? ',' : ''}
 }`
 }
@@ -222,7 +228,7 @@ export default function makeComponentsScript(components, opts) {
 
   const extendProps = Object.keys(props).map((propName) => {
     const val = props[propName]
-    const s = `props.${propName} = ${val}`
+    const s = `  props.${propName} = ${val}`
     return s
   }).join('\n')
 
@@ -249,11 +255,11 @@ export default function makeComponentsScript(components, opts) {
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
   const plain = ${preact ? 'Comp.plain || (/^\\s*class\\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))' : true}
-  ${extendProps || ''}
-
+${extendProps}${extendProps ? '\n' : ''}
   const ids = id.split(',')
   ids.forEach((Id) => {
     const { parent, el } = init(Id, key)
+    if (!el) return
     const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id: Id, plain })
     let comp
   ${ifIo.replace(/^/gm, '  ')}

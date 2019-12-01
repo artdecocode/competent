@@ -678,7 +678,10 @@ const {createHash:lb} = _crypto;
 const mb = a => {
   const b = Object.keys(a);
   return `{
-  ${b.map(c => `${/-/.test(c) ? `'${c}'` : c}: '${`${a[c]}`.replace(/'/g, "\\'")}'`).join(",\n  ")}${b.length ? "," : ""}
+  ${b.map(c => {
+    const d = a[c];
+    return `${/-/.test(c) ? `'${c}'` : c}: ${"string" == typeof d ? `'${d.replace(/'/g, "\\'")}'` : d}`;
+  }).join(",\n  ")}${b.length ? "," : ""}
 }`;
 }, nb = a => {
   const b = [];
@@ -887,7 +890,7 @@ module.exports = {_competent:(a, b = {}) => {
   }
   !0 === b && (b = ".");
   var k = [...g ? [tb([null, "Component", "render", ...e ? ["h"] : []], g, !1)] : [], ...b ? [tb([null, ...d ? ["makeIo"] : [], "init", g ? "start" : "startPlain"], `${b}/__competent-lib`, !1)] : [], ...ub(a, c)].join("\n");
-  const n = Object.keys(f).map(v => `props.${v} = ${f[v]}`).join("\n");
+  const n = Object.keys(f).map(v => `  props.${v} = ${f[v]}`).join("\n");
   var h = `start${g ? "" : "Plain"}(renderMeta, Comp, comp, el, parent, props, children${g ? ", { render, Component, h }" : ""})`;
   h = d ? `el.render = () => {
     comp = ${h}
@@ -905,11 +908,11 @@ module.exports = {_competent:(a, b = {}) => {
 meta.forEach(({ key, id, props = {}, children = [] }) => {
   const Comp = __components[key]
   const plain = ${g ? "Comp.plain || (/^\\s*class\\s+/.test(Comp.toString()) && !Component.isPrototypeOf(Comp))" : !0}
-  ${n || ""}
-
+${n}${n ? "\n" : ""}
   const ids = id.split(',')
   ids.forEach((Id) => {
     const { parent, el } = init(Id, key)
+    if (!el) return
     const renderMeta = /** @type {_competent.RenderMeta} */ ({ key, id: Id, plain })
     let comp
   ${h.replace(/^/gm, "  ")}

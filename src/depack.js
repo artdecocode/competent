@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import '@externs/preact' // can't set that in @depack/render's package.json yet
+import '@externs/preact/types/externs'
 import '../types/externs'
 import '../types/competent'
 import '../types/component'

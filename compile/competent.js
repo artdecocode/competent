@@ -105,46 +105,48 @@ function M(a, b = {}, c = {}, d = !1, e = !1, f) {
     }
     l = l.displayName || l !== Function && l.name || ka(l);
   }
-  let p = "";
+  let q = "";
   ({C:H, A:d, l:f} = fa(I, l, {allAttributes:v, xml:u, B:e, sort:m, l:f}));
   if (g) {
     let B = `<${l}`.length;
-    p = H.reduce((F, q) => {
-      const w = B + 1 + q.length;
+    q = H.reduce((F, p) => {
+      const w = B + 1 + p.length;
       if (w > D) {
-        return B = z.length, `${F}\n${z}${q}`;
+        return B = z.length, `${F}\n${z}${p}`;
       }
       B = w;
-      return `${F} ${q}`;
+      return `${F} ${p}`;
     }, "");
   } else {
-    p = H.length ? " " + H.join(" ") : "";
+    q = H.length ? " " + H.join(" ") : "";
   }
-  p = `<${l}${p}>`;
+  q = `<${l}${q}>`;
   if (`${l}`.match(/[\s\n\\/='"\0<>]/)) {
-    throw p;
+    throw q;
   }
   var H = `${l}`.match(ha);
-  Y && H && (p = p.replace(/>$/, " />"));
+  Y && H && (q = q.replace(/>$/, " />"));
   let G = [];
   if (d) {
-    !x && g && (ca(d) || d.length + la(p) > D) && (d = "\n" + z + `${d}`.replace(/(\n+)/g, "$1" + (z || "\t"))), p += d;
+    !x && g && (ca(d) || d.length + la(q) > D) && (d = "\n" + z + `${d}`.replace(/(\n+)/g, "$1" + (z || "\t"))), q += d;
   } else {
     if (a.children) {
-      let B = g && p.includes("\n");
+      let B = g && q.includes("\n");
       const F = [];
-      G = a.children.map((q, w) => {
-        if (null != q && !1 !== q) {
-          var y = M(q, b, c, !0, "svg" == l ? !0 : "foreignObject" == l ? !1 : e, f);
+      G = a.children.map((p, w) => {
+        if (null != p && !1 !== p) {
+          var y = M(p, b, c, !0, "svg" == l ? !0 : "foreignObject" == l ? !1 : e, f);
           if (y) {
-            g && y.length + la(p) > D && (B = !0);
-            var r = y.replace(new RegExp(`</${q.nodeName}>$`), "");
-            ma(q.nodeName, r) && (F[w] = y.length);
+            g && y.length + la(q) > D && (B = !0);
+            if ("string" == typeof p.nodeName) {
+              const r = y.replace(new RegExp(`</${p.nodeName}>$`), "");
+              ma(p.nodeName, r) && (F[w] = y.length);
+            }
             return y;
           }
         }
       }).filter(Boolean);
-      g && B && !x && (G = G.reduce((q, w, y) => {
+      g && B && !x && (G = G.reduce((p, w, y) => {
         var r = (y = F[y - 1]) && /^<([\s\S]+?)>/.exec(w);
         r && ([, r] = r, r = !ia.test(r));
         if (y && !r) {
@@ -154,26 +156,26 @@ function M(a, b = {}, c = {}, d = !1, e = !1, f) {
           for (; null !== (E = r.exec(w));) {
             const [K] = E;
             [, J] = E;
-            r.lastIndex + K.length - 1 > D - (P ? y : 0) && (E = w.slice(0, r.lastIndex - 1), w = w.slice(r.lastIndex), P ? (q.push(E), P = !1) : q.push("\n" + z + `${E}`.replace(/(\n+)/g, "$1" + (z || "\t"))), r.lastIndex = 0);
+            r.lastIndex + K.length - 1 > D - (P ? y : 0) && (E = w.slice(0, r.lastIndex - 1), w = w.slice(r.lastIndex), P ? (p.push(E), P = !1) : p.push("\n" + z + `${E}`.replace(/(\n+)/g, "$1" + (z || "\t"))), r.lastIndex = 0);
           }
-          J && q.push(J);
-          q.push(w);
+          J && p.push(J);
+          p.push(w);
         } else {
-          q.push("\n" + z + `${w}`.replace(/(\n+)/g, "$1" + (z || "\t")));
+          p.push("\n" + z + `${w}`.replace(/(\n+)/g, "$1" + (z || "\t")));
         }
-        return q;
+        return p;
       }, []));
     }
   }
   if (G.length) {
-    p += G.join("");
+    q += G.join("");
   } else {
     if (u) {
-      return p.substring(0, p.length - 1) + " />";
+      return q.substring(0, q.length - 1) + " />";
     }
   }
-  H || (!ma(l, G[G.length - 1]) && !x && g && p.includes("\n") && (p += `\n${T}`), p += `</${l}>`);
-  return p;
+  H || (!ma(l, G[G.length - 1]) && !x && g && q.includes("\n") && (q += `\n${T}`), q += `</${l}>`);
+  return q;
 }
 const ma = (a, b) => `${a}`.match(ia) && (b ? !/>$/.test(b) : !0);
 function ka(a) {
@@ -807,13 +809,13 @@ module.exports = {_competent:(a, b = {}) => {
     vb("render %s", l);
     const T = Error("Skip render");
     try {
-      const z = a[l], p = x.slice(0, I), H = x.slice(I + u.length);
-      if (/\x3c!--\s*$/.test(p) && /^\s*--\x3e/.test(H)) {
+      const z = a[l], q = x.slice(0, I), H = x.slice(I + u.length);
+      if (/\x3c!--\s*$/.test(q) && /^\s*--\x3e/.test(H)) {
         return u;
       }
       const [{content:G = "", props:B}] = ra(l, D);
       D = [G];
-      let F = !1, q = !0, w = !1;
+      let F = !1, p = !0, w = !1;
       const y = {pretty:void 0, lineLength:void 0};
       let r, E, P, J;
       const K = e.call(this, {...B, children:D}, {export(t = !0, A = null) {
@@ -829,7 +831,7 @@ module.exports = {_competent:(a, b = {}) => {
         y.pretty = t;
         A && (y.lineLength = A);
       }, renderAgain(t = !0, A = !1) {
-        q = t;
+        p = t;
         w = A;
       }, setChildContext(t) {
         E = t;
@@ -851,7 +853,7 @@ module.exports = {_competent:(a, b = {}) => {
         if (A.fileRender) {
           let O = await A.render(K);
           O = wb(O, y);
-          q && (O = await yb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:w, re:v, replacement:c, m:E, body:O}));
+          p && (O = await yb({getContext:h.bind(this), getReplacements:m.bind(this), key:l, s:w, re:v, replacement:c, m:E, body:O}));
           await A.fileRender(O, K);
         }
       }
@@ -865,7 +867,7 @@ module.exports = {_competent:(a, b = {}) => {
         return g && g.call(this, l, B), "";
       }
       S = (C || "") + S.replace(/^/gm, Y);
-      q && (S = await yb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:l, s:w, re:v, replacement:c, m:E, body:S, position:I}));
+      p && (S = await yb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:l, s:w, re:v, replacement:c, m:E, body:S, position:I}));
       F && f.call(this, l, r, J || B, D);
       g && g.call(this, l, B);
       return S;

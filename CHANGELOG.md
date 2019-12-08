@@ -1,3 +1,9 @@
+## 9 December 2019
+
+### [3.7.3](https://github.com/artdecocode/competent/compare/v3.7.2...v3.7.3)
+
+- [fix] Fix `@depack/render` bug when `child.nodeName` was a function.
+
 ## 1 December 2019
 
 ### [3.7.2](https://github.com/artdecocode/competent/compare/v3.7.1...v3.7.2)

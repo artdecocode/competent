@@ -1,6 +1,6 @@
 {
   "name": "competent",
-  "version": "3.7.2",
+  "version": "3.7.3",
   "description": "Extracts, Renders And Exports For Dynamic Render JSX Components From Within HTML.",
   "main": "compile/index.js",
   "module": "src/index.js",
@@ -76,5 +76,9 @@
     "yarn-s": "1.2.1",
     "zoroaster": "^4.1.2"
   },
-  "srcDependencies": ["@depack/render", "restream", "rexml"]
+  "srcDependencies": [
+    "@depack/render",
+    "restream",
+    "rexml"
+  ]
 }
